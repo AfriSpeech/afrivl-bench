@@ -185,9 +185,9 @@ async function load(){
   const r = await fetchFirst([`./data/languages.json`, `../data/human_eval/languages.json`, `${RAW}/human-eval/data/languages.json`]);
   LANGUAGES = await r.json();
 
-  const savedLangIso = params.get('lang') || localStorage.getItem('afrivl_gt_last_lang');
-  if (savedLangIso) {
-    const match = LANGUAGES.find(l => l.iso === savedLangIso || l.language.toLowerCase() === savedLangIso.toLowerCase());
+  const urlLang = params.get('lang');
+  if (urlLang) {
+    const match = LANGUAGES.find(l => l.iso === urlLang || l.language.toLowerCase() === urlLang.toLowerCase());
     if (match) { promptReviewerEmail(match); return; }
   }
   renderLangPicker();
@@ -225,22 +225,17 @@ function renderLangPicker(){
 function promptReviewerEmail(langObj){
   const savedEmail = reviewerEmail || 'michsethowusu@gmail.com';
   card.innerHTML = `
-    <h2 style="margin:0 0 4px;font-size:1.18rem;">Reviewer Identity</h2>
-    <p style="margin:0 0 16px;color:var(--muted);font-size:0.86rem;">
-      Language: <b>${langObj.flag} ${langObj.language}</b> (${langObj.all_primary_countries ? langObj.all_primary_countries.join(', ') : langObj.primary_country})
+    <h2 style="margin:0 0 6px;font-size:1.22rem;">Enter your email to start or resume</h2>
+    <p style="margin:0 0 18px;color:var(--muted);font-size:0.9rem;">
+      Language: <b>${langObj.flag} ${langObj.language}</b> &middot; ${langObj.all_primary_countries ? langObj.all_primary_countries.join(', ') : langObj.primary_country}
     </p>
-    <div class="field" style="margin-bottom:14px;">
-      <label for="email-input">Your Email Address</label>
-      <input type="email" id="email-input" placeholder="e.g. name@example.com" value="${savedEmail}" required autofocus>
+    <div class="field" style="margin-bottom:18px;">
+      <label for="email-input">Email address</label>
+      <input type="email" id="email-input" placeholder="name@example.com" value="${savedEmail}" required autofocus>
     </div>
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:18px;font-size:0.84rem;color:var(--text);line-height:1.5;">
-      <div style="font-weight:700;margin-bottom:4px;color:var(--accent);">💡 Why we ask for your email:</div>
-      <div>1. <b>Session Resumption:</b> Saves your progress in the cloud so you can return anytime on any device without repeating words.</div>
-      <div style="margin-top:4px;">2. <b>Paper Attribution:</b> Credits you as a participating native speaker / contributor in the research publication.</div>
-    </div>
-    <button class="primary" id="confirm-email-btn">Continue to Review →</button>
-    <div style="text-align:center;margin-top:12px;">
-      <button class="link-btn" id="back-to-langs-btn">← Choose another language</button>
+    <button class="primary" id="confirm-email-btn">Continue &rarr;</button>
+    <div style="text-align:center;margin-top:14px;">
+      <button class="link-btn" id="back-to-langs-btn">&larr; Choose another language</button>
     </div>
   `;
 
