@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VL-MMLU-Afri — Language Image Picker</title>
+<style>
+  :root{ --bg:#f5f5f5; --panel:#fff; --border:#ddd; --text:#1a1a1a; --muted:#777; --accent:#2563eb; --good:#15803d; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  .layout{display:flex;height:100vh;}
+  .sidebar{width:280px;border-right:1px solid var(--border);overflow-y:auto;background:var(--panel);}
+  .sidebar-header{padding:14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--panel);}
+  .sidebar-header select,.sidebar-header input{width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;}
+  .progress{font-size:0.8rem;color:var(--muted);}
+  .word-item{padding:9px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:0.86rem;}
+  .word-item:hover{background:#f7f9fc;}
+  .word-item.active{background:#eef2ff;font-weight:600;}
+  .main{flex:1;padding:24px 32px;overflow-y:auto;}
+  h1{font-size:1.3rem;margin:0 0 2px;}
+  .local-word{font-size:1.6rem;font-weight:700;color:var(--accent);margin:4px 0 2px;}
+  .cat-label{color:var(--muted);font-size:0.88rem;margin-bottom:18px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px;}
+  .tile{position:relative;border:3px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;
+    aspect-ratio:1/1;background:#eee;}
+  .tile img{width:100%;height:100%;object-fit:cover;display:block;}
+  .tile.selected{border-color:var(--good);box-shadow:0 0 0 2px var(--good);}
+  .tile .check{position:absolute;top:4px;right:4px;background:var(--good);color:#fff;border-radius:50%;
+    width:22px;height:22px;display:none;align-items:center;justify-content:center;font-size:0.8rem;}
+  .tile.selected .check{display:flex;}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:10px;}
+  button{padding:10px 18px;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer;}
+  button.save{background:var(--accent);color:#fff;font-weight:600;}
+  button.none{background:#fee2e2;color:#b91c1c;}
+  button.export{background:var(--good);color:#fff;font-weight:600;}
+  .status-line{margin-top:10px;font-size:0.85rem;color:var(--muted);}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid var(--border);background:var(--panel);}
+  .note{font-size:0.8rem;color:var(--muted);max-width:620px;}
+  .badge{font-size:0.85rem;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="note">Each image was found by searching DuckDuckGo for the <b>English word plus the
+    country this language is spoken in</b> (e.g. "Apple Nigeria" for Hausa). Click the one image
+    that actually shows the word's meaning. If none of the 50 match, click "None match".</div>
+  <button class="export" id="export-btn">⬇ Export picks.json</button>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <select id="lang-select"></select>
+      <input type="text" id="filter" placeholder="Filter words…">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="word-list"></div>
+  </div>
+  <div class="main" id="main"></div>
+</div>
+
+<script>
+let CANDIDATES = {};   // english -> {query, category, images}
+let PICKS = {};        // keyed by iso: { english: {chosen_url|null, none_match, ts} }
+let iso = null;
+let current = null;
+
+const LANGS = [
+  ['hau','Hausa'], ['twi','Akan Twi'], ['amh','Amharic'], ['wol','Wolof'], ['ibo','Igbo'],
+  ['swh','kiSwahili'], ['xho','isiXhosa'], ['zul','isiZulu'], ['mnk','Mandinka'],
+];
+
+function loadPicksFromStorage(){
+  try { PICKS = JSON.parse(localStorage.getItem('lang_image_picks') || '{}'); } catch { PICKS = {}; }
+}
+function persist(){ localStorage.setItem('lang_image_picks', JSON.stringify(PICKS)); }
+
+async function loadLang(code){
+  iso = code;
+  const r = await fetch(`../data/ddg_candidates/${iso}.json`, {cache:'no-store'});
+  CANDIDATES = r.ok ? await r.json() : {};
+  PICKS[iso] = PICKS[iso] || {};
+  renderSidebar();
+  const words = Object.keys(CANDIDATES);
+  const ready = words.filter(w => !isPending(w));
+  const firstUnpicked = ready.find(w => !PICKS[iso][w]);
+  selectWord(firstUnpicked || ready[0] || words[0]);
+}
+
+function isPending(w){ return !CANDIDATES[w] || CANDIDATES[w].images.length === 0; }
+
+function renderSidebar(filterText){
+  const list = document.getElementById('word-list');
+  const q = (filterText || '').toLowerCase();
+  const words = Object.keys(CANDIDATES).filter(w => !q || w.toLowerCase().includes(q));
+  // Ready-to-review words first, still-fetching ones pushed to the bottom.
+  words.sort((a, b) => isPending(a) - isPending(b));
+  list.innerHTML = words.map(w => {
+    const pick = PICKS[iso]?.[w];
+    const badge = isPending(w) ? '⏳' : (pick ? (pick.none_match ? '🚫' : '✅') : '⬜');
+    return `<div class="word-item ${current === w ? 'active' : ''}" data-w="${w}">
+      <span>${w}</span><span class="badge">${badge}</span></div>`;
+  }).join('');
+  list.querySelectorAll('.word-item').forEach(el => {
+    el.addEventListener('click', () => selectWord(el.dataset.w));
+  });
+  const ready = words.filter(w => !isPending(w));
+  const done = ready.filter(w => PICKS[iso]?.[w]).length;
+  const pending = words.length - ready.length;
+  document.getElementById('progress').textContent =
+    `${done} / ${ready.length} picked` + (pending ? ` · ${pending} still fetching` : '');
+}
+
+function selectWord(english){
+  current = english;
+  renderSidebar(document.getElementById('filter').value);
+  const c = CANDIDATES[english];
+  if (!c || c.images.length === 0) {
+    document.getElementById('main').innerHTML = `
+      <h1>${english}</h1>
+      <p style="color:var(--muted);">No candidate images yet for this word — still being fetched in
+      the background (DuckDuckGo rate-limits bursts, so this is deliberately slow). Try another word
+      for now; it'll show up with a ⏳ until ready.</p>
+      <div class="actions"><button class="save" id="skip-pending-btn">Next ready word →</button></div>
+    `;
+    document.getElementById('skip-pending-btn').addEventListener('click', goNext);
+    return;
+  }
+  const pick = PICKS[iso]?.[english];
+  document.getElementById('main').innerHTML = `
+    <h1>${english} <span style="color:var(--muted);font-weight:400;">= "${c.local_word || '?'}"</span></h1>
+    <div class="local-word">searched: "${c.query}"</div>
+    <div class="cat-label">${c.category}${c.country ? ' · ' + c.country : ''}</div>
+    <div class="grid" id="grid"></div>
+    <div class="actions">
+      <button class="none" id="none-btn">🚫 None of these match</button>
+    </div>
+    <div class="status-line" id="status-line"></div>
+  `;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = c.images.map((url, i) => `
+    <div class="tile ${pick && pick.chosen_url === url ? 'selected' : ''}" data-i="${i}">
+      <img src="${url}" loading="lazy" onerror="this.closest('.tile').style.display='none'">
+      <div class="check">✓</div>
+    </div>`).join('');
+  grid.querySelectorAll('.tile').forEach(t => {
+    t.addEventListener('click', () => {
+      grid.querySelectorAll('.tile').forEach(x => x.classList.remove('selected'));
+      t.classList.add('selected');
+      const url = c.images[+t.dataset.i];
+      PICKS[iso][english] = { chosen_url: url, none_match: false, ts: new Date().toISOString() };
+      persist();
+      document.getElementById('status-line').textContent = 'Saved.';
+      renderSidebar(document.getElementById('filter').value);
+    });
+  });
+  document.getElementById('none-btn').addEventListener('click', () => {
+    PICKS[iso][english] = { chosen_url: null, none_match: true, ts: new Date().toISOString() };
+    persist();
+    renderSidebar(document.getElementById('filter').value);
+    goNext();
+  });
+}
+
+function goNext(){
+  const words = Object.keys(CANDIDATES).filter(w => !isPending(w));
+  const idx = words.indexOf(current);
+  const next = words.slice(idx + 1).find(w => !PICKS[iso][w]) || words.find(w => !PICKS[iso][w]) || words[0];
+  if (next) selectWord(next);
+}
+
+document.getElementById('filter').addEventListener('input', e => renderSidebar(e.target.value));
+document.getElementById('export-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(PICKS, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'picks.json';
+  a.click();
+});
+
+const sel = document.getElementById('lang-select');
+sel.innerHTML = LANGS.map(([code, name]) => `<option value="${code}">${name}</option>`).join('');
+sel.addEventListener('change', () => loadLang(sel.value));
+
+loadPicksFromStorage();
+loadLang(sel.value);
+</script>
+</body>
+</html>

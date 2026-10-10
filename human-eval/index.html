@@ -3,78 +3,106 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VL-MMLU-Afri — Human Review</title>
+<title>VL-MMLU-Afri — Human Ground Truth Review</title>
 <style>
   :root{
-    --bg:#fafafa; --panel:#ffffff; --text:#1a1d23; --muted:#6b7280; --border:#e5e7eb;
-    --accent:#2563eb; --good:#15803d; --bad:#b91c1c; --good-bg:#f0fdf4; --bad-bg:#fef2f2;
+    --bg:#fafafa; --panel:#ffffff; --text:#1a1d23; --muted:#64748b; --border:#e2e8f0;
+    --accent:#2563eb; --accent-hover:#1d4ed8; --good:#16a34a; --good-bg:#f0fdf4;
+    --bad:#dc2626; --bad-bg:#fef2f2; --good-btn:#15803d; --good-btn-hover:#166534;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     display:flex;flex-direction:column;align-items:center;padding:24px 16px 48px;}
   .wrap{width:100%;max-width:520px;}
-  header{text-align:center;margin-bottom:24px;}
-  h1{font-size:1.3rem;margin:0 0 6px;font-weight:650;}
-  .lede{color:var(--muted);font-size:0.92rem;line-height:1.5;margin:0;}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;
-    padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+  header{text-align:center;margin-bottom:20px;}
+  h1{font-size:1.35rem;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
+  .lede{color:var(--muted);font-size:0.88rem;line-height:1.45;margin:0 auto;}
+
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:22px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+  
+  /* Topbar / Status */
+  .progress{display:flex;justify-content:space-between;align-items:center;
+    font-size:0.82rem;color:var(--muted);margin-bottom:12px;}
+  .progress b{color:var(--text);}
+  .progress .lang-tag{font-weight:700;color:var(--text);display:inline-flex;align-items:center;gap:5px;}
+  .progress-bar-wrap{width:100%;height:4px;background:#f1f5f9;border-radius:2px;overflow:hidden;margin-bottom:16px;}
+  .progress-bar-fill{height:100%;background:var(--accent);transition:width .2s;}
+
+  /* Word Prompt Area */
+  .word-header{text-align:center;margin-bottom:14px;}
+  .local-word{font-size:2.1rem;font-weight:800;color:var(--text);margin:0 0 3px;letter-spacing:-0.02em;line-height:1.15;}
+  .concept-meta{font-size:0.86rem;color:var(--muted);}
+  .concept-meta b{color:var(--text);font-weight:600;}
+
+  /* Image Container */
+  .imgwrap{background:#f1f5f9;border-radius:12px;overflow:hidden;margin-bottom:14px;
+    aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;}
+  .imgwrap img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cand-badge{position:absolute;top:10px;right:10px;background:rgba(15,23,42,0.78);color:#fff;
+    font-size:0.75rem;padding:3px 8px;border-radius:20px;font-weight:600;letter-spacing:0.02em;}
+  .country-pill{position:absolute;top:10px;left:10px;background:rgba(15,23,42,0.78);color:#fff;
+    font-size:0.75rem;padding:3px 9px;border-radius:6px;font-weight:600;}
+  .img-credit{position:absolute;bottom:0;left:0;right:0;background:rgba(15,23,42,0.7);color:#fff;
+    font-size:0.65rem;padding:3px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    opacity:0;transition:opacity .15s;}
+  .imgwrap:hover .img-credit{opacity:1;}
+
+  .prompt{font-size:0.95rem;margin:0 0 16px;text-align:center;color:var(--text);}
+  .prompt b{color:var(--accent);}
+
+  /* Decision Buttons */
+  .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  button.choice-btn{padding:14px 18px;border:none;border-radius:12px;font-size:1.02rem;
+    font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    gap:8px;transition:all .12s;}
+  button.no-btn{background:var(--bad-bg);color:var(--bad);border:1.5px solid #fecaca;}
+  button.no-btn:hover{background:#fee2e2;border-color:var(--bad);}
+  button.yes-btn{background:var(--good-bg);color:var(--good);border:1.5px solid #bbf7d0;}
+  button.yes-btn:hover{background:#dcfce7;border-color:var(--good);}
+
+  .sub-actions{display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:var(--muted);margin-top:6px;}
+  .link-btn{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:0.82rem;padding:4px 0;}
+  .link-btn:hover{color:var(--text);}
+  .key-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* Language Picker Screen */
   .field{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
   label{font-size:0.85rem;font-weight:600;color:var(--muted);}
   select{padding:11px 12px;border:1px solid var(--border);border-radius:9px;font-size:1rem;
-    background:#fff;color:var(--text);}
+    background:#fff;color:var(--text);width:100%;}
   button.primary{width:100%;padding:13px;border:none;border-radius:9px;background:var(--accent);
     color:#fff;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;}
-  button.primary:hover{background:#1d4ed8;}
-  button.primary:disabled{background:#9ca3af;cursor:default;}
-  .hint{color:var(--muted);font-size:0.8rem;margin-top:10px;text-align:center;}
+  button.primary:hover{background:var(--accent-hover);}
+  .lang-list{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+  .lang-item{border:1px solid var(--border);border-radius:10px;padding:12px 14px;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#fff;transition:all .1s;}
+  .lang-item:hover{border-color:var(--accent);background:#f8fafc;}
+  .lang-item .name{font-weight:600;font-size:0.95rem;}
+  .lang-item .detail{font-size:0.8rem;color:var(--muted);}
 
-  .progress{display:flex;justify-content:space-between;align-items:center;
-    font-size:0.82rem;color:var(--muted);margin-bottom:14px;}
-  .progress b{color:var(--text);}
-  .imgwrap{background:#f3f4f6;border-radius:10px;overflow:hidden;margin-bottom:18px;
-    aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
-  .imgwrap img{width:100%;height:100%;object-fit:cover;}
-  .prompt{font-size:0.95rem;margin:0 0 14px;text-align:center;color:var(--text);}
-  .prompt b{color:var(--accent);}
-  .choices{display:flex;flex-direction:column;gap:10px;}
-  .choice{padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;background:#fff;
-    font-size:1rem;text-align:left;cursor:pointer;transition:border-color .12s,background .12s;}
-  .choice:hover:not(:disabled){border-color:var(--accent);}
-  .choice:disabled{cursor:default;}
-  .choice.correct{border-color:var(--good);background:var(--good-bg);color:var(--good);font-weight:600;}
-  .choice.incorrect{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);font-weight:600;}
-  .choice.dim{opacity:0.55;}
-  .actions{display:flex;justify-content:space-between;align-items:center;margin-top:18px;}
-  .flag-btn{background:none;border:none;color:var(--muted);font-size:0.82rem;cursor:pointer;
-    text-decoration:underline;padding:4px 0;}
-  .flag-btn:hover{color:var(--bad);}
-  .next-btn{padding:10px 20px;border:none;border-radius:9px;background:var(--accent);color:#fff;
-    font-size:0.92rem;font-weight:600;cursor:pointer;visibility:hidden;}
-  .next-btn.show{visibility:visible;}
-  .saved{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:10px;height:14px;}
-  .switch-lang{text-align:center;margin-top:16px;}
-  .switch-lang button{background:none;border:none;color:var(--muted);font-size:0.82rem;
-    cursor:pointer;text-decoration:underline;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:rgba(15,23,42,0.92);color:#fff;padding:8px 16px;border-radius:20px;
+    font-size:0.84rem;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    opacity:0;pointer-events:none;transition:opacity .2s;z-index:99;}
+  .toast.show{opacity:1;}
   .loading,.error{text-align:center;color:var(--muted);padding:60px 0;}
-  .flag-note{display:flex;gap:8px;margin-top:10px;}
-  .flag-note input{flex:1;padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.88rem;}
-  .flag-note button{padding:9px 14px;border:none;border-radius:8px;background:var(--text);color:#fff;
-    font-size:0.85rem;cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>VL-MMLU-Afri — Human Review</h1>
-    <p class="lede">Look at the picture and pick the word that matches it. Your answers help
-      us check the images are correct and see how well models compare to human judgment.</p>
+    <p class="lede">Review words in your language. Does the picture match the local word? Your answers become the ground truth for multimodal AI evaluation.</p>
   </header>
 
   <div class="card" id="card">
-    <div class="loading" id="loading">Loading…</div>
+    <div class="loading">Loading language datasets…</div>
   </div>
 </div>
+
+<div class="toast" id="toast">Saved.</div>
 
 <script>
 // ---------------------------------------------------------------- config
@@ -83,35 +111,31 @@ const OWNER = params.get('repo') || 'AfriSpeech/vl-mmlu-afri';
 const BRANCH = params.get('branch') || 'main';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${BRANCH}`;
 
-// Write-only fine-grained token, scoped to ONLY the dataset below. It is
-// deliberately reachable from this static page (there's no backend to hide
-// it behind); worst case someone spams that one dataset, nothing else.
-// Base64-encoded only to avoid naive automated secret-pattern scanners, not
-// to hide it from anyone who actually reads the page source.
+// Scoped write-only token for AfriSpeech/vl-mmlu-afri-human-eval dataset
 const _T = ["aGZfa2pERnBPc", "ENsTmVra0t2R0", "90R3hKbmZVdXV", "uVUNuSHBVdw=="];
 const HF_TOKEN = atob(_T.join(""));
 const HF_DATASET = "AfriSpeech/vl-mmlu-afri-human-eval";
 
 const SESSION_ID = (() => {
-  let id = localStorage.getItem('vlmmlu_session');
-  if (!id) { id = crypto.randomUUID(); localStorage.setItem('vlmmlu_session', id); }
+  let id = localStorage.getItem('vlmmlu_gt_session');
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem('vlmmlu_gt_session', id); }
   return id;
 })();
 
-function answeredKey(lang){ return `vlmmlu_answered_${lang}`; }
-function getAnswered(lang){
-  try { return new Set(JSON.parse(localStorage.getItem(answeredKey(lang)) || '[]')); }
+function reviewedKey(iso){ return `vlmmlu_gt_reviewed_${iso}`; }
+function getReviewed(iso){
+  try { return new Set(JSON.parse(localStorage.getItem(reviewedKey(iso)) || '[]')); }
   catch { return new Set(); }
 }
-function markAnswered(lang, id){
-  const s = getAnswered(lang); s.add(id);
-  localStorage.setItem(answeredKey(lang), JSON.stringify([...s]));
+function markReviewed(iso, id){
+  const s = getReviewed(iso); s.add(id);
+  localStorage.setItem(reviewedKey(iso), JSON.stringify([...s]));
 }
 
 async function hfCommit(path, obj){
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2))));
   const body = [
-    JSON.stringify({key:'header', value:{summary:'human-eval submission'}}),
+    JSON.stringify({key:'header', value:{summary:`ground-truth ${obj.iso639_3} ${obj.english} ${obj.action}`}}),
     JSON.stringify({key:'file', value:{content, path, encoding:'base64'}}),
   ].join('\n');
   try{
@@ -121,20 +145,26 @@ async function hfCommit(path, obj){
       body,
     });
     return r.ok;
-  }catch(e){ console.error('submit failed', e); return false; }
+  }catch(e){ console.error('Commit failed', e); return false; }
 }
 
-// ------------------------------------------------------------------ state
-let QUESTIONS = [];
-let byLang = {};
-let lang = null;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+// ---------------------------------------------------------------- state
+let LANGUAGES = [];
+let currentLang = null;
+let ITEMS = [];
 let queue = [];
 let current = null;
-let answeredThisSession = 0;
+let candIdx = 0;
+let sessionAnsweredCount = 0;
 
 const card = document.getElementById('card');
-
-function imageBase(){ return imageBase._v; }
 
 async function fetchFirst(paths){
   let lastErr;
@@ -149,117 +179,248 @@ async function fetchFirst(paths){
 }
 
 async function load(){
-  const r = await fetchFirst([`../data/questions.json`, `${RAW}/data/questions.json`]);
-  imageBase._v = r.url.includes('raw.githubusercontent.com') ? `${RAW}/data/images` : '../data/images';
-  QUESTIONS = await r.json();
-  byLang = {};
-  for (const q of QUESTIONS) (byLang[q.language] ||= []).push(q);
+  const r = await fetchFirst([`./data/languages.json`, `../data/human_eval/languages.json`, `${RAW}/human-eval/data/languages.json`]);
+  LANGUAGES = await r.json();
+
+  const savedLangIso = localStorage.getItem('vlmmlu_gt_last_lang') || params.get('lang');
+  if (savedLangIso) {
+    const match = LANGUAGES.find(l => l.iso === savedLangIso || l.language.toLowerCase() === savedLangIso.toLowerCase());
+    if (match) { selectLanguage(match); return; }
+  }
   renderLangPicker();
 }
 
 function renderLangPicker(){
-  const langs = Object.keys(byLang).sort();
   card.innerHTML = `
-    <div class="field">
-      <label for="lang-select">Language</label>
-      <select id="lang-select">
-        ${langs.map(l => `<option value="${l}">${l} (${byLang[l].length} items)</option>`).join('')}
-      </select>
+    <h2 style="margin:0 0 4px;font-size:1.15rem;">Select your language</h2>
+    <p style="margin:0 0 14px;color:var(--muted);font-size:0.86rem;">
+      Pick the language you want to review. You will see candidate images grounded in that language's country.
+    </p>
+    <div class="lang-list">
+      ${LANGUAGES.map(l => {
+        const reviewed = getReviewed(l.iso).size;
+        return `
+          <div class="lang-item" data-iso="${l.iso}">
+            <div>
+              <div class="name">${l.flag} ${l.language}</div>
+              <div class="detail">${l.all_primary_countries ? l.all_primary_countries.join(', ') : l.primary_country}</div>
+            </div>
+            <div class="detail" style="font-weight:600;color:var(--accent);">${reviewed} / ${l.word_count} done</div>
+          </div>
+        `;
+      }).join('')}
     </div>
-    <button class="primary" id="start-btn">Start reviewing</button>
-    <p class="hint">You'll see one image at a time with 4 word choices.</p>
   `;
-  document.getElementById('start-btn').addEventListener('click', () => {
-    lang = document.getElementById('lang-select').value;
-    answeredThisSession = 0;
-    buildQueue();
-    nextQuestion();
+  card.querySelectorAll('.lang-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const match = LANGUAGES.find(l => l.iso === el.dataset.iso);
+      selectLanguage(match);
+    });
   });
+}
+
+async function selectLanguage(langObj){
+  currentLang = langObj;
+  localStorage.setItem('vlmmlu_gt_last_lang', langObj.iso);
+  card.innerHTML = `<div class="loading">Loading words for ${langObj.flag} ${langObj.language}…</div>`;
+  const r = await fetchFirst([
+    `./data/${langObj.iso}.json`,
+    `../data/human_eval/${langObj.iso}.json`,
+    `${RAW}/human-eval/data/${langObj.iso}.json`
+  ]);
+  ITEMS = await r.json();
+  sessionAnsweredCount = 0;
+  buildQueue();
+  nextWord();
 }
 
 function buildQueue(){
-  const answered = getAnswered(lang);
-  const pool = byLang[lang].slice();
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  const fresh = pool.filter(q => !answered.has(q.id));
-  queue = fresh.length ? fresh : pool; // everything answered before -> allow repeats
+  const reviewed = getReviewed(currentLang.iso);
+  const unreviewed = ITEMS.filter(item => !reviewed.has(item.id));
+  queue = unreviewed.length ? unreviewed.slice() : ITEMS.slice();
 }
 
-function nextQuestion(){
+function nextWord(){
   if (!queue.length) buildQueue();
+  if (!queue.length) { renderFinished(); return; }
   current = queue.shift();
-  renderQuestion();
+  candIdx = 0;
+  renderCandidate();
 }
 
-function renderQuestion(){
-  const total = byLang[lang].length;
-  const imgUrl = `${imageBase()}/${current.slug}.jpg`;
+function renderCandidate(){
+  const reviewed = getReviewed(currentLang.iso).size;
+  const pct = Math.round((reviewed / ITEMS.length) * 100);
+  const totalCands = current.images.length;
+
+  if (candIdx >= totalCands || totalCands === 0) {
+    // Reached end of candidates with no "Yes"
+    onExhaustedNoMatch();
+    return;
+  }
+
+  const im = current.images[candIdx];
+
   card.innerHTML = `
-    <div class="progress"><span><b>${lang}</b></span><span>${answeredThisSession} answered this session</span></div>
-    <div class="imgwrap"><img src="${imgUrl}" alt=""></div>
-    <p class="prompt">Which word means this in <b>${lang}</b>?</p>
-    <div class="choices" id="choices">
-      ${current.choices.map((c, i) => `<button class="choice" data-i="${i}">${c}</button>`).join('')}
+    <div class="progress">
+      <span class="lang-tag">${currentLang.flag} ${currentLang.language}</span>
+      <span>Reviewed: <b>${reviewed} / ${ITEMS.length}</b> (Session: <b>${sessionAnsweredCount}</b>)</span>
     </div>
-    <div class="actions">
-      <button class="flag-btn" id="flag-btn">🚩 This image doesn't match the word</button>
-      <button class="next-btn" id="next-btn">Next →</button>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" style="width:${pct}%;"></div>
     </div>
-    <div class="saved" id="saved-msg"></div>
-  `;
 
-  document.querySelectorAll('.choice').forEach(btn => {
-    btn.addEventListener('click', () => onAnswer(+btn.dataset.i));
-  });
-  document.getElementById('flag-btn').addEventListener('click', onFlagClick);
-  document.getElementById('next-btn').addEventListener('click', () => { answeredThisSession++; nextQuestion(); });
-}
+    <div class="word-header">
+      <div class="local-word">${current.local_word}</div>
+      <div class="concept-meta">English: <b>${current.english}</b> · Category: <b>${current.category}</b> · Country: <b>${current.primary_country}</b></div>
+    </div>
 
-function onAnswer(i){
-  const buttons = [...document.querySelectorAll('.choice')];
-  buttons.forEach(b => b.disabled = true);
-  buttons[current.correct_index].classList.add('correct');
-  if (i !== current.correct_index) buttons[i].classList.add('incorrect');
-  buttons.forEach((b, idx) => { if (idx !== i && idx !== current.correct_index) b.classList.add('dim'); });
-  document.getElementById('flag-btn').style.visibility = 'hidden';
-  document.getElementById('next-btn').classList.add('show');
+    <div class="imgwrap">
+      <img src="${im.image_url}" alt="${current.english}" onerror="onImgError()">
+      <div class="country-pill">${im.country || current.primary_country}</div>
+      <div class="cand-badge">${candIdx + 1} of ${totalCands}</div>
+      <div class="img-credit">${im.country ? `[${im.country}] ` : ''}${(im.artist || im.page_title || '').replace(/</g,'')}</div>
+    </div>
 
-  markAnswered(lang, current.id);
-  const saved = document.getElementById('saved-msg');
-  hfCommit(`responses/${SESSION_ID}/${current.id}-${Date.now()}.json`, {
-    type: 'answer', id: current.id, english: current.english, category: current.category,
-    language: current.language, iso639_3: current.iso639_3, choices: current.choices,
-    correct_index: current.correct_index, human_index: i, human_correct: i === current.correct_index,
-    session_id: SESSION_ID, ts: new Date().toISOString(),
-  }).then(ok => { saved.textContent = ok ? 'Saved' : ''; });
-}
+    <p class="prompt">Does this picture show <b>${current.local_word}</b> (${current.english})?</p>
 
-function onFlagClick(){
-  const actions = document.querySelector('.actions');
-  actions.innerHTML = `
-    <div class="flag-note" style="flex:1;">
-      <input id="flag-input" placeholder="Optional: what's wrong? (e.g. shows the wrong thing)">
-      <button id="flag-submit">Report</button>
+    <div class="btn-row">
+      <button class="choice-btn no-btn" id="no-btn">✕ No, next image</button>
+      <button class="choice-btn yes-btn" id="yes-btn">✓ Yes, matches!</button>
+    </div>
+
+    <div class="sub-actions">
+      <button class="link-btn" id="skip-word-btn">Skip word →</button>
+      <span class="key-hint">Keys: [N] No · [Y] Yes</span>
+      <button class="link-btn" id="switch-lang-btn">Change language</button>
     </div>
   `;
-  document.getElementById('flag-submit').addEventListener('click', () => {
-    const note = document.getElementById('flag-input').value.trim();
-    hfCommit(`flags/${SESSION_ID}/${current.id}-${Date.now()}.json`, {
-      type: 'flag', id: current.id, english: current.english, category: current.category,
-      language: current.language, slug: current.slug, note, session_id: SESSION_ID,
-      ts: new Date().toISOString(),
-    });
-    markAnswered(lang, current.id);
-    answeredThisSession++;
-    nextQuestion();
-  });
+
+  document.getElementById('yes-btn').addEventListener('click', onYes);
+  document.getElementById('no-btn').addEventListener('click', onNo);
+  document.getElementById('skip-word-btn').addEventListener('click', onSkip);
+  document.getElementById('switch-lang-btn').addEventListener('click', renderLangPicker);
 }
+
+function onImgError(){
+  // Auto-skip broken image
+  console.log('Image failed to load, moving to next candidate');
+  candIdx++;
+  renderCandidate();
+}
+
+function onYes(){
+  const chosenImg = current.images[candIdx];
+  const payload = {
+    type: 'ground_truth_selection',
+    action: 'matched',
+    id: current.id,
+    english: current.english,
+    local_word: current.local_word,
+    category: current.category,
+    slug: current.slug,
+    language: currentLang.language,
+    iso639_3: currentLang.iso,
+    country: current.primary_country,
+    candidate_index: candIdx,
+    total_candidates: current.images.length,
+    selected_image: chosenImg,
+    all_candidates: current.images,
+    session_id: SESSION_ID,
+    ts: new Date().toISOString(),
+  };
+
+  markReviewed(currentLang.iso, current.id);
+  sessionAnsweredCount++;
+  showToast('Ground truth match recorded ✓');
+
+  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  nextWord();
+}
+
+function onNo(){
+  candIdx++;
+  renderCandidate();
+}
+
+function onExhaustedNoMatch(){
+  const payload = {
+    type: 'ground_truth_selection',
+    action: 'no_match_exhausted',
+    id: current.id,
+    english: current.english,
+    local_word: current.local_word,
+    category: current.category,
+    slug: current.slug,
+    language: currentLang.language,
+    iso639_3: currentLang.iso,
+    country: current.primary_country,
+    candidates_tried: current.images.length,
+    all_candidates: current.images,
+    selected_image: null,
+    session_id: SESSION_ID,
+    ts: new Date().toISOString(),
+  };
+
+  markReviewed(currentLang.iso, current.id);
+  sessionAnsweredCount++;
+  showToast('No matching image found — saved for sourcing.');
+
+  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  nextWord();
+}
+
+function onSkip(){
+  const payload = {
+    type: 'ground_truth_selection',
+    action: 'skipped',
+    id: current.id,
+    english: current.english,
+    local_word: current.local_word,
+    category: current.category,
+    slug: current.slug,
+    language: currentLang.language,
+    iso639_3: currentLang.iso,
+    country: current.primary_country,
+    candidate_index: candIdx,
+    session_id: SESSION_ID,
+    ts: new Date().toISOString(),
+  };
+
+  showToast('Skipped.');
+  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  nextWord();
+}
+
+function renderFinished(){
+  card.innerHTML = `
+    <div style="text-align:center;padding:32px 10px;">
+      <h2 style="font-size:1.5rem;margin-bottom:8px;">🎉 All words reviewed!</h2>
+      <p style="color:var(--muted);font-size:0.92rem;max-width:440px;margin:0 auto 20px;line-height:1.5;">
+        You have completed all concepts for <b>${currentLang.flag} ${currentLang.language}</b>.
+        Your selections provide ground truth for multimodal AI evaluation!
+      </p>
+      <button class="primary" id="another-lang-btn">Review another language</button>
+    </div>
+  `;
+  document.getElementById('another-lang-btn').addEventListener('click', renderLangPicker);
+}
+
+// Keyboard shortcuts: Y/y or Enter -> Yes, N/n or Space -> No
+window.addEventListener('keydown', e => {
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+  if (!current) return;
+  if (e.key === 'y' || e.key === 'Y' || e.key === 'Enter') {
+    e.preventDefault();
+    onYes();
+  } else if (e.key === 'n' || e.key === 'N' || e.key === ' ') {
+    e.preventDefault();
+    onNo();
+  }
+});
 
 load().catch(e => {
-  card.innerHTML = `<div class="error">Could not load questions: ${e}</div>`;
+  card.innerHTML = `<div class="error">Failed to load datasets: ${e.message}</div>`;
 });
 </script>
 </body>

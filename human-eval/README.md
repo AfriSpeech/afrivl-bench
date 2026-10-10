@@ -1,24 +1,23 @@
 ---
 title: VL-MMLU-Afri Human Review
-emoji: 🧑‍⚖️
+emoji: 🌍
 colorFrom: blue
-colorTo: gray
+colorTo: green
 sdk: static
 pinned: false
 license: cc-by-4.0
-short_description: Human review tool for the VL-MMLU-Afri image set
+short_description: Human ground truth for African visual vocabulary
 ---
 
-# VL-MMLU-Afri — Human Review
+# VL-MMLU-Afri — Human Ground Truth Review
 
-Pick a language, look at the picture, pick the word that matches it. Every
-answer is recorded (anonymously, by a random per-browser session id) to a
-public dataset, [`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval),
-so human accuracy can be compared against the vision-language models benchmarked
-in [vl-mmlu-afri](https://github.com/AfriSpeech/vl-mmlu-afri) — not as a ground
-truth to replace the model benchmark, but as a corroborating signal (and
-likely a much smaller sample size).
+This tool collects human visual-linguistic ground truth across 9 African languages
+(Akan Twi, Hausa, Igbo, kiSwahili, Amharic, Wolof, Mandinka, isiXhosa, isiZulu).
 
-A "this image doesn't match the word" report is a separate signal from an
-answer — it flags the image itself for review rather than scoring a wrong
-guess, and feeds back into fixing `data/search_hints.json` upstream.
+Reviewers pick their language, view the authentic local word alongside country-grounded
+candidate photos from Wikimedia Commons, and select the image that best depicts that concept
+in their culture and country context (or mark if none match).
+
+Selections are recorded to the public dataset:
+[`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval)
+and serve as the ground truth against which multimodal vision-language models (e.g. Gemini) are evaluated.

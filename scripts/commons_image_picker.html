@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VL-MMLU-Afri — Commons Image Picker</title>
+<style>
+  :root{ --bg:#f5f5f5; --panel:#fff; --border:#ddd; --text:#1a1a1a; --muted:#777; --accent:#2563eb; --good:#15803d; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  .layout{display:flex;height:100vh;}
+  .sidebar{width:280px;border-right:1px solid var(--border);overflow-y:auto;background:var(--panel);}
+  .sidebar-header{padding:14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--panel);}
+  .sidebar-header select,.sidebar-header input{width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;}
+  .progress{font-size:0.8rem;color:var(--muted);}
+  .cat-header{padding:7px 14px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);background:#fafafa;}
+  .word-item{padding:9px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:0.86rem;}
+  .word-item:hover{background:#f7f9fc;}
+  .word-item.active{background:#eef2ff;font-weight:600;}
+  .main{flex:1;padding:24px 32px;overflow-y:auto;}
+  h1{font-size:1.4rem;margin:0 0 2px;}
+  .query-line{font-size:1rem;color:var(--accent);font-weight:600;margin:4px 0 2px;}
+  .cat-label{color:var(--muted);font-size:0.88rem;margin-bottom:18px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px;}
+  .tile{position:relative;border:3px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;
+    aspect-ratio:1/1;background:#eee;}
+  .tile img{width:100%;height:100%;object-fit:cover;display:block;}
+  .tile.selected{border-color:var(--good);box-shadow:0 0 0 2px var(--good);}
+  .tile .check{position:absolute;top:4px;right:4px;background:var(--good);color:#fff;border-radius:50%;
+    width:22px;height:22px;display:none;align-items:center;justify-content:center;font-size:0.8rem;}
+  .tile.selected .check{display:flex;}
+  .tile .country-tag{position:absolute;top:4px;left:4px;background:rgba(0,0,0,0.72);color:#fff;
+    font-size:0.65rem;padding:2px 6px;border-radius:4px;font-weight:600;letter-spacing:0.02em;pointer-events:none;}
+  .tile .credit{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.65);color:#fff;
+    font-size:0.62rem;padding:2px 4px;opacity:0;transition:opacity .1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tile:hover .credit{opacity:1;}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:10px;}
+  button{padding:10px 18px;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer;}
+  button.none{background:#fee2e2;color:#b91c1c;}
+  button.export{background:var(--good);color:#fff;font-weight:600;}
+  .status-line{margin-top:10px;font-size:0.85rem;color:var(--muted);}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid var(--border);background:var(--panel);}
+  .note{font-size:0.8rem;color:var(--muted);max-width:640px;}
+  .badge{font-size:0.85rem;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="note">Each image was found on Wikimedia Commons by searching across target countries (Ghana, Nigeria, Kenya, South Africa, Ethiopia, Senegal, Tanzania, Gambia). One image is picked per word and reused for every language's question about that word. Click the one that actually shows the word's meaning, or "None match" if nothing in the 50 works.</div>
+  <button class="export" id="export-btn">⬇ Export picks.json</button>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <input type="text" id="filter" placeholder="Filter words…">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="word-list"></div>
+  </div>
+  <div class="main" id="main"></div>
+</div>
+
+<script>
+let CANDIDATES = {};   // english -> {query, category, images: [{image_url, page_title, source_url, license, artist}]}
+let PICKS = {};        // english -> {chosen_url|null, none_match, ts}
+let current = null;
+
+function loadPicksFromStorage(){
+  try { PICKS = JSON.parse(localStorage.getItem('commons_image_picks') || '{}'); } catch { PICKS = {}; }
+}
+function persist(){ localStorage.setItem('commons_image_picks', JSON.stringify(PICKS)); }
+
+async function load(){
+  const r = await fetch('../data/commons_candidates_africa.json', {cache:'no-store'});
+  CANDIDATES = await r.json();
+  renderSidebar();
+  const words = Object.keys(CANDIDATES);
+  const ready = words.filter(w => CANDIDATES[w].images.length > 0);
+  const firstUnpicked = ready.find(w => !PICKS[w]);
+  selectWord(firstUnpicked || ready[0] || words[0]);
+}
+
+function renderSidebar(filterText){
+  const list = document.getElementById('word-list');
+  const q = (filterText || '').toLowerCase();
+  const byCat = {};
+  for (const w of Object.keys(CANDIDATES)) {
+    if (q && !w.toLowerCase().includes(q)) continue;
+    (byCat[CANDIDATES[w].category] ||= []).push(w);
+  }
+  let html = '';
+  for (const cat of Object.keys(byCat).sort()) {
+    html += `<div class="cat-header">${cat}</div>`;
+    for (const w of byCat[cat].sort()) {
+      const c = CANDIDATES[w];
+      const pick = PICKS[w];
+      const badge = c.images.length === 0 ? '⏳' : (pick ? (pick.none_match ? '🚫' : '✅') : '⬜');
+      html += `<div class="word-item ${current === w ? 'active' : ''}" data-w="${w}">
+        <span>${w}</span><span class="badge">${badge}</span></div>`;
+    }
+  }
+  list.innerHTML = html;
+  list.querySelectorAll('.word-item').forEach(el => {
+    el.addEventListener('click', () => selectWord(el.dataset.w));
+  });
+  const all = Object.keys(CANDIDATES);
+  const ready = all.filter(w => CANDIDATES[w].images.length > 0);
+  const done = ready.filter(w => PICKS[w]).length;
+  document.getElementById('progress').textContent =
+    `${done} / ${ready.length} picked` + (all.length > ready.length ? ` · ${all.length - ready.length} pending` : '');
+}
+
+function selectWord(english){
+  current = english;
+  renderSidebar(document.getElementById('filter').value);
+  const c = CANDIDATES[english];
+  if (!c || c.images.length === 0) {
+    document.getElementById('main').innerHTML = `<h1>${english}</h1><p style="color:var(--muted);">No candidates for this word yet.</p>`;
+    return;
+  }
+  const pick = PICKS[english];
+  document.getElementById('main').innerHTML = `
+    <h1>${english}</h1>
+    <div class="query-line">countries searched: ${c.countries_searched || c.query || ''}</div>
+    <div class="cat-label">${c.category}${c.country_summary ? ' · found: ' + c.country_summary : ''}</div>
+    <div class="grid" id="grid"></div>
+    <div class="actions">
+      <button class="none" id="none-btn">🚫 None of these match</button>
+    </div>
+    <div class="status-line" id="status-line"></div>
+  `;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = c.images.map((im, i) => `
+    <div class="tile ${pick && pick.chosen_url === im.image_url ? 'selected' : ''}" data-i="${i}">
+      <img src="${im.image_url}" loading="lazy" onerror="this.closest('.tile').style.display='none'">
+      ${im.country ? `<div class="country-tag">${im.country}</div>` : ''}
+      <div class="credit">${im.country ? `[${im.country}] ` : ''}${(im.artist || im.page_title || '').replace(/</g,'')}</div>
+      <div class="check">✓</div>
+    </div>`).join('');
+  grid.querySelectorAll('.tile').forEach(t => {
+    t.addEventListener('click', () => {
+      grid.querySelectorAll('.tile').forEach(x => x.classList.remove('selected'));
+      t.classList.add('selected');
+      const im = c.images[+t.dataset.i];
+      PICKS[english] = {
+        chosen_url: im.image_url, source_url: im.source_url, license: im.license,
+        artist: im.artist, country: im.country, none_match: false, ts: new Date().toISOString(),
+      };
+      persist();
+      document.getElementById('status-line').textContent = 'Saved.';
+      renderSidebar(document.getElementById('filter').value);
+    });
+  });
+  document.getElementById('none-btn').addEventListener('click', () => {
+    PICKS[english] = { chosen_url: null, none_match: true, ts: new Date().toISOString() };
+    persist();
+    renderSidebar(document.getElementById('filter').value);
+    goNext();
+  });
+}
+
+function goNext(){
+  const words = Object.keys(CANDIDATES).filter(w => CANDIDATES[w].images.length > 0);
+  const idx = words.indexOf(current);
+  const next = words.slice(idx + 1).find(w => !PICKS[w]) || words.find(w => !PICKS[w]) || words[0];
+  if (next) selectWord(next);
+}
+
+document.getElementById('filter').addEventListener('input', e => renderSidebar(e.target.value));
+document.getElementById('export-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(PICKS, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'picks.json';
+  a.click();
+});
+
+loadPicksFromStorage();
+load();
+</script>
+</body>
+</html>

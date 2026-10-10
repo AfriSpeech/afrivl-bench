@@ -1,0 +1,93 @@
+[
+  {
+    "language": "Akan Twi",
+    "iso": "twi",
+    "flag": "🇬🇭",
+    "primary_country": "Ghana",
+    "all_primary_countries": [
+      "Ghana"
+    ],
+    "word_count": 116
+  },
+  {
+    "language": "Hausa",
+    "iso": "hau",
+    "flag": "🇳🇬",
+    "primary_country": "Nigeria",
+    "all_primary_countries": [
+      "Nigeria"
+    ],
+    "word_count": 120
+  },
+  {
+    "language": "Igbo",
+    "iso": "ibo",
+    "flag": "🇳🇬",
+    "primary_country": "Nigeria",
+    "all_primary_countries": [
+      "Nigeria"
+    ],
+    "word_count": 136
+  },
+  {
+    "language": "kiSwahili",
+    "iso": "swh",
+    "flag": "🇰🇪 🇹🇿",
+    "primary_country": "Kenya",
+    "all_primary_countries": [
+      "Kenya",
+      "Tanzania"
+    ],
+    "word_count": 114
+  },
+  {
+    "language": "Amharic",
+    "iso": "amh",
+    "flag": "🇪🇹",
+    "primary_country": "Ethiopia",
+    "all_primary_countries": [
+      "Ethiopia"
+    ],
+    "word_count": 109
+  },
+  {
+    "language": "Wolof",
+    "iso": "wol",
+    "flag": "🇸🇳",
+    "primary_country": "Senegal",
+    "all_primary_countries": [
+      "Senegal"
+    ],
+    "word_count": 108
+  },
+  {
+    "language": "Mandinka",
+    "iso": "mnk",
+    "flag": "🇬🇲",
+    "primary_country": "Gambia",
+    "all_primary_countries": [
+      "Gambia"
+    ],
+    "word_count": 105
+  },
+  {
+    "language": "isiXhosa",
+    "iso": "xho",
+    "flag": "🇿🇦",
+    "primary_country": "South Africa",
+    "all_primary_countries": [
+      "South Africa"
+    ],
+    "word_count": 123
+  },
+  {
+    "language": "isiZulu",
+    "iso": "zul",
+    "flag": "🇿🇦",
+    "primary_country": "South Africa",
+    "all_primary_countries": [
+      "South Africa"
+    ],
+    "word_count": 123
+  }
+]

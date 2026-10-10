@@ -44,6 +44,12 @@ def slug_model(model: str) -> str:
 
 
 def prompt_for(q: dict) -> str:
+    if q.get("image_options"):
+        return (
+            f"The images above are labeled {', '.join(opt['letter'] for opt in q['image_options'])} in order. "
+            f"Which image correctly depicts the word '{q.get('local_word', q.get('english'))}' ({q.get('english', '')}) "
+            f"in {q['language']}?\n\nAnswer with only the letter of the correct image."
+        )
     opts = "\n".join(f"{LETTERS[i]}. {c}" for i, c in enumerate(q["choices"]))
     return (
         f"The attached image shows a single concept. In {q['language']}, which of "
@@ -53,17 +59,24 @@ def prompt_for(q: dict) -> str:
 
 
 async def ask(aio, model: str, q: dict, sem: asyncio.Semaphore) -> dict:
-    img_path = IMAGES / f"{q['slug']}.jpg"
-    image_bytes = img_path.read_bytes()
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
-                types.Part.from_text(text=prompt_for(q)),
-            ],
-        )
-    ]
+    parts = []
+    if q.get("image_options"):
+        for opt in q["image_options"]:
+            img_path = DATA / opt["image_file"]
+            parts.append(types.Part.from_text(text=f"Image {opt['letter']}:"))
+            parts.append(types.Part.from_bytes(data=img_path.read_bytes(), mime_type="image/jpeg"))
+        parts.append(types.Part.from_text(text=prompt_for(q)))
+    else:
+        if q.get("image_file"):
+            img_path = DATA / q["image_file"]
+        else:
+            img_path = IMAGES / f"{q['slug']}.jpg"
+        parts = [
+            types.Part.from_bytes(data=img_path.read_bytes(), mime_type="image/jpeg"),
+            types.Part.from_text(text=prompt_for(q)),
+        ]
+
+    contents = [types.Content(role="user", parts=parts)]
     config = types.GenerateContentConfig(
         response_mime_type="application/json",
         response_schema=ANSWER_SCHEMA,
@@ -96,7 +109,8 @@ def base_row(q: dict) -> dict:
     return {
         "id": q["id"], "english": q["english"], "category": q["category"],
         "language": q["language"], "iso639_3": q["iso639_3"],
-        "correct_answer": q["correct_answer"], "correct_index": q["correct_index"],
+        "correct_answer": q.get("correct_letter", q.get("correct_answer")),
+        "correct_index": q["correct_index"],
     }
 
 
@@ -132,10 +146,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", default=",".join(DEFAULT_MODELS))
     ap.add_argument("--concurrency", type=int, default=CONCURRENCY_DEFAULT)
+    ap.add_argument("--questions", default=None, help="path to questions JSON (defaults to questions_ground_truth.json if present, else questions.json)")
     ap.add_argument("--limit", type=int, default=None, help="only the first N questions (smoke test)")
     args = ap.parse_args()
 
-    questions = json.loads((DATA / "questions.json").read_text(encoding="utf-8"))
+    if args.questions:
+        q_path = Path(args.questions)
+    elif (DATA / "questions_ground_truth.json").exists():
+        q_path = DATA / "questions_ground_truth.json"
+        print(f"Using human ground-truth benchmark questions: {q_path}")
+    else:
+        q_path = DATA / "questions.json"
+
+    questions = json.loads(q_path.read_text(encoding="utf-8"))
     if args.limit:
         questions = questions[: args.limit]
 

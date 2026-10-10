@@ -80,10 +80,8 @@ python3 03_aggregate.py        # → results/summary.json
 ```
 
 `00_fetch_images.py` is idempotent — re-run with `--refresh` to redo words
-already verified, or plain to pick up only words that still lack one (e.g.
-after adding a `search_hints.json` entry). `scripts/00b_verify_images.py` is a
-standalone re-check tool for spot-auditing the manifest later; the main
-pipeline no longer needs it since verification is now inline in step 1.
+already verified against a stricter/changed prompt, or plain to pick up only
+words that still lack one (e.g. after adding a `search_hints.json` entry).
 
 `02_bench_gemini.py` is resumable per model — it appends to
 `results/<model>.jsonl` and skips question ids already answered.
@@ -138,28 +136,30 @@ Space, reads `results/summary.json` from this repo at page load — the same
 pattern as
 [gemini-afro-mt-bench](https://github.com/AfriSpeech/gemini-afro-mt-bench).
 
-## Human review
+## Human ground truth review
 
-A second static page, [`human-eval/`](human-eval/), lets a person step through
-the same image-and-4-choices questions by hand. Every answer (and every
-"this image doesn't match the word" report) is written client-side straight
-to the public dataset
+A second static page, [`human-eval/`](human-eval/) (deployed to Hugging Face Spaces at
+[`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri-human-eval)),
+allows reviewers to establish visual-linguistic ground truth across 9 African languages.
+
+Reviewers select their language, view the authentic local word alongside country-grounded
+candidate photos from Wikimedia Commons (one at a time), and evaluate whether each image matches:
+- **Yes ✓**: Confirms that this image accurately depicts the local word in that country/culture context.
+- **No ✕**: Cycles to the next candidate photo. If all candidates are exhausted with "No", the concept is flagged as lacking a verified image and saved for sourcing.
+- **Skip**: Moves to the next word.
+
+Submissions are saved client-side directly to the dataset:
 [`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval)
-via a Hugging Face **write-only, single-dataset-scoped** fine-grained token
-embedded in the page — there's no backend to hide it behind on a static page,
-so the token is deliberately limited to "can only write to this one dataset"
-so the worst case is spam, not a real security issue.
+via a write-only, dataset-scoped Hugging Face token.
 
-`scripts/04_aggregate_human_eval.py` pulls every submission from that dataset
-and merges it into `results/summary.json` as a `"human-eval"` entry —
-structurally identical to a model's entry, so it shows up as just another row
-in the same leaderboard and detail views the dashboard already has, no UI
-changes needed. This is deliberately **not treated as ground truth**: human
-sample size will likely stay far smaller than the per-model LLM runs, so it's
-a corroborating signal (does the model's accuracy track human accuracy,
-per language/category?) rather than a replacement answer key. Image-quality
-reports land in `results/human_flags.json` for manual review, feeding back
-into `data/search_hints.json` upstream.
+### Symmetrical LLM benchmarking
+
+`scripts/04_build_ground_truth_from_human_eval.py` aggregates human selections into
+`data/questions_ground_truth.json`. Vision-language models (e.g. Gemini) are evaluated on
+the exact same task:
+Given the local word and 4 candidate images (the human-selected ground-truth image + 3 visual distractors
+from the same candidate pool), the model must choose the correct image. The model's score is computed
+directly against native speaker consensus.
 
 ## Caveats
 

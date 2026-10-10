@@ -1,0 +1,922 @@
+[
+  {
+    "english": "Antelope",
+    "category": "animals",
+    "slug": "antelope"
+  },
+  {
+    "english": "Bird",
+    "category": "animals",
+    "slug": "bird"
+  },
+  {
+    "english": "Camel",
+    "category": "animals",
+    "slug": "camel"
+  },
+  {
+    "english": "Cat",
+    "category": "animals",
+    "slug": "cat"
+  },
+  {
+    "english": "Chicken",
+    "category": "animals",
+    "slug": "chicken"
+  },
+  {
+    "english": "Cow",
+    "category": "animals",
+    "slug": "cow"
+  },
+  {
+    "english": "Dog",
+    "category": "animals",
+    "slug": "dog"
+  },
+  {
+    "english": "Donkey",
+    "category": "animals",
+    "slug": "donkey"
+  },
+  {
+    "english": "Duck",
+    "category": "animals",
+    "slug": "duck"
+  },
+  {
+    "english": "Elephant",
+    "category": "animals",
+    "slug": "elephant"
+  },
+  {
+    "english": "Goat",
+    "category": "animals",
+    "slug": "goat"
+  },
+  {
+    "english": "Horse",
+    "category": "animals",
+    "slug": "horse"
+  },
+  {
+    "english": "Lion",
+    "category": "animals",
+    "slug": "lion"
+  },
+  {
+    "english": "Ox",
+    "category": "animals",
+    "slug": "ox"
+  },
+  {
+    "english": "Pig",
+    "category": "animals",
+    "slug": "pig"
+  },
+  {
+    "english": "Rat",
+    "category": "animals",
+    "slug": "rat"
+  },
+  {
+    "english": "Sheep",
+    "category": "animals",
+    "slug": "sheep"
+  },
+  {
+    "english": "Snake",
+    "category": "animals",
+    "slug": "snake"
+  },
+  {
+    "english": "Tiger",
+    "category": "animals",
+    "slug": "tiger"
+  },
+  {
+    "english": "Blouse",
+    "category": "clothing",
+    "slug": "blouse"
+  },
+  {
+    "english": "Bracelet",
+    "category": "clothing",
+    "slug": "bracelet"
+  },
+  {
+    "english": "Coat",
+    "category": "clothing",
+    "slug": "coat"
+  },
+  {
+    "english": "Dress",
+    "category": "clothing",
+    "slug": "dress"
+  },
+  {
+    "english": "Earring",
+    "category": "clothing",
+    "slug": "earring"
+  },
+  {
+    "english": "Hat",
+    "category": "clothing",
+    "slug": "hat"
+  },
+  {
+    "english": "Headscarf",
+    "category": "clothing",
+    "slug": "headscarf"
+  },
+  {
+    "english": "Jacket",
+    "category": "clothing",
+    "slug": "jacket"
+  },
+  {
+    "english": "Necklace",
+    "category": "clothing",
+    "slug": "necklace"
+  },
+  {
+    "english": "Necktie",
+    "category": "clothing",
+    "slug": "necktie"
+  },
+  {
+    "english": "Pants",
+    "category": "clothing",
+    "slug": "pants"
+  },
+  {
+    "english": "Scarf",
+    "category": "clothing",
+    "slug": "scarf"
+  },
+  {
+    "english": "Shirt",
+    "category": "clothing",
+    "slug": "shirt"
+  },
+  {
+    "english": "Shoe",
+    "category": "clothing",
+    "slug": "shoe"
+  },
+  {
+    "english": "Short-sleeved shirt",
+    "category": "clothing",
+    "slug": "short-sleeved-shirt"
+  },
+  {
+    "english": "Shorts",
+    "category": "clothing",
+    "slug": "shorts"
+  },
+  {
+    "english": "Skirt",
+    "category": "clothing",
+    "slug": "skirt"
+  },
+  {
+    "english": "Socks",
+    "category": "clothing",
+    "slug": "socks"
+  },
+  {
+    "english": "Sweater",
+    "category": "clothing",
+    "slug": "sweater"
+  },
+  {
+    "english": "Tie",
+    "category": "clothing",
+    "slug": "tie"
+  },
+  {
+    "english": "Traditional skirt",
+    "category": "clothing",
+    "slug": "traditional-skirt"
+  },
+  {
+    "english": "Turban",
+    "category": "clothing",
+    "slug": "turban"
+  },
+  {
+    "english": "Vest",
+    "category": "clothing",
+    "slug": "vest"
+  },
+  {
+    "english": "Western skirt",
+    "category": "clothing",
+    "slug": "western-skirt"
+  },
+  {
+    "english": "Bowl",
+    "category": "cooking",
+    "slug": "bowl"
+  },
+  {
+    "english": "Coffee",
+    "category": "cooking",
+    "slug": "coffee"
+  },
+  {
+    "english": "Cooking oil",
+    "category": "cooking",
+    "slug": "cooking-oil"
+  },
+  {
+    "english": "Cup",
+    "category": "cooking",
+    "slug": "cup"
+  },
+  {
+    "english": "Dish",
+    "category": "cooking",
+    "slug": "dish"
+  },
+  {
+    "english": "Fire",
+    "category": "cooking",
+    "slug": "fire"
+  },
+  {
+    "english": "Fire pit",
+    "category": "cooking",
+    "slug": "fire-pit"
+  },
+  {
+    "english": "Fork",
+    "category": "cooking",
+    "slug": "fork"
+  },
+  {
+    "english": "Kitchen",
+    "category": "cooking",
+    "slug": "kitchen"
+  },
+  {
+    "english": "Knife",
+    "category": "cooking",
+    "slug": "knife"
+  },
+  {
+    "english": "Ladle",
+    "category": "cooking",
+    "slug": "ladle"
+  },
+  {
+    "english": "Pepper",
+    "category": "cooking",
+    "slug": "pepper"
+  },
+  {
+    "english": "Plate",
+    "category": "cooking",
+    "slug": "plate"
+  },
+  {
+    "english": "Pot",
+    "category": "cooking",
+    "slug": "pot"
+  },
+  {
+    "english": "Salt",
+    "category": "cooking",
+    "slug": "salt"
+  },
+  {
+    "english": "Spoon",
+    "category": "cooking",
+    "slug": "spoon"
+  },
+  {
+    "english": "Stove",
+    "category": "cooking",
+    "slug": "stove"
+  },
+  {
+    "english": "Bucket",
+    "category": "farm",
+    "slug": "bucket"
+  },
+  {
+    "english": "Cassava",
+    "category": "farm",
+    "slug": "cassava"
+  },
+  {
+    "english": "Corral",
+    "category": "farm",
+    "slug": "corral"
+  },
+  {
+    "english": "Cutlass",
+    "category": "farm",
+    "slug": "cutlass"
+  },
+  {
+    "english": "Field",
+    "category": "farm",
+    "slug": "field"
+  },
+  {
+    "english": "Garden",
+    "category": "farm",
+    "slug": "garden"
+  },
+  {
+    "english": "Hoe",
+    "category": "farm",
+    "slug": "hoe"
+  },
+  {
+    "english": "Path",
+    "category": "farm",
+    "slug": "path"
+  },
+  {
+    "english": "Plough",
+    "category": "farm",
+    "slug": "plough"
+  },
+  {
+    "english": "Plow",
+    "category": "farm",
+    "slug": "plow"
+  },
+  {
+    "english": "Road",
+    "category": "farm",
+    "slug": "road"
+  },
+  {
+    "english": "Seed",
+    "category": "farm",
+    "slug": "seed"
+  },
+  {
+    "english": "Apple",
+    "category": "food and drink",
+    "slug": "apple"
+  },
+  {
+    "english": "Banana",
+    "category": "food and drink",
+    "slug": "banana"
+  },
+  {
+    "english": "Baobab fruit",
+    "category": "food and drink",
+    "slug": "baobab-fruit"
+  },
+  {
+    "english": "Beans",
+    "category": "food and drink",
+    "slug": "beans"
+  },
+  {
+    "english": "Beer",
+    "category": "food and drink",
+    "slug": "beer"
+  },
+  {
+    "english": "Bread",
+    "category": "food and drink",
+    "slug": "bread"
+  },
+  {
+    "english": "Cocoyam",
+    "category": "food and drink",
+    "slug": "cocoyam"
+  },
+  {
+    "english": "Cola nut",
+    "category": "food and drink",
+    "slug": "cola-nut"
+  },
+  {
+    "english": "Corn",
+    "category": "food and drink",
+    "slug": "corn"
+  },
+  {
+    "english": "Egg",
+    "category": "food and drink",
+    "slug": "egg"
+  },
+  {
+    "english": "Fish",
+    "category": "food and drink",
+    "slug": "fish"
+  },
+  {
+    "english": "Food",
+    "category": "food and drink",
+    "slug": "food"
+  },
+  {
+    "english": "Grape",
+    "category": "food and drink",
+    "slug": "grape"
+  },
+  {
+    "english": "Guava",
+    "category": "food and drink",
+    "slug": "guava"
+  },
+  {
+    "english": "Kolanut",
+    "category": "food and drink",
+    "slug": "kolanut"
+  },
+  {
+    "english": "Lemon",
+    "category": "food and drink",
+    "slug": "lemon"
+  },
+  {
+    "english": "Mango",
+    "category": "food and drink",
+    "slug": "mango"
+  },
+  {
+    "english": "Meat",
+    "category": "food and drink",
+    "slug": "meat"
+  },
+  {
+    "english": "Milk",
+    "category": "food and drink",
+    "slug": "milk"
+  },
+  {
+    "english": "Millet",
+    "category": "food and drink",
+    "slug": "millet"
+  },
+  {
+    "english": "Onion",
+    "category": "food and drink",
+    "slug": "onion"
+  },
+  {
+    "english": "Orange",
+    "category": "food and drink",
+    "slug": "orange"
+  },
+  {
+    "english": "Peach",
+    "category": "food and drink",
+    "slug": "peach"
+  },
+  {
+    "english": "Pineapple",
+    "category": "food and drink",
+    "slug": "pineapple"
+  },
+  {
+    "english": "Plantain",
+    "category": "food and drink",
+    "slug": "plantain"
+  },
+  {
+    "english": "Rice",
+    "category": "food and drink",
+    "slug": "rice"
+  },
+  {
+    "english": "Sour milk",
+    "category": "food and drink",
+    "slug": "sour-milk"
+  },
+  {
+    "english": "Water",
+    "category": "food and drink",
+    "slug": "water"
+  },
+  {
+    "english": "Watermelon",
+    "category": "food and drink",
+    "slug": "watermelon"
+  },
+  {
+    "english": "Yam",
+    "category": "food and drink",
+    "slug": "yam"
+  },
+  {
+    "english": "Bathroom",
+    "category": "house",
+    "slug": "bathroom"
+  },
+  {
+    "english": "Bed",
+    "category": "house",
+    "slug": "bed"
+  },
+  {
+    "english": "Chair",
+    "category": "house",
+    "slug": "chair"
+  },
+  {
+    "english": "Door",
+    "category": "house",
+    "slug": "door"
+  },
+  {
+    "english": "Door panel",
+    "category": "house",
+    "slug": "door-panel"
+  },
+  {
+    "english": "Doorway",
+    "category": "house",
+    "slug": "doorway"
+  },
+  {
+    "english": "Room",
+    "category": "house",
+    "slug": "room"
+  },
+  {
+    "english": "Table",
+    "category": "house",
+    "slug": "table"
+  },
+  {
+    "english": "Telephone",
+    "category": "house",
+    "slug": "telephone"
+  },
+  {
+    "english": "Window",
+    "category": "house",
+    "slug": "window"
+  },
+  {
+    "english": "Cloud",
+    "category": "natural world",
+    "slug": "cloud"
+  },
+  {
+    "english": "Lake",
+    "category": "natural world",
+    "slug": "lake"
+  },
+  {
+    "english": "Land",
+    "category": "natural world",
+    "slug": "land"
+  },
+  {
+    "english": "Moon",
+    "category": "natural world",
+    "slug": "moon"
+  },
+  {
+    "english": "Mountain",
+    "category": "natural world",
+    "slug": "mountain"
+  },
+  {
+    "english": "Ocean",
+    "category": "natural world",
+    "slug": "ocean"
+  },
+  {
+    "english": "Rain",
+    "category": "natural world",
+    "slug": "rain"
+  },
+  {
+    "english": "River",
+    "category": "natural world",
+    "slug": "river"
+  },
+  {
+    "english": "Sea",
+    "category": "natural world",
+    "slug": "sea"
+  },
+  {
+    "english": "Sky",
+    "category": "natural world",
+    "slug": "sky"
+  },
+  {
+    "english": "Star",
+    "category": "natural world",
+    "slug": "star"
+  },
+  {
+    "english": "Sun",
+    "category": "natural world",
+    "slug": "sun"
+  },
+  {
+    "english": "Tree",
+    "category": "natural world",
+    "slug": "tree"
+  },
+  {
+    "english": "Boy",
+    "category": "people",
+    "slug": "boy"
+  },
+  {
+    "english": "Brother",
+    "category": "people",
+    "slug": "brother"
+  },
+  {
+    "english": "Child",
+    "category": "people",
+    "slug": "child"
+  },
+  {
+    "english": "Elderly person",
+    "category": "people",
+    "slug": "elderly-person"
+  },
+  {
+    "english": "Father",
+    "category": "people",
+    "slug": "father"
+  },
+  {
+    "english": "Girl",
+    "category": "people",
+    "slug": "girl"
+  },
+  {
+    "english": "Man",
+    "category": "people",
+    "slug": "man"
+  },
+  {
+    "english": "Mother",
+    "category": "people",
+    "slug": "mother"
+  },
+  {
+    "english": "Parent",
+    "category": "people",
+    "slug": "parent"
+  },
+  {
+    "english": "Sibling",
+    "category": "people",
+    "slug": "sibling"
+  },
+  {
+    "english": "Sister",
+    "category": "people",
+    "slug": "sister"
+  },
+  {
+    "english": "Son",
+    "category": "people",
+    "slug": "son"
+  },
+  {
+    "english": "Woman",
+    "category": "people",
+    "slug": "woman"
+  },
+  {
+    "english": "Church",
+    "category": "places",
+    "slug": "church"
+  },
+  {
+    "english": "City",
+    "category": "places",
+    "slug": "city"
+  },
+  {
+    "english": "Highway",
+    "category": "places",
+    "slug": "highway"
+  },
+  {
+    "english": "Hospital",
+    "category": "places",
+    "slug": "hospital"
+  },
+  {
+    "english": "Market",
+    "category": "places",
+    "slug": "market"
+  },
+  {
+    "english": "Mosque",
+    "category": "places",
+    "slug": "mosque"
+  },
+  {
+    "english": "Street",
+    "category": "places",
+    "slug": "street"
+  },
+  {
+    "english": "Synagogue",
+    "category": "places",
+    "slug": "synagogue"
+  },
+  {
+    "english": "Village",
+    "category": "places",
+    "slug": "village"
+  },
+  {
+    "english": "Doctor",
+    "category": "professions",
+    "slug": "doctor"
+  },
+  {
+    "english": "Driver",
+    "category": "professions",
+    "slug": "driver"
+  },
+  {
+    "english": "Farmer",
+    "category": "professions",
+    "slug": "farmer"
+  },
+  {
+    "english": "Goldsmith",
+    "category": "professions",
+    "slug": "goldsmith"
+  },
+  {
+    "english": "Judge",
+    "category": "professions",
+    "slug": "judge"
+  },
+  {
+    "english": "Musician",
+    "category": "professions",
+    "slug": "musician"
+  },
+  {
+    "english": "Nurse",
+    "category": "professions",
+    "slug": "nurse"
+  },
+  {
+    "english": "Pastor",
+    "category": "professions",
+    "slug": "pastor"
+  },
+  {
+    "english": "Police",
+    "category": "professions",
+    "slug": "police"
+  },
+  {
+    "english": "Policeman",
+    "category": "professions",
+    "slug": "policeman"
+  },
+  {
+    "english": "Priest",
+    "category": "professions",
+    "slug": "priest"
+  },
+  {
+    "english": "Seamstress",
+    "category": "professions",
+    "slug": "seamstress"
+  },
+  {
+    "english": "Security guard",
+    "category": "professions",
+    "slug": "security-guard"
+  },
+  {
+    "english": "Soldier",
+    "category": "professions",
+    "slug": "soldier"
+  },
+  {
+    "english": "Student",
+    "category": "professions",
+    "slug": "student"
+  },
+  {
+    "english": "Tailor",
+    "category": "professions",
+    "slug": "tailor"
+  },
+  {
+    "english": "Teacher",
+    "category": "professions",
+    "slug": "teacher"
+  },
+  {
+    "english": "Work",
+    "category": "professions",
+    "slug": "work"
+  },
+  {
+    "english": "Bell",
+    "category": "school",
+    "slug": "bell"
+  },
+  {
+    "english": "Blackboard",
+    "category": "school",
+    "slug": "blackboard"
+  },
+  {
+    "english": "Book",
+    "category": "school",
+    "slug": "book"
+  },
+  {
+    "english": "Box",
+    "category": "school",
+    "slug": "box"
+  },
+  {
+    "english": "Chalk",
+    "category": "school",
+    "slug": "chalk"
+  },
+  {
+    "english": "Clock",
+    "category": "school",
+    "slug": "clock"
+  },
+  {
+    "english": "Eraser",
+    "category": "school",
+    "slug": "eraser"
+  },
+  {
+    "english": "Key",
+    "category": "school",
+    "slug": "key"
+  },
+  {
+    "english": "Paper",
+    "category": "school",
+    "slug": "paper"
+  },
+  {
+    "english": "Pen",
+    "category": "school",
+    "slug": "pen"
+  },
+  {
+    "english": "Pencil",
+    "category": "school",
+    "slug": "pencil"
+  },
+  {
+    "english": "Picture",
+    "category": "school",
+    "slug": "picture"
+  },
+  {
+    "english": "Airplane",
+    "category": "transportation",
+    "slug": "airplane"
+  },
+  {
+    "english": "Bicycle",
+    "category": "transportation",
+    "slug": "bicycle"
+  },
+  {
+    "english": "Boat",
+    "category": "transportation",
+    "slug": "boat"
+  },
+  {
+    "english": "Bus",
+    "category": "transportation",
+    "slug": "bus"
+  },
+  {
+    "english": "Car",
+    "category": "transportation",
+    "slug": "car"
+  },
+  {
+    "english": "Motorcycle",
+    "category": "transportation",
+    "slug": "motorcycle"
+  },
+  {
+    "english": "Train",
+    "category": "transportation",
+    "slug": "train"
+  }
+]

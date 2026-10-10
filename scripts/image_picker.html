@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VL-MMLU-Afri — Image Picker</title>
+<style>
+  :root{ --bg:#f5f5f5; --panel:#fff; --border:#ddd; --text:#1a1a1a; --muted:#777; --accent:#2563eb; --good:#15803d; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  .layout{display:flex;height:100vh;}
+  .sidebar{width:300px;border-right:1px solid var(--border);overflow-y:auto;background:var(--panel);}
+  .sidebar-header{padding:14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--panel);}
+  .sidebar-header input{width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;}
+  .progress{font-size:0.8rem;color:var(--muted);margin-top:8px;}
+  .word-item{padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:0.88rem;}
+  .word-item:hover{background:#f7f9fc;}
+  .word-item.active{background:#eef2ff;font-weight:600;}
+  .cat-header{padding:8px 14px;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);background:#fafafa;position:sticky;top:0;}
+  .badge{font-size:0.9rem;}
+  .main{flex:1;padding:30px 40px;overflow-y:auto;}
+  h1{font-size:1.3rem;margin:0 0 4px;}
+  .cat-label{color:var(--muted);font-size:0.9rem;margin-bottom:24px;}
+  .imgrow{display:flex;gap:24px;margin-bottom:20px;flex-wrap:wrap;}
+  .imgbox{width:280px;}
+  .imgbox h3{font-size:0.82rem;color:var(--muted);margin:0 0 8px;font-weight:600;}
+  .imgbox .frame{width:280px;height:280px;border:1px solid var(--border);border-radius:10px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;background:#fafafa;color:var(--muted);font-size:0.85rem;}
+  .imgbox img{width:100%;height:100%;object-fit:cover;}
+  .field{margin:18px 0;}
+  label{display:block;font-size:0.85rem;font-weight:600;color:var(--muted);margin-bottom:6px;}
+  input[type=text]{width:100%;max-width:600px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.95rem;}
+  .actions{display:flex;gap:10px;margin-top:16px;}
+  button{padding:10px 18px;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer;}
+  button.save{background:var(--accent);color:#fff;font-weight:600;}
+  button.skip{background:#e5e7eb;color:#333;}
+  button.clear{background:#fee2e2;color:#b91c1c;}
+  button.export{background:var(--good);color:#fff;font-weight:600;}
+  .status-line{margin-top:10px;font-size:0.85rem;color:var(--muted);}
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 40px;border-bottom:1px solid var(--border);background:var(--panel);}
+  .note{font-size:0.8rem;color:var(--muted);max-width:640px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="note">Paste an image URL per word, preview it, save. Picks are kept in your browser
+    (localStorage) as you go — click <b>Export picks.json</b> any time to download everything
+    chosen so far.</div>
+  <button class="export" id="export-btn">⬇ Export picks.json</button>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <input type="text" id="filter" placeholder="Filter words…">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="word-list"></div>
+  </div>
+  <div class="main" id="main"></div>
+</div>
+
+<script>
+let WORDS = [];
+let PICKS = JSON.parse(localStorage.getItem('image_picks') || '{}');
+let current = null;
+
+function slugify(w){ return w.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+
+async function load(){
+  const r = await fetch('picker_words.json');
+  WORDS = await r.json();
+  renderSidebar();
+  selectWord(WORDS.find(w => !PICKS[w.english]) || WORDS[0]);
+}
+
+function statusFor(w){
+  if (PICKS[w.english]) return '✅';
+  if (w.slug) return '🖼';
+  return '⬜';
+}
+
+function renderSidebar(filterText){
+  const list = document.getElementById('word-list');
+  const q = (filterText || '').toLowerCase();
+  const byCat = {};
+  for (const w of WORDS){
+    if (q && !w.english.toLowerCase().includes(q)) continue;
+    (byCat[w.category] ||= []).push(w);
+  }
+  let html = '';
+  for (const cat of Object.keys(byCat).sort()){
+    html += `<div class="cat-header">${cat}</div>`;
+    for (const w of byCat[cat]){
+      html += `<div class="word-item ${current && current.english === w.english ? 'active' : ''}" data-w="${w.english}">
+        <span>${w.english}</span><span class="badge">${statusFor(w)}</span></div>`;
+    }
+  }
+  list.innerHTML = html;
+  list.querySelectorAll('.word-item').forEach(el => {
+    el.addEventListener('click', () => selectWord(WORDS.find(w => w.english === el.dataset.w)));
+  });
+  const done = Object.keys(PICKS).length;
+  document.getElementById('progress').textContent = `${done} / ${WORDS.length} picked`;
+}
+
+function selectWord(w){
+  current = w;
+  renderSidebar(document.getElementById('filter').value);
+  const existing = w.slug ? `../data/images/${w.slug}.jpg` : null;
+  const pickedUrl = PICKS[w.english]?.url || '';
+  document.getElementById('main').innerHTML = `
+    <h1>${w.english}</h1>
+    <div class="cat-label">${w.category}</div>
+    <div class="imgrow">
+      <div class="imgbox">
+        <h3>Current (auto-fetched)</h3>
+        <div class="frame" id="frame-existing">${existing ? `<img src="${existing}" onerror="if(this.parentElement) this.parentElement.textContent='none yet'">` : 'none yet'}</div>
+      </div>
+      <div class="imgbox">
+        <h3>Your pick (preview)</h3>
+        <div class="frame" id="frame-pick">${pickedUrl ? `<img src="${pickedUrl}">` : 'paste a URL below'}</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Image URL</label>
+      <input type="text" id="url-input" placeholder="https://…" value="${pickedUrl.replace(/"/g,'&quot;')}">
+    </div>
+    <div class="actions">
+      <button class="save" id="save-btn">Save &amp; next</button>
+      <button class="skip" id="skip-btn">Skip (keep current, move on)</button>
+      <button class="clear" id="clear-btn">Clear my pick</button>
+    </div>
+    <div class="status-line" id="status-line"></div>
+  `;
+  const input = document.getElementById('url-input');
+  input.addEventListener('input', () => {
+    const url = input.value.trim();
+    document.getElementById('frame-pick').innerHTML = url ? `<img src="${url}" onerror="if(this.parentElement) this.parentElement.textContent='could not load image'">` : 'paste a URL below';
+  });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') save(true); });
+  document.getElementById('save-btn').addEventListener('click', () => save(true));
+  document.getElementById('skip-btn').addEventListener('click', () => goNext());
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    delete PICKS[current.english];
+    persist();
+    selectWord(current);
+  });
+}
+
+function persist(){
+  localStorage.setItem('image_picks', JSON.stringify(PICKS));
+}
+
+function save(advance){
+  const url = document.getElementById('url-input').value.trim();
+  if (!url) { document.getElementById('status-line').textContent = 'Enter a URL first.'; return; }
+  PICKS[current.english] = { url, category: current.category, ts: new Date().toISOString() };
+  persist();
+  document.getElementById('status-line').textContent = 'Saved.';
+  if (advance) goNext();
+}
+
+function goNext(){
+  const idx = WORDS.findIndex(w => w.english === current.english);
+  const next = WORDS.slice(idx + 1).find(w => !PICKS[w.english]) || WORDS[(idx + 1) % WORDS.length];
+  selectWord(next);
+}
+
+document.getElementById('filter').addEventListener('input', e => renderSidebar(e.target.value));
+document.getElementById('export-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(PICKS, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'picks.json';
+  a.click();
+});
+
+load();
+</script>
+</body>
+</html>

@@ -33,7 +33,8 @@ LANGUAGE_ISO = {
 # objects. "days of the week" has no visual referent at all. "numbers" and
 # "colors" aren't objects either - a numeral or a color swatch tests symbol/
 # attribute recognition, not whether the model can name a pictured thing.
-EXCLUDED_CATEGORIES = {"days of the week", "numbers", "colors"}
+# "body parts" is excluded by product decision.
+EXCLUDED_CATEGORIES = {"days of the week", "numbers", "colors", "body parts"}
 
 N_CHOICES = 4
 SEED = 20261010

@@ -215,12 +215,25 @@ def make_number_image(word: str) -> tuple[bytes, dict]:
 # -------------------------------------------------------------- verification
 def verify_prompt(english: str, category: str) -> str:
     return (
-        f'The attached image is a candidate photo for the English concept "{english}" '
-        f'(BU 200 Word Project category: {category}). Does it clearly and unambiguously '
-        "depict that concept, such that someone could correctly guess the word from the "
-        "picture alone? Answer false if the image shows something else (e.g. a place, "
-        "brand, or person that merely shares the word as a name), is a diagram/label "
-        "overlay rather than a photo of the thing, or shows the wrong part/sense of it."
+        f'This image is a candidate for a picture-dictionary entry for the English word '
+        f'"{english}" (BU 200 Word Project category: {category}), aimed at someone learning '
+        "the word. Picture a person glancing at this image for two seconds and being asked "
+        '"what is this a picture of?" - would nearly everyone immediately say '
+        f'"{english}", with no further context? Answer false unless ALL of these hold:\n'
+        f"1. The {english} is the single, large, unmistakably dominant subject of the "
+        "photo - not a small or incidental detail elsewhere in a busy scene (e.g. a tie "
+        "glimpsed in a photo of two people shaking hands does NOT count).\n"
+        "2. It is the common, concrete, literal sense of the word, not a metaphorical, "
+        "idiomatic, brand-name, or proper-noun use (e.g. an airplane's 'nose' is not a "
+        "'nose'; 'Africa Star' is not a 'star'), and for a body part specifically, it must "
+        "be a HUMAN body part, not an animal's.\n"
+        "3. For a whole food/plant/animal word, it shows the thing in its ordinary, "
+        "recognizable everyday form - not a prepared dish, a cut/processed product, a "
+        "closeup so tight the whole form isn't visible, or an unrelated plant part (e.g. "
+        "a plated chicken dish doesn't read as 'chicken'; leaves don't read as the fruit).\n"
+        "4. It is an actual photograph, not a diagram, map, flag, logo, or illustration "
+        "with text labels overlaid.\n"
+        "Be strict and literal-minded; when in doubt, answer false."
     )
 
 
