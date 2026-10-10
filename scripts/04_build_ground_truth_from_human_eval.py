@@ -1,22 +1,21 @@
-"""Build visual-choice benchmark questions from human-eval ground truth.
+"""Build symmetrical benchmark questions from human-eval ground truth.
 
-Pulls human ground-truth submissions from AfriSpeech/afrivl-bench-human-eval
-(or a local directory) written by human-eval/index.html under
-`ground_truth/<session_id>/<id>-<ts>.json`.
-
-Evaluation task symmetry:
-Just as humans were shown candidate images alongside the local word to pick
-the matching image, the LLM is evaluated on the exact same task:
-Given 4 images labeled A, B, C, D (the human-selected image + 3 visual distractors
-from the same candidate pool) and the local word in that language, the model must
-pick the letter corresponding to the correct image.
+Enforces experimental fairness between human reviewers and LLMs:
+Models only see candidate images up to the sequential decision point where
+the human accepted an image:
+- If the human accepted the 1st image: The human made a binary decision on
+  that single image. The LLM is given that single image and must decide
+  Yes or No.
+- If the human accepted the 2nd image (after rejecting the 1st): The human's
+  decision space was {image 1, image 2}. The LLM is given those exact 2 images
+  (labeled A, B, shuffled) to pick between.
+- If the human accepted candidate k (after rejecting candidates 1..k-1): The
+  LLM is given the k images seen by the human up to that point (labeled A, B, ...,
+  shuffled) to identify the correct referent.
 
 Usage:
     python3 04_build_ground_truth_from_human_eval.py [--local-dir DIR]
-Writes data/questions_ground_truth.json:
-    [ { "id": "...", "language": "...", "local_word": "...", "english": "...",
-        "image_options": [ {"letter": "A", "image_file": "...", "image_url": "..."}, ...],
-        "correct_letter": "B", "correct_index": 1, ... } ]
+Writes data/questions_ground_truth.json
 """
 from __future__ import annotations
 
@@ -29,7 +28,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-from common import DATA, LANGUAGE_ISO, N_CHOICES, RESULTS, SEED
+from common import DATA, LANGUAGE_ISO, RESULTS, SEED
 
 from huggingface_hub import HfApi, hf_hub_download
 
@@ -37,7 +36,7 @@ DATASET = "AfriSpeech/afrivl-bench-human-eval"
 UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
 GT_IMAGES_DIR = DATA / "images" / "ground_truth"
 GT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-LETTERS = "ABCD"
+LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 def download_image(url: str, dest: Path) -> bool:
@@ -128,103 +127,109 @@ def main():
         chosen_sub = next(s for s in selected_subs if s["selected_image"]["image_url"] == top_url)
         top_img = chosen_sub["selected_image"]
 
-        # Collect candidate pool from submissions
-        all_cands = []
-        seen_cand_urls = set()
-        for s in subs:
-            for c in s.get("all_candidates", []):
-                u = c.get("image_url")
-                if u and u not in seen_cand_urls:
-                    seen_cand_urls.add(u)
-                    all_cands.append(c)
+        # Sequential decision horizon: images seen up to point where human said Yes
+        cand_idx = chosen_sub.get("candidate_index", 0)
+        all_cands = chosen_sub.get("all_candidates", [])
+        if not all_cands:
+            all_cands = [top_img]
+            cand_idx = 0
 
-        # Distractor images are other candidate images from the same pool that were not the chosen image
-        distractor_cands = [c for c in all_cands if c.get("image_url") != top_url]
-        if len(distractor_cands) < N_CHOICES - 1:
-            # If candidate pool had fewer than 3 distractors, keep whatever is available
-            distractors = distractor_cands
+        # Exact candidates seen by the human up to that selection point
+        seen_candidates = all_cands[:cand_idx + 1]
+
+        if cand_idx == 0:
+            # Case 1: 1st image was accepted -> Binary Yes/No evaluation
+            correct_file = GT_IMAGES_DIR / f"{item_id}_cand0.jpg"
+            ok = download_image(top_url, correct_file)
+            if not ok:
+                print(f"Warning: Failed to download image for {item_id}: {top_url}")
+                continue
+
+            ground_truth_questions.append({
+                "id": item_id,
+                "question_type": "binary",
+                "language": language,
+                "iso639_3": iso,
+                "country": sample.get("country"),
+                "english": english,
+                "local_word": local_word,
+                "category": category,
+                "slug": slug,
+                "image_file": str(correct_file.relative_to(DATA)),
+                "image_url": top_url,
+                "correct_answer": "Yes",
+                "human_votes": n_votes,
+                "total_reviews": len(subs),
+                "decision_depth": 1,
+            })
         else:
-            distractors = rng.sample(distractor_cands, N_CHOICES - 1)
+            # Case 2: Candidate k accepted after rejecting earlier ones -> Multiple-choice among candidates 1..k
+            cand_files = []
+            for c_i, c in enumerate(seen_candidates):
+                dest = GT_IMAGES_DIR / f"{item_id}_cand{c_i}.jpg"
+                if download_image(c["image_url"], dest):
+                    cand_files.append({
+                        "image_file": str(dest.relative_to(DATA)),
+                        "image_url": c["image_url"],
+                        "is_correct": (c_i == cand_idx),
+                        "country": c.get("country"),
+                    })
 
-        # Download correct image
-        correct_file = GT_IMAGES_DIR / f"{item_id}_correct.jpg"
-        ok = download_image(top_url, correct_file)
-        if not ok:
-            print(f"Warning: Failed to download correct image for {item_id}: {top_url}")
-            continue
+            if not cand_files or not any(c["is_correct"] for c in cand_files):
+                print(f"Warning: Missing downloaded files for {item_id}")
+                continue
 
-        # Download distractor images
-        distractor_entries = []
-        for d_i, d in enumerate(distractors):
-            d_dest = GT_IMAGES_DIR / f"{item_id}_distractor_{d_i}.jpg"
-            if download_image(d["image_url"], d_dest):
-                distractor_entries.append({
-                    "image_file": str(d_dest.relative_to(DATA)),
-                    "image_url": d["image_url"],
-                    "is_correct": False,
-                    "country": d.get("country"),
-                })
+            # Shuffle candidate options so the correct answer isn't predictably last
+            rng.shuffle(cand_files)
+            correct_idx = next(i for i, c in enumerate(cand_files) if c["is_correct"])
+            correct_letter = LETTERS[correct_idx]
 
-        if len(distractor_entries) < 1:
-            print(f"Warning: Not enough distractors downloaded for {item_id}")
-            continue
+            image_options = [
+                {
+                    "letter": LETTERS[i],
+                    "image_file": c["image_file"],
+                    "image_url": c["image_url"],
+                    "country": c.get("country"),
+                }
+                for i, c in enumerate(cand_files)
+            ]
 
-        # Build multiple choice image options (shuffled)
-        correct_entry = {
-            "image_file": str(correct_file.relative_to(DATA)),
-            "image_url": top_url,
-            "is_correct": True,
-            "country": top_img.get("country"),
-            "artist": top_img.get("artist"),
-            "license": top_img.get("license"),
-        }
-        all_options = distractor_entries + [correct_entry]
-        rng.shuffle(all_options)
-
-        correct_idx = next(i for i, opt in enumerate(all_options) if opt["is_correct"])
-        correct_letter = LETTERS[correct_idx]
-
-        image_options = [
-            {
-                "letter": LETTERS[i],
-                "image_file": opt["image_file"],
-                "image_url": opt["image_url"],
-                "country": opt.get("country"),
-            }
-            for i, opt in enumerate(all_options)
-        ]
-
-        ground_truth_questions.append({
-            "id": item_id,
-            "language": language,
-            "iso639_3": iso,
-            "country": sample.get("country"),
-            "english": english,
-            "local_word": local_word,
-            "category": category,
-            "slug": slug,
-            "image_options": image_options,
-            "correct_letter": correct_letter,
-            "correct_index": correct_idx,
-            "human_votes": n_votes,
-            "total_reviews": len(subs),
-            "top_image_url": top_url,
-        })
+            ground_truth_questions.append({
+                "id": item_id,
+                "question_type": "multiple_choice",
+                "language": language,
+                "iso639_3": iso,
+                "country": sample.get("country"),
+                "english": english,
+                "local_word": local_word,
+                "category": category,
+                "slug": slug,
+                "image_options": image_options,
+                "correct_letter": correct_letter,
+                "correct_answer": correct_letter,
+                "correct_index": correct_idx,
+                "human_votes": n_votes,
+                "total_reviews": len(subs),
+                "decision_depth": cand_idx + 1,
+            })
 
     out_file = DATA / "questions_ground_truth.json"
     out_file.write_text(json.dumps(ground_truth_questions, indent=2, ensure_ascii=False), encoding="utf-8")
 
     # Also write a summary of human ground truth
     by_lang_counts = Counter(q["language"] for q in ground_truth_questions)
+    by_type_counts = Counter(q["question_type"] for q in ground_truth_questions)
     summary = {
         "total_human_submissions": len(submissions),
         "total_ground_truth_questions": len(ground_truth_questions),
         "none_match_items_count": len(none_match_items),
+        "by_question_type": dict(by_type_counts),
         "by_language": dict(by_lang_counts),
     }
     (RESULTS / "human_ground_truth_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    print(f"\nBuilt {len(ground_truth_questions)} visual-choice benchmark questions -> {out_file}")
+    print(f"\nBuilt {len(ground_truth_questions)} symmetrical benchmark questions -> {out_file}")
+    print(f"Question types: {dict(by_type_counts)}")
     print(f"Items with no matching image (none match): {len(none_match_items)}")
     print(f"By language: {dict(by_lang_counts)}")
 

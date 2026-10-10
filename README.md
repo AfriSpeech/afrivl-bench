@@ -160,14 +160,16 @@ Submissions are saved client-side directly to the dataset:
 [`AfriSpeech/afrivl-bench-human-eval`](https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval)
 via a write-only, dataset-scoped Hugging Face token.
 
-### Symmetrical LLM benchmarking
+### Symmetrical sequential LLM benchmarking
 
 `scripts/04_build_ground_truth_from_human_eval.py` aggregates human selections into
-`data/questions_ground_truth.json`. Vision-language models (e.g. Gemini) are evaluated on
-the exact same task:
-Given the local word and 4 candidate images (the human-selected ground-truth image + 3 visual distractors
-from the same candidate pool), the model must choose the correct image. The model's score is computed
-directly against native speaker consensus.
+`data/questions_ground_truth.json`. To maintain strict experimental fairness, the model
+is evaluated under the exact decision horizon experienced by the human reviewer:
+
+- **1st image accepted:** If the native reviewer approved the very first candidate photo, the human made a binary decision on that image alone. The LLM is given that single image and prompted to decide `Yes` or `No` (ground truth: `Yes`).
+- **k-th image accepted (k > 1):** If the reviewer rejected images `1 .. k-1` before accepting candidate `k`, the model is given the exact `k` images seen up to that point (labeled A, B, ..., shuffled) to identify which one depicts the local word. Candidates beyond `k` were never judged by the human and are strictly excluded.
+
+Model pass rates are computed directly against native speaker consensus.
 
 ## Caveats
 

@@ -23,7 +23,7 @@ This research introduces **AfriVL-Bench**, a benchmark evaluating the ability of
 ## Key Research Questions
 
 1. **Perceptual Disconnect in Cross-Lingual Vision Models:** Do vision-language models trained predominantly on Western web data associate African language nouns with culturally accurate local referents, or do they default to Westernized approximations?
-2. **Symmetrical Human-VLM Benchmarking:** When given identical visual choices grounded in target countries (Ghana, Nigeria, Kenya, Tanzania, Ethiopia, Senegal, Gambia, South Africa), how closely does model selection align with native-speaker consensus?
+2. **Symmetrical Sequential Benchmarking:** When models are evaluated under the exact decision horizon experienced by human reviewers—receiving a binary Yes/No decision if the 1st image was accepted, or choosing strictly among the *k* candidates seen up to the acceptance point—how reliably do frontier VLMs track native-speaker consensus?
 3. **Regional and Category Variations:** Across categories (agriculture, cooking, tools, attire, community life), where do current multimodal architectures succeed, and where does lexical translation fail to translate into visual grounding?
 
 ---

@@ -44,11 +44,20 @@ def slug_model(model: str) -> str:
 
 
 def prompt_for(q: dict) -> str:
-    if q.get("image_options"):
+    if q.get("question_type") == "binary":
         return (
-            f"The images above are labeled {', '.join(opt['letter'] for opt in q['image_options'])} in order. "
-            f"Which image correctly depicts the word '{q.get('local_word', q.get('english'))}' ({q.get('english', '')}) "
-            f"in {q['language']}?\n\nAnswer with only the letter of the correct image."
+            f"The attached image is presented for the word '{q.get('local_word', q.get('english'))}' "
+            f"({q.get('english', '')}) in {q['language']}.\n\n"
+            f"Does this image correctly and accurately depict this concept?\n"
+            f"Answer with only 'Yes' or 'No'."
+        )
+    if q.get("image_options"):
+        valid_letters = ", ".join(opt["letter"] for opt in q["image_options"])
+        return (
+            f"The images above are labeled {valid_letters} in order.\n\n"
+            f"Which image correctly depicts the word '{q.get('local_word', q.get('english'))}' "
+            f"({q.get('english', '')}) in {q['language']}?\n\n"
+            f"Answer with only the letter ({valid_letters}) of the correct image."
         )
     opts = "\n".join(f"{LETTERS[i]}. {c}" for i, c in enumerate(q["choices"]))
     return (
@@ -77,9 +86,30 @@ async def ask(aio, model: str, q: dict, sem: asyncio.Semaphore) -> dict:
         ]
 
     contents = [types.Content(role="user", parts=parts)]
+
+    if q.get("question_type") == "binary":
+        schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={"answer": types.Schema(type=types.Type.STRING, enum=["Yes", "No"])},
+            required=["answer"],
+        )
+    elif q.get("image_options"):
+        valid_letters = [opt["letter"] for opt in q["image_options"]]
+        schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={"answer": types.Schema(type=types.Type.STRING, enum=valid_letters)},
+            required=["answer"],
+        )
+    else:
+        schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={"answer": types.Schema(type=types.Type.STRING, enum=list(LETTERS))},
+            required=["answer"],
+        )
+
     config = types.GenerateContentConfig(
         response_mime_type="application/json",
-        response_schema=ANSWER_SCHEMA,
+        response_schema=schema,
         temperature=0,
     )
     async with sem:
@@ -92,25 +122,37 @@ async def ask(aio, model: str, q: dict, sem: asyncio.Semaphore) -> dict:
                     return {**base_row(q), "error": str(e)}
                 await asyncio.sleep(2 * (attempt + 1))
     try:
-        letter = json.loads(r.text)["answer"].strip().upper()
+        raw_ans = json.loads(r.text)["answer"].strip()
     except Exception:
         return {**base_row(q), "raw_response": getattr(r, "text", None), "error": "unparseable"}
 
-    idx = LETTERS.find(letter)
-    return {
-        **base_row(q),
-        "model_answer": letter,
-        "model_index": idx,
-        "pass": idx == q["correct_index"],
-    }
+    if q.get("question_type") == "binary":
+        is_pass = (raw_ans.lower() == q.get("correct_answer", "yes").lower())
+        return {
+            **base_row(q),
+            "model_answer": raw_ans,
+            "pass": is_pass,
+        }
+    else:
+        letter = raw_ans.upper()
+        idx = LETTERS.find(letter)
+        is_pass = (letter == q.get("correct_letter") or idx == q.get("correct_index"))
+        return {
+            **base_row(q),
+            "model_answer": letter,
+            "model_index": idx,
+            "pass": is_pass,
+        }
 
 
 def base_row(q: dict) -> dict:
     return {
         "id": q["id"], "english": q["english"], "category": q["category"],
         "language": q["language"], "iso639_3": q["iso639_3"],
+        "question_type": q.get("question_type", "multiple_choice"),
         "correct_answer": q.get("correct_letter", q.get("correct_answer")),
-        "correct_index": q["correct_index"],
+        "correct_index": q.get("correct_index", 0),
+        "decision_depth": q.get("decision_depth"),
     }
 
 
