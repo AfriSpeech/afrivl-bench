@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VL-MMLU-Afri — Visual MT Benchmark</title>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fa; --panel:#ffffff; --text:#1f2430; --muted:#5b6472; --border:#e3e6ea;
+    --accent:#7c3aed; --good:#1a936f; --bad:#d1495b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  header{padding:24px 24px 12px;max-width:1200px;margin:0 auto;}
+  h1{font-size:1.6rem;margin:0 0 8px;}
+  .lede{color:var(--muted);font-size:0.95rem;line-height:1.5;max-width:860px;}
+  .lede code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:0.85em;}
+  main{max-width:1200px;margin:0 auto;padding:0 24px 48px;}
+  .row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+  .row > div{flex:1 1 420px;min-width:0;}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end;margin:18px 0;
+    background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .field{display:flex;flex-direction:column;gap:4px;font-size:0.82rem;color:var(--muted);}
+  .field label{font-weight:600;}
+  .field select{padding:6px 8px;border:1px solid var(--border);border-radius:6px;
+    font-size:0.88rem;background:#fff;min-width:220px;}
+  .stat-line{margin:4px 0 14px;font-size:0.92rem;color:var(--muted);}
+  table.dash{width:100%;border-collapse:collapse;font-size:0.85rem;background:var(--panel);}
+  table.dash th,table.dash td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:left;}
+  table.dash th{color:var(--muted);font-weight:600;}
+  .table-wrap{border:1px solid var(--border);border-radius:10px;overflow:auto;margin-bottom:16px;}
+  footer{color:var(--muted);font-size:0.8rem;text-align:center;padding:20px;}
+  .error{padding:40px;text-align:center;color:var(--bad);}
+</style>
+</head>
+<body>
+<header>
+  <h1>VL-MMLU-Afri — Visual Multiple-Choice MT Benchmark</h1>
+  <p class="lede">
+    Each question shows a model an <b>image</b> of a concept and 4 candidate
+    translations into a target language — 1 correct, 3 real human translations
+    of other concepts. The model must ground the image to answer, not just
+    translate text. Concepts and human reference translations come from the
+    <a href="https://www.bu.edu/200word/" target="_blank" rel="noopener">BU 200 Word Project</a>.
+    Chance baseline is <code id="chance-note">25%</code> (4 options).
+  </p>
+</header>
+<main>
+  <div class="panel" style="margin-bottom:16px;"><div id="plot-leaderboard"></div></div>
+
+  <div class="controls">
+    <div class="field"><label>Model</label><select id="f-model"></select></div>
+  </div>
+  <p class="stat-line" id="m-stat"></p>
+
+  <div class="row">
+    <div class="panel"><div id="plot-language"></div></div>
+    <div class="panel"><div id="plot-category"></div></div>
+  </div>
+
+  <div class="table-wrap"><table class="dash" id="m-table"></table></div>
+</main>
+<footer id="footer"></footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const OWNER = params.get('repo') || 'AfriSpeech/vl-mmlu-afri';
+const BRANCH = params.get('branch') || 'main';
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${BRANCH}`;
+const PLOTLY_CFG = {displaylogo:false, responsive:true};
+const MODEL_COLORS = ['#7c3aed','#1a936f','#e9a13b','#3457d5','#d1495b','#0ea5a5'];
+
+async function load(name){
+  const candidates = [`results/${name}.json`, `${RAW}/results/${name}.json`];
+  let lastErr;
+  for (const url of candidates){
+    try{
+      const r = await fetch(url, {cache:'no-store'});
+      if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+      return await r.json();
+    }catch(e){ lastErr = e; }
+  }
+  return {__error__: `could not load ${name}.json: ${lastErr}`};
+}
+
+function fmt(n){ return (n === null || n === undefined) ? '-' : n.toFixed(1); }
+
+function renderLeaderboard(summary){
+  const models = Object.entries(summary.models);
+  const sorted = models.slice().sort((a,b) => (a[1].overall_pass_rate||0) - (b[1].overall_pass_rate||0));
+  Plotly.newPlot('plot-leaderboard', [
+    {
+      type:'bar', orientation:'h',
+      x: sorted.map(m => m[1].overall_pass_rate), y: sorted.map(m => m[0]),
+      marker:{color: sorted.map((m,i) => MODEL_COLORS[i % MODEL_COLORS.length])},
+      text: sorted.map(m => `${fmt(m[1].overall_pass_rate)}%`), textposition:'outside',
+      hovertemplate:'%{y}: %{x:.1f}%<br>n=%{customdata}<extra></extra>',
+      customdata: sorted.map(m => m[1].n_scored),
+    },
+    {
+      type:'scatter', mode:'lines', x:[summary.chance_baseline, summary.chance_baseline],
+      y:[-0.5, sorted.length - 0.5], line:{color:'#999', dash:'dash'}, name:'chance',
+      hovertemplate:`chance baseline: ${summary.chance_baseline}%<extra></extra>`,
+    },
+  ], {
+    height: Math.max(220, 60*sorted.length + 100), margin:{l:180,r:40,t:40,b:40},
+    title:'Overall pass rate by model', xaxis:{title:'Pass rate (%)', range:[0,100]},
+    yaxis:{title:''}, showlegend:false,
+  }, PLOTLY_CFG);
+}
+
+function renderModel(summary, model){
+  const m = summary.models[model];
+  document.getElementById('m-stat').innerHTML =
+    `<b>${model}</b> &nbsp; n=${m.n_scored} scored` +
+    (m.n_errors ? ` (${m.n_errors} errors excluded)` : '') +
+    ` &nbsp; overall pass rate <b>${fmt(m.overall_pass_rate)}%</b> &nbsp; chance ${summary.chance_baseline}%`;
+
+  const langs = Object.entries(m.by_language);
+  Plotly.newPlot('plot-language', [
+    {
+      type:'bar', x: langs.map(l => l[0]), y: langs.map(l => l[1].pass_rate),
+      marker:{color: langs.map(l => l[1].pass_rate >= summary.chance_baseline ? '#1a936f' : '#d1495b')},
+      customdata: langs.map(l => [l[1].iso639_3, l[1].n]),
+      hovertemplate:'%{x} (%{customdata[0]}): %{y:.1f}% (n=%{customdata[1]})<extra></extra>',
+    },
+    {
+      type:'scatter', mode:'lines', x:langs.map(l=>l[0]), y:langs.map(()=>summary.chance_baseline),
+      line:{color:'#999', dash:'dash'}, hoverinfo:'skip',
+    },
+  ], {
+    height:380, margin:{l:50,r:20,t:40,b:70}, title:'Pass rate by language',
+    yaxis:{title:'Pass rate (%)', range:[0,100]}, showlegend:false,
+  }, PLOTLY_CFG);
+
+  const cats = Object.entries(m.by_category).sort((a,b) => a[1].pass_rate - b[1].pass_rate);
+  Plotly.newPlot('plot-category', [
+    {
+      type:'bar', orientation:'h', x: cats.map(c => c[1].pass_rate), y: cats.map(c => c[0]),
+      marker:{color: cats.map(c => c[1].pass_rate >= summary.chance_baseline ? '#1a936f' : '#d1495b')},
+      customdata: cats.map(c => c[1].n),
+      hovertemplate:'%{y}: %{x:.1f}% (n=%{customdata})<extra></extra>',
+    },
+    {
+      type:'scatter', mode:'lines', y:cats.map(c=>c[0]), x:cats.map(()=>summary.chance_baseline),
+      line:{color:'#999', dash:'dash'}, hoverinfo:'skip',
+    },
+  ], {
+    height:440, margin:{l:140,r:20,t:40,b:40}, title:'Pass rate by category',
+    xaxis:{title:'Pass rate (%)', range:[0,100]}, yaxis:{title:''}, showlegend:false,
+  }, PLOTLY_CFG);
+
+  const table = document.getElementById('m-table');
+  table.innerHTML = `<thead><tr><th>Language</th><th>ISO</th><th>n</th><th>Pass rate</th></tr></thead>
+    <tbody>${langs.map(([lang,v]) => `<tr><td>${lang}</td><td>${v.iso639_3}</td><td>${v.n}</td>
+      <td>${fmt(v.pass_rate)}%</td></tr>`).join('')}</tbody>`;
+}
+
+async function main(){
+  const summary = await load('summary');
+  if (summary.__error__){
+    document.getElementById('plot-leaderboard').innerHTML = `<div class="error">${summary.__error__}</div>`;
+    return;
+  }
+  document.getElementById('chance-note').textContent = summary.chance_baseline + '%';
+  document.getElementById('footer').innerHTML =
+    `<small>Data: <a href="${RAW}/results/summary.json" target="_blank">${OWNER}</a> @ <code>${BRANCH}</code></small>`;
+
+  renderLeaderboard(summary);
+
+  const sel = document.getElementById('f-model');
+  const modelNames = Object.keys(summary.models);
+  sel.innerHTML = modelNames.map(m => `<option>${m}</option>`).join('');
+  sel.addEventListener('change', () => renderModel(summary, sel.value));
+  if (modelNames.length) renderModel(summary, modelNames[0]);
+}
+main();
+</script>
+</body>
+</html>
