@@ -164,6 +164,8 @@ let current = null;
 let candIdx = 0;
 let sessionAnsweredCount = 0;
 let historyStack = [];
+let reviewerEmail = localStorage.getItem('afrivl_reviewer_email') || '';
+let reviewerSlug = localStorage.getItem('afrivl_reviewer_slug') || '';
 
 const card = document.getElementById('card');
 
@@ -183,10 +185,10 @@ async function load(){
   const r = await fetchFirst([`./data/languages.json`, `../data/human_eval/languages.json`, `${RAW}/human-eval/data/languages.json`]);
   LANGUAGES = await r.json();
 
-  const savedLangIso = localStorage.getItem('afrivl_gt_last_lang') || params.get('lang');
+  const savedLangIso = params.get('lang') || localStorage.getItem('afrivl_gt_last_lang');
   if (savedLangIso) {
     const match = LANGUAGES.find(l => l.iso === savedLangIso || l.language.toLowerCase() === savedLangIso.toLowerCase());
-    if (match) { selectLanguage(match); return; }
+    if (match) { promptReviewerEmail(match); return; }
   }
   renderLangPicker();
 }
@@ -215,9 +217,72 @@ function renderLangPicker(){
   card.querySelectorAll('.lang-item').forEach(el => {
     el.addEventListener('click', () => {
       const match = LANGUAGES.find(l => l.iso === el.dataset.iso);
-      selectLanguage(match);
+      promptReviewerEmail(match);
     });
   });
+}
+
+function promptReviewerEmail(langObj){
+  const savedEmail = reviewerEmail || 'michsethowusu@gmail.com';
+  card.innerHTML = `
+    <h2 style="margin:0 0 4px;font-size:1.18rem;">Reviewer Identity</h2>
+    <p style="margin:0 0 16px;color:var(--muted);font-size:0.86rem;">
+      Language: <b>${langObj.flag} ${langObj.language}</b> (${langObj.all_primary_countries ? langObj.all_primary_countries.join(', ') : langObj.primary_country})
+    </p>
+    <div class="field" style="margin-bottom:14px;">
+      <label for="email-input">Your Email Address</label>
+      <input type="email" id="email-input" placeholder="e.g. name@example.com" value="${savedEmail}" required autofocus>
+    </div>
+    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:18px;font-size:0.84rem;color:var(--text);line-height:1.5;">
+      <div style="font-weight:700;margin-bottom:4px;color:var(--accent);">💡 Why we ask for your email:</div>
+      <div>1. <b>Session Resumption:</b> Saves your progress in the cloud so you can return anytime on any device without repeating words.</div>
+      <div style="margin-top:4px;">2. <b>Paper Attribution:</b> Credits you as a participating native speaker / contributor in the research publication.</div>
+    </div>
+    <button class="primary" id="confirm-email-btn">Continue to Review →</button>
+    <div style="text-align:center;margin-top:12px;">
+      <button class="link-btn" id="back-to-langs-btn">← Choose another language</button>
+    </div>
+  `;
+
+  document.getElementById('back-to-langs-btn').addEventListener('click', renderLangPicker);
+  const input = document.getElementById('email-input');
+  const confirmBtn = document.getElementById('confirm-email-btn');
+
+  const onConfirm = async () => {
+    const email = input.value.trim().toLowerCase();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      input.focus();
+      return;
+    }
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Loading reviewer session…';
+    const slug = email.replace(/[^a-z0-9]/g, '_');
+    localStorage.setItem('afrivl_reviewer_email', email);
+    localStorage.setItem('afrivl_reviewer_slug', slug);
+    reviewerEmail = email;
+    reviewerSlug = slug;
+
+    // Check cloud profile in dataset for resumption
+    try {
+      const profileUrl = `https://huggingface.co/datasets/${HF_DATASET}/raw/main/reviewers/${slug}/profile.json`;
+      const res = await fetch(profileUrl, { cache: 'no-store' });
+      if (res.ok) {
+        const prof = await res.json();
+        if (prof.reviewed_ids && prof.reviewed_ids.length) {
+          const s = getReviewed(langObj.iso);
+          prof.reviewed_ids.forEach(id => s.add(id));
+          localStorage.setItem(reviewedKey(langObj.iso), JSON.stringify([...s]));
+          showToast(`Welcome back! Resumed (${prof.reviewed_ids.length} words completed).`);
+        }
+      }
+    } catch(e) { console.log('Cloud profile check:', e); }
+
+    selectLanguage(langObj);
+  };
+
+  confirmBtn.addEventListener('click', onConfirm);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') onConfirm(); });
 }
 
 async function selectLanguage(langObj){
@@ -268,6 +333,10 @@ function renderCandidate(){
       <span class="lang-tag">${currentLang.flag} ${currentLang.language}</span>
       <span>Reviewed: <b>${reviewed} / ${ITEMS.length}</b> (Session: <b>${sessionAnsweredCount}</b>)</span>
     </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--muted);margin-bottom:10px;">
+      <span>Reviewer: <b style="color:var(--text);">${reviewerEmail}</b></span>
+      <button class="link-btn" id="change-reviewer-btn" style="font-size:0.75rem;">Switch reviewer</button>
+    </div>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" style="width:${pct}%;"></div>
     </div>
@@ -299,6 +368,7 @@ function renderCandidate(){
 
   document.getElementById('yes-btn').addEventListener('click', onYes);
   document.getElementById('no-btn').addEventListener('click', onNo);
+  document.getElementById('change-reviewer-btn').addEventListener('click', () => promptReviewerEmail(currentLang));
   if (historyStack.length) {
     document.getElementById('prev-btn').addEventListener('click', onPrevious);
   }
@@ -311,6 +381,20 @@ function onImgError(){
   console.log('Image failed to load, moving to next candidate');
   candIdx++;
   renderCandidate();
+}
+
+function syncReviewerProfile(){
+  if (!reviewerSlug || !reviewerEmail) return;
+  const allReviewed = [...getReviewed(currentLang.iso)];
+  const profPayload = {
+    email: reviewerEmail,
+    reviewer_slug: reviewerSlug,
+    total_reviewed: allReviewed.length,
+    by_language: { [currentLang.iso]: allReviewed.length },
+    reviewed_ids: allReviewed,
+    last_updated: new Date().toISOString()
+  };
+  hfCommit(`reviewers/${reviewerSlug}/profile.json`, profPayload);
 }
 
 function onYes(){
@@ -332,6 +416,8 @@ function onYes(){
     total_candidates: current.images.length,
     selected_image: chosenImg,
     all_candidates: current.images,
+    reviewer_email: reviewerEmail,
+    reviewer_slug: reviewerSlug,
     session_id: SESSION_ID,
     ts: new Date().toISOString(),
   };
@@ -340,7 +426,9 @@ function onYes(){
   sessionAnsweredCount++;
   showToast('Ground truth match recorded ✓');
 
-  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  const folder = reviewerSlug || SESSION_ID;
+  hfCommit(`ground_truth/${folder}/${current.id}-${Date.now()}.json`, payload);
+  syncReviewerProfile();
   nextWord();
 }
 
@@ -388,6 +476,8 @@ function onExhaustedNoMatch(){
     candidates_tried: current.images.length,
     all_candidates: current.images,
     selected_image: null,
+    reviewer_email: reviewerEmail,
+    reviewer_slug: reviewerSlug,
     session_id: SESSION_ID,
     ts: new Date().toISOString(),
   };
@@ -396,7 +486,9 @@ function onExhaustedNoMatch(){
   sessionAnsweredCount++;
   showToast('No matching image found — saved for sourcing.');
 
-  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  const folder = reviewerSlug || SESSION_ID;
+  hfCommit(`ground_truth/${folder}/${current.id}-${Date.now()}.json`, payload);
+  syncReviewerProfile();
   nextWord();
 }
 
@@ -414,12 +506,15 @@ function onSkip(){
     iso639_3: currentLang.iso,
     country: current.primary_country,
     candidate_index: candIdx,
+    reviewer_email: reviewerEmail,
+    reviewer_slug: reviewerSlug,
     session_id: SESSION_ID,
     ts: new Date().toISOString(),
   };
 
   showToast('Skipped.');
-  hfCommit(`ground_truth/${SESSION_ID}/${current.id}-${Date.now()}.json`, payload);
+  const folder = reviewerSlug || SESSION_ID;
+  hfCommit(`ground_truth/${folder}/${current.id}-${Date.now()}.json`, payload);
   nextWord();
 }
 

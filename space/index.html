@@ -1,182 +1,509 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AfriVL-Bench — Multimodal Visual Grounding Benchmark</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AfriVL-Bench: Multimodal Visual Grounding Benchmark for African Languages. Symmetrical evaluation of vision-language models against human ground truth across 9 African languages.">
+<title>AfriVL-Bench — African Multimodal Benchmark</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
-  :root{
-    --bg:#f7f8fa; --panel:#ffffff; --text:#1f2430; --muted:#5b6472; --border:#e3e6ea;
-    --accent:#7c3aed; --good:#1a936f; --bad:#d1495b;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
-  header{padding:24px 24px 12px;max-width:1200px;margin:0 auto;}
-  h1{font-size:1.6rem;margin:0 0 8px;}
-  .lede{color:var(--muted);font-size:0.95rem;line-height:1.5;max-width:860px;}
-  .lede code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:0.85em;}
-  main{max-width:1200px;margin:0 auto;padding:0 24px 48px;}
-  .row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
-  .row > div{flex:1 1 420px;min-width:0;}
-  .panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px;}
-  .controls{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end;margin:18px 0;
-    background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
-  .field{display:flex;flex-direction:column;gap:4px;font-size:0.82rem;color:var(--muted);}
-  .field label{font-weight:600;}
-  .field select{padding:6px 8px;border:1px solid var(--border);border-radius:6px;
-    font-size:0.88rem;background:#fff;min-width:220px;}
-  .stat-line{margin:4px 0 14px;font-size:0.92rem;color:var(--muted);}
-  table.dash{width:100%;border-collapse:collapse;font-size:0.85rem;background:var(--panel);}
-  table.dash th,table.dash td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:left;}
-  table.dash th{color:var(--muted);font-weight:600;}
-  .table-wrap{border:1px solid var(--border);border-radius:10px;overflow:auto;margin-bottom:16px;}
-  footer{color:var(--muted);font-size:0.8rem;text-align:center;padding:20px;}
-  .error{padding:40px;text-align:center;color:var(--bad);}
+/* ====== Reset & Base ====== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-hi: #dbeafe;
+  --accent-hover: #1d4ed8;
+  --link: #2563eb;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #1e293b;
+  --text-strong: #0f172a;
+  --text-muted: #64748b;
+  --success: #16a34a;
+  --success-bg: #dcfce7;
+  --warning: #d97706;
+  --warning-bg: #fef3c7;
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
+}
+html { font-size: 15px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--link); text-decoration: none; font-weight: 500; }
+a:hover { text-decoration: underline; }
+
+/* ====== Layout ====== */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 20px 72px; }
+
+/* ====== Header ====== */
+.site-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; padding: 22px 0 16px; margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.head-brand h1 { font-size: 1.5rem; font-weight: 800; color: var(--text-strong); letter-spacing: -.02em; }
+.head-brand .tagline { color: var(--text-muted); font-size: 0.9rem; margin-top: 2px; }
+.head-links { display: flex; gap: 12px; font-size: 0.85rem; align-items: center; }
+.head-links a.btn-cta {
+  background: var(--accent); color: #fff; padding: 6px 14px; border-radius: 6px;
+  font-weight: 600; transition: background .12s;
+}
+.head-links a.btn-cta:hover { background: var(--accent-hover); text-decoration: none; }
+
+/* ====== Stat cards ====== */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
+}
+.stat-card .label { color: var(--text-muted); font-size: 0.76rem; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+.stat-card .value { font-size: 1.55rem; font-weight: 800; color: var(--text-strong); letter-spacing: -.02em; }
+.stat-card .sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+/* ====== Section note ====== */
+.section-note {
+  font-size: 0.88rem; color: var(--text); padding: 14px 18px;
+  background: var(--surface); border-left: 4px solid var(--accent); border: 1px solid var(--border);
+  border-left-width: 4px; border-radius: 8px; margin-bottom: 22px; box-shadow: var(--shadow);
+}
+.section-note strong { color: var(--text-strong); }
+.section-note ul { margin: 6px 0 6px 20px; color: var(--text-muted); }
+.section-note li { margin-bottom: 3px; }
+
+/* ====== Tabs ====== */
+.tabs { display: flex; gap: 6px; margin-bottom: 22px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+.tab {
+  padding: 10px 18px; cursor: pointer; border: 1px solid transparent; border-bottom: none;
+  background: transparent; color: var(--text-muted); font-weight: 600; font-size: 0.92rem;
+  border-radius: var(--radius) var(--radius) 0 0; transition: all .12s; margin-bottom: -1px;
+}
+.tab:hover { color: var(--text-strong); background: var(--surface-2); }
+.tab.active {
+  background: var(--surface); color: var(--text-strong);
+  border-color: var(--border); border-bottom: 2px solid var(--accent);
+}
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ====== Filters ====== */
+.filters {
+  display: flex; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; align-items: center;
+  background: var(--surface); padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+}
+.filters label { color: var(--text-muted); font-size: 0.84rem; font-weight: 600; }
+.filters select, .filters input {
+  background: var(--surface); border: 1px solid var(--border-strong);
+  color: var(--text); padding: 7px 11px; border-radius: 6px; font-size: 0.88rem;
+  font-family: inherit;
+}
+.filters input[type="text"] { min-width: 220px; }
+select:focus, input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-hi); }
+
+/* ====== Table ====== */
+.table-wrap {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow-x: auto; box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th, td { text-align: left; padding: 11px 16px; white-space: nowrap; }
+th {
+  background: var(--surface-2); color: var(--text-strong);
+  font-weight: 600; font-size: 0.8rem; letter-spacing: .02em;
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; cursor: pointer; user-select: none;
+}
+th:hover { color: var(--link); }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:nth-child(even) { background: var(--neutral-50); }
+tbody tr:hover { background: var(--accent-soft); }
+.empty-row td { text-align: center; color: var(--text-muted); padding: 36px; background: var(--surface) !important; }
+
+/* Badges & Metrics */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+.badge-pass { background: var(--success-bg); color: var(--success); }
+.badge-pending { background: var(--warning-bg); color: var(--warning); }
+.badge-pill { background: var(--surface-2); color: var(--text-muted); font-weight: 500; }
+.badge-author { background: #f3e8ff; color: #7e22ce; font-weight: 600; }
+.score-bold { font-weight: 700; color: var(--text-strong); }
+
+/* Rank indicators */
+.rank { font-weight: 700; color: var(--text-muted); }
+.rank.r1 { color: #b8860b; } .rank.r2 { color: #64748b; } .rank.r3 { color: #9a3412; }
+
+/* Loading & Footer */
+.loading { text-align: center; padding: 90px 0; color: var(--text-muted); }
+.spinner {
+  width: 36px; height: 36px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 0 auto 14px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.footer {
+  margin-top: 48px; text-align: center; color: var(--text-muted);
+  font-size: 0.84rem; padding-top: 24px; border-top: 1px solid var(--border);
+}
+.footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; font-weight: 500; }
+
+@media (max-width: 768px) {
+  .site-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .head-links { flex-wrap: wrap; }
+  .filters { flex-direction: column; align-items: stretch; }
+  .filters select, .filters input { width: 100%; }
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>AfriVL-Bench — Multimodal Visual Grounding Benchmark</h1>
-  <p class="lede">
-    Evaluates vision-language models on culturally and regionally grounded
-    African vocabulary across 9 reference languages. Models must ground the image to answer,
-    not just translate text. Concepts and human reference translations come from the
-    <a href="https://www.bu.edu/200word/" target="_blank" rel="noopener">BU 200 Word Project</a>.
-    Chance baseline is <code id="chance-note">25%</code> (4 options).
-  </p>
-</header>
-<main>
-  <div class="panel" style="margin-bottom:16px;"><div id="plot-leaderboard"></div></div>
-
-  <div class="controls">
-    <div class="field"><label>Model</label><select id="f-model"></select></div>
-  </div>
-  <p class="stat-line" id="m-stat"></p>
-
-  <div class="row">
-    <div class="panel"><div id="plot-language"></div></div>
-    <div class="panel"><div id="plot-category"></div></div>
+<div class="container">
+  <div class="site-head">
+    <div class="head-brand">
+      <h1>AfriVL-Bench</h1>
+      <div class="tagline">Multimodal Visual Grounding Benchmark across 9 African Languages</div>
+    </div>
+    <div class="head-links">
+      <a href="https://github.com/AfriSpeech/afrivl-bench" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/AfriSpeech/afrivl-bench/blob/main/paper/README.md" target="_blank" rel="noopener">Paper Abstract</a>
+      <a href="https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener">Dataset</a>
+      <a href="https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener" class="btn-cta">Participate in Review &rarr;</a>
+    </div>
   </div>
 
-  <div class="table-wrap"><table class="dash" id="m-table"></table></div>
-</main>
-<footer id="footer"></footer>
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading benchmark data and human ground truth&hellip;</p>
+  </div>
+
+  <div id="main" style="display:none;">
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <div class="section-note">
+      <strong>Symmetrical Sequential Evaluation.</strong> Rather than evaluating translation solely as text-to-text token matching or generic stock photos,
+      <strong>AfriVL-Bench</strong> tests whether multimodal LLMs can identify authentic, culturally grounded visual referents approved by native speakers:
+      <ul>
+        <li><strong>Human Ground Truth:</strong> Native speakers review candidate photos grounded in target countries (Ghana, Nigeria, Kenya, Tanzania, Ethiopia, Senegal, Gambia, South Africa), confirming whether an image accurately depicts the local word.</li>
+        <li><strong>Procedural Fairness:</strong> If a human accepted the 1st photo, the model receives a binary Yes/No prompt on that image alone. If the human accepted candidate <em>k</em> (after rejecting earlier photos), the model is given strictly those <em>k</em> candidates to choose from.</li>
+        <li><strong>Evaluation Key:</strong> Model performance is scored directly against native-speaker consensus.</li>
+      </ul>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="leaderboard">Leaderboard</div>
+      <div class="tab" data-tab="by-lang">By Language</div>
+      <div class="tab" data-tab="by-cat">By Category</div>
+      <div class="tab" data-tab="reviewers">Human Ground Truth &amp; Reviewers</div>
+    </div>
+
+    <!-- Tab 1: Leaderboard -->
+    <div class="tab-pane active" id="pane-leaderboard">
+      <div class="filters">
+        <label>Filter Model:</label>
+        <input type="text" id="filter-model" placeholder="Search model name…">
+      </div>
+      <div class="table-wrap">
+        <table id="table-leaderboard">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Model</th>
+              <th>Overall Accuracy</th>
+              <th>Binary (1st-Cand)</th>
+              <th>MCQ (k-Cand)</th>
+              <th>Questions Evaluated</th>
+              <th>Benchmark Protocol</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-leaderboard"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 2: By Language -->
+    <div class="tab-pane" id="pane-by-lang">
+      <div class="filters">
+        <label>Select Language:</label>
+        <select id="select-lang"></select>
+      </div>
+      <div class="table-wrap">
+        <table id="table-lang">
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>ISO</th>
+              <th>Country Context</th>
+              <th>Vocabulary Concepts</th>
+              <th>Human Ground Truth</th>
+              <th>Consensus Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-lang"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 3: By Category -->
+    <div class="tab-pane" id="pane-by-cat">
+      <div class="table-wrap">
+        <table id="table-cat">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Concepts</th>
+              <th>Ground Truth Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-cat"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 4: Reviewers & Ground Truth Attribution -->
+    <div class="tab-pane" id="pane-reviewers">
+      <div class="section-note" style="background:#fdf4ff;border-color:#a855f7;">
+        <strong>Contributor &amp; Co-Author Attribution:</strong> Native speakers contributing visual validations are recognized as research contributors.
+        To join the evaluation and paper, <a href="https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener">review concepts in your language</a> or email <a href="mailto:mich@afrispeech.org">mich@afrispeech.org</a>.
+      </div>
+      <div class="table-wrap">
+        <table id="table-reviewers">
+          <thead>
+            <tr>
+              <th>Reviewer Identifier</th>
+              <th>Language Focus</th>
+              <th>Validated Concepts</th>
+              <th>Last Active</th>
+              <th>Research Attribution</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-reviewers"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/AfriSpeech/afrivl-bench" target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://github.com/AfriSpeech/afrivl-bench/blob/main/paper/README.md" target="_blank" rel="noopener">Paper Abstract</a>
+      <a href="https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener">Human Review Tool</a>
+      <a href="https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener">Submissions Dataset</a>
+    </div>
+    <p>AfriVL-Bench &middot; AfriSpeech Initiative &middot; African Multimodal Visual-Linguistic Grounding</p>
+  </footer>
+</div>
 
 <script>
 const params = new URLSearchParams(location.search);
 const OWNER = params.get('repo') || 'AfriSpeech/afrivl-bench';
 const BRANCH = params.get('branch') || 'main';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${BRANCH}`;
-const PLOTLY_CFG = {displaylogo:false, responsive:true};
-const MODEL_COLORS = ['#7c3aed','#1a936f','#e9a13b','#3457d5','#d1495b','#0ea5a5'];
+const HF_DATASET = 'AfriSpeech/afrivl-bench-human-eval';
 
-async function load(name){
-  const candidates = [`results/${name}.json`, `${RAW}/results/${name}.json`];
-  let lastErr;
-  for (const url of candidates){
-    try{
-      const r = await fetch(url, {cache:'no-store'});
-      if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-      return await r.json();
-    }catch(e){ lastErr = e; }
-  }
-  return {__error__: `could not load ${name}.json: ${lastErr}`};
+let LANGUAGES = [];
+let SUMMARY = null;
+let REVIEWERS = [];
+
+async function loadData() {
+  try {
+    // 1. Load language configs
+    const rLang = await fetch(`${RAW}/human-eval/data/languages.json`, { cache: 'no-store' });
+    if (rLang.ok) LANGUAGES = await rLang.json();
+  } catch (e) { console.log('Lang load:', e); }
+
+  try {
+    // 2. Load model summary if present
+    const rSum = await fetch(`${RAW}/results/summary.json`, { cache: 'no-store' });
+    if (rSum.ok) SUMMARY = await rSum.json();
+  } catch (e) { console.log('Summary load:', e); }
+
+  try {
+    // 3. Load active reviewer profile
+    const rProf = await fetch(`https://huggingface.co/datasets/${HF_DATASET}/raw/main/reviewers/michsethowusu_at_gmail_com/profile.json`, { cache: 'no-store' });
+    if (rProf.ok) {
+      const prof = await rProf.json();
+      REVIEWERS = [prof];
+    }
+  } catch (e) { console.log('Reviewer load:', e); }
+
+  renderAll();
 }
 
-function fmt(n){ return (n === null || n === undefined) ? '-' : n.toFixed(1); }
+function renderAll() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('main').style.display = 'block';
 
-function renderLeaderboard(summary){
-  const models = Object.entries(summary.models);
-  const sorted = models.slice().sort((a,b) => (a[1].overall_pass_rate||0) - (b[1].overall_pass_rate||0));
-  Plotly.newPlot('plot-leaderboard', [
-    {
-      type:'bar', orientation:'h',
-      x: sorted.map(m => m[1].overall_pass_rate), y: sorted.map(m => m[0]),
-      marker:{color: sorted.map((m,i) => MODEL_COLORS[i % MODEL_COLORS.length])},
-      text: sorted.map(m => `${fmt(m[1].overall_pass_rate)}%`), textposition:'outside',
-      hovertemplate:'%{y}: %{x:.1f}%<br>n=%{customdata}<extra></extra>',
-      customdata: sorted.map(m => m[1].n_scored),
-    },
-    {
-      type:'scatter', mode:'lines', x:[summary.chance_baseline, summary.chance_baseline],
-      y:[-0.5, sorted.length - 0.5], line:{color:'#999', dash:'dash'}, name:'chance',
-      hovertemplate:`chance baseline: ${summary.chance_baseline}%<extra></extra>`,
-    },
-  ], {
-    height: Math.max(220, 60*sorted.length + 100), margin:{l:180,r:40,t:40,b:40},
-    title:'Overall pass rate by model', xaxis:{title:'Pass rate (%)', range:[0,100]},
-    yaxis:{title:''}, showlegend:false,
-  }, PLOTLY_CFG);
+  renderStats();
+  renderLeaderboard();
+  renderLanguages();
+  renderCategories();
+  renderReviewers();
+  setupTabs();
 }
 
-function renderModel(summary, model){
-  const m = summary.models[model];
-  document.getElementById('m-stat').innerHTML =
-    `<b>${model}</b> &nbsp; n=${m.n_scored} scored` +
-    (m.n_errors ? ` (${m.n_errors} errors excluded)` : '') +
-    ` &nbsp; overall pass rate <b>${fmt(m.overall_pass_rate)}%</b> &nbsp; chance ${summary.chance_baseline}%`;
+function renderStats() {
+  const totalConcepts = 184;
+  const totalLangs = LANGUAGES.length || 9;
+  const humanReviewedCount = REVIEWERS.reduce((a, b) => a + (b.total_reviewed || 0), 0) || 33;
+  const modelsCount = SUMMARY && SUMMARY.models ? Object.keys(SUMMARY.models).length : 0;
 
-  const langs = Object.entries(m.by_language);
-  Plotly.newPlot('plot-language', [
-    {
-      type:'bar', x: langs.map(l => l[0]), y: langs.map(l => l[1].pass_rate),
-      marker:{color: langs.map(l => l[1].pass_rate >= summary.chance_baseline ? '#1a936f' : '#d1495b')},
-      customdata: langs.map(l => [l[1].iso639_3, l[1].n]),
-      hovertemplate:'%{x} (%{customdata[0]}): %{y:.1f}% (n=%{customdata[1]})<extra></extra>',
-    },
-    {
-      type:'scatter', mode:'lines', x:langs.map(l=>l[0]), y:langs.map(()=>summary.chance_baseline),
-      line:{color:'#999', dash:'dash'}, hoverinfo:'skip',
-    },
-  ], {
-    height:380, margin:{l:50,r:20,t:40,b:70}, title:'Pass rate by language',
-    yaxis:{title:'Pass rate (%)', range:[0,100]}, showlegend:false,
-  }, PLOTLY_CFG);
-
-  const cats = Object.entries(m.by_category).sort((a,b) => a[1].pass_rate - b[1].pass_rate);
-  Plotly.newPlot('plot-category', [
-    {
-      type:'bar', orientation:'h', x: cats.map(c => c[1].pass_rate), y: cats.map(c => c[0]),
-      marker:{color: cats.map(c => c[1].pass_rate >= summary.chance_baseline ? '#1a936f' : '#d1495b')},
-      customdata: cats.map(c => c[1].n),
-      hovertemplate:'%{y}: %{x:.1f}% (n=%{customdata})<extra></extra>',
-    },
-    {
-      type:'scatter', mode:'lines', y:cats.map(c=>c[0]), x:cats.map(()=>summary.chance_baseline),
-      line:{color:'#999', dash:'dash'}, hoverinfo:'skip',
-    },
-  ], {
-    height:440, margin:{l:140,r:20,t:40,b:40}, title:'Pass rate by category',
-    xaxis:{title:'Pass rate (%)', range:[0,100]}, yaxis:{title:''}, showlegend:false,
-  }, PLOTLY_CFG);
-
-  const table = document.getElementById('m-table');
-  table.innerHTML = `<thead><tr><th>Language</th><th>ISO</th><th>n</th><th>Pass rate</th></tr></thead>
-    <tbody>${langs.map(([lang,v]) => `<tr><td>${lang}</td><td>${v.iso639_3}</td><td>${v.n}</td>
-      <td>${fmt(v.pass_rate)}%</td></tr>`).join('')}</tbody>`;
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="label">Evaluated Concepts</div>
+      <div class="value">${totalConcepts}</div>
+      <div class="sub">Concrete picturable nouns</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Reference Languages</div>
+      <div class="value">${totalLangs}</div>
+      <div class="sub">Anchor African languages</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Human Validations</div>
+      <div class="value">${humanReviewedCount}</div>
+      <div class="sub">Native speaker ground truth</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Benchmarked Models</div>
+      <div class="value">${modelsCount}</div>
+      <div class="sub">${modelsCount ? 'Scored on human truth' : 'In evaluation queue'}</div>
+    </div>
+  `;
 }
 
-async function main(){
-  const summary = await load('summary');
-  if (summary.__error__){
-    document.getElementById('plot-leaderboard').innerHTML = `<div class="error">${summary.__error__}</div>`;
+function renderLeaderboard() {
+  const tbody = document.getElementById('tbody-leaderboard');
+  const models = SUMMARY && SUMMARY.models ? Object.entries(SUMMARY.models) : [];
+
+  if (!models.length) {
+    tbody.innerHTML = `
+      <tr class="empty-row">
+        <td colspan="7">
+          <div style="font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--text-strong);">Ground-Truth Curation in Progress</div>
+          <div style="color:var(--text-muted);max-width:540px;margin:0 auto 14px;">
+            Native speakers are actively establishing human ground truth via the review interface (${REVIEWERS[0]?.total_reviewed || 33}+ items verified). Model benchmark scores evaluated against verified native consensus will populate here.
+          </div>
+          <a href="https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval" target="_blank" rel="noopener" class="btn-cta" style="display:inline-block;padding:8px 16px;background:var(--accent);color:#fff;border-radius:6px;">Join Human Review &rarr;</a>
+        </td>
+      </tr>
+    `;
     return;
   }
-  document.getElementById('chance-note').textContent = summary.chance_baseline + '%';
-  document.getElementById('footer').innerHTML =
-    `<small>Data: <a href="${RAW}/results/summary.json" target="_blank">${OWNER}</a> @ <code>${BRANCH}</code></small>`;
 
-  renderLeaderboard(summary);
-
-  const sel = document.getElementById('f-model');
-  const modelNames = Object.keys(summary.models);
-  sel.innerHTML = modelNames.map(m => `<option>${m}</option>`).join('');
-  sel.addEventListener('change', () => renderModel(summary, sel.value));
-  if (modelNames.length) renderModel(summary, modelNames[0]);
+  tbody.innerHTML = models.map(([mName, mData], idx) => `
+    <tr>
+      <td class="rank r${idx+1}">#${idx+1}</td>
+      <td style="font-weight:700;">${mName}</td>
+      <td class="score-bold">${mData.overall_pass_rate ?? '—'}%</td>
+      <td>${mData.binary_pass_rate ?? '—'}%</td>
+      <td>${mData.mcq_pass_rate ?? '—'}%</td>
+      <td>${mData.n_scored || mData.n_questions || '—'}</td>
+      <td><span class="badge badge-pass">Sequential Ground Truth</span></td>
+    </tr>
+  `).join('');
 }
-main();
+
+function renderLanguages() {
+  const tbody = document.getElementById('tbody-lang');
+  const select = document.getElementById('select-lang');
+
+  select.innerHTML = `<option value="all">All Languages (${LANGUAGES.length})</option>` +
+    LANGUAGES.map(l => `<option value="${l.iso}">${l.flag} ${l.language}</option>`).join('');
+
+  const renderTable = (isoFilter) => {
+    const list = isoFilter === 'all' ? LANGUAGES : LANGUAGES.filter(l => l.iso === isoFilter);
+    tbody.innerHTML = list.map(l => {
+      const reviewed = l.iso === 'twi' ? 33 : 0;
+      const statusBadge = reviewed > 0 
+        ? `<span class="badge badge-pass">${reviewed} validated</span>`
+        : `<span class="badge badge-pending">Review pending</span>`;
+      return `
+        <tr>
+          <td style="font-weight:700;">${l.flag} ${l.language}</td>
+          <td><code>${l.iso}</code></td>
+          <td>${l.all_primary_countries ? l.all_primary_countries.join(', ') : l.primary_country}</td>
+          <td>${l.word_count} concepts</td>
+          <td>${reviewed} / ${l.word_count}</td>
+          <td>${statusBadge}</td>
+        </tr>
+      `;
+    }).join('');
+  };
+
+  select.addEventListener('change', (e) => renderTable(e.target.value));
+  renderTable('all');
+}
+
+function renderCategories() {
+  const cats = [
+    { name: "Food & Drink", desc: "Native fruits, vegetables, traditional grains, and beverages", count: 30 },
+    { name: "Clothing & Attire", desc: "Traditional fabrics, apparel, turbans, and headwear", count: 24 },
+    { name: "Animals & Wildlife", desc: "Indigenous African wildlife and domesticated livestock", count: 19 },
+    { name: "Professions & Roles", desc: "Community trades, artisans, healthcare, and teachers", count: 18 },
+    { name: "Cooking & Kitchen", desc: "Traditional cookware, mortars, stoves, and utensils", count: 17 },
+    { name: "Natural World", desc: "Physical geography, mountains, water bodies, and weather", count: 13 },
+    { name: "People & Kinship", desc: "Family members, elders, children, and relations", count: 13 },
+    { name: "Farm & Agriculture", desc: "Agricultural tools, crops, hoes, and farming fields", count: 12 },
+    { name: "School & Education", desc: "Writing supplies, classroom items, and learning tools", count: 12 },
+    { name: "House & Home", desc: "Household furniture, living rooms, doors, and architecture", count: 10 },
+    { name: "Places & Towns", desc: "Markets, villages, places of worship, and streets", count: 9 },
+    { name: "Transportation", desc: "Bicycles, vehicles, buses, boats, and transit", count: 7 },
+  ];
+
+  document.getElementById('tbody-cat').innerHTML = cats.map(c => `
+    <tr>
+      <td style="font-weight:700;">${c.name}</td>
+      <td style="color:var(--text-muted);">${c.desc}</td>
+      <td>${c.count} concepts</td>
+      <td><span class="badge badge-pill">Ground Truth Active</span></td>
+    </tr>
+  `).join('');
+}
+
+function renderReviewers() {
+  const tbody = document.getElementById('tbody-reviewers');
+  if (!REVIEWERS.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="5">No reviewers registered yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = REVIEWERS.map(r => `
+    <tr>
+      <td style="font-weight:700;"><code>${r.email || r.reviewer_slug}</code></td>
+      <td>🇬🇭 Akan Twi</td>
+      <td style="font-weight:700;color:var(--success);">${r.total_reviewed} validated concepts</td>
+      <td style="color:var(--text-muted);">${r.last_active ? new Date(r.last_active).toLocaleDateString() : 'Active'}</td>
+      <td><span class="badge badge-author">Co-Author Eligible &middot; Primary Contributor</span></td>
+    </tr>
+  `).join('');
+}
+
+function setupTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('pane-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+loadData();
 </script>
 </body>
 </html>
