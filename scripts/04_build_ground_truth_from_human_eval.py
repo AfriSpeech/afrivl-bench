@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import random
 import re
@@ -30,7 +31,7 @@ from pathlib import Path
 
 from common import DATA, LANGUAGE_ISO, RESULTS, SEED
 
-from huggingface_hub import HfApi, hf_hub_download
+from huggingface_hub import snapshot_download
 
 DATASET = "AfriSpeech/afrivl-bench-human-eval"
 UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
@@ -39,19 +40,20 @@ GT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-def download_image(url: str, dest: Path) -> bool:
+def download_one(task: tuple[str, Path]) -> tuple[str, bool]:
+    url, dest = task
     if dest.exists() and dest.stat().st_size > 1000:
-        return True
+        return url, True
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     for attempt in range(3):
         try:
-            with urllib.request.urlopen(req, timeout=25) as r:
+            with urllib.request.urlopen(req, timeout=20) as r:
                 dest.write_bytes(r.read())
-                return True
+                return url, True
         except Exception:
             if attempt == 2:
-                return False
-    return False
+                return url, False
+    return url, False
 
 
 def main():
@@ -69,20 +71,20 @@ def main():
                 pass
         print(f"Loaded {len(submissions)} submissions from local directory {p}")
     else:
-        api = HfApi()
+        print(f"Syncing submissions from Hugging Face dataset {DATASET}...")
         try:
-            files = api.list_repo_files(DATASET, repo_type="dataset")
-            gt_files = [f for f in files if f.startswith("ground_truth/") and f.endswith(".json")]
-            print(f"Found {len(gt_files)} ground-truth submissions in {DATASET}")
-            for path in gt_files:
-                local = hf_hub_download(DATASET, path, repo_type="dataset")
-                submissions.append(json.loads(open(local, encoding="utf-8").read()))
+            local_dir = snapshot_download(DATASET, repo_type="dataset", allow_patterns="ground_truth/**/*.json")
+            for f in Path(local_dir).glob("ground_truth/**/*.json"):
+                try:
+                    submissions.append(json.loads(f.read_text(encoding="utf-8")))
+                except Exception:
+                    pass
+            print(f"Found {len(submissions)} ground-truth submissions in {DATASET}")
         except Exception as e:
-            print(f"Could not fetch from HF dataset: {e}", file=sys.stderr)
+            print(f"Could not fetch snapshot from HF: {e}", file=sys.stderr)
 
     if not submissions:
         print("No ground-truth submissions found yet.")
-        print(f"Reviewers can submit selections via the human-eval space.")
         return
 
     # Group submissions by item_id: e.g. "twi-airplane"
@@ -96,7 +98,9 @@ def main():
     print(f"Total unique concept items with human review: {len(by_item)}")
     rng = random.Random(SEED)
 
-    ground_truth_questions = []
+    # 1. First pass: analyze items and collect images that must be downloaded
+    planned_items = []
+    download_tasks = {}  # url -> dest_path
     none_match_items = []
     skipped_items = []
 
@@ -127,96 +131,119 @@ def main():
         chosen_sub = next(s for s in selected_subs if s["selected_image"]["image_url"] == top_url)
         top_img = chosen_sub["selected_image"]
 
-        # Sequential decision horizon: images seen up to point where human said Yes
         cand_idx = chosen_sub.get("candidate_index", 0)
         all_cands = chosen_sub.get("all_candidates", [])
         if not all_cands:
             all_cands = [top_img]
             cand_idx = 0
 
-        # Exact candidates seen by the human up to that selection point
         seen_candidates = all_cands[:cand_idx + 1]
 
         if cand_idx == 0:
-            # Case 1: 1st image was accepted -> Binary Yes/No evaluation
             correct_file = GT_IMAGES_DIR / f"{item_id}_cand0.jpg"
-            ok = download_image(top_url, correct_file)
-            if not ok:
-                print(f"Warning: Failed to download image for {item_id}: {top_url}")
-                continue
+            download_tasks[top_url] = correct_file
+            planned_items.append({
+                "type": "binary", "item_id": item_id, "language": language, "iso": iso,
+                "country": sample.get("country"), "english": english, "local_word": local_word,
+                "category": category, "slug": slug, "file": correct_file, "url": top_url,
+                "votes": n_votes, "total_reviews": len(subs),
+            })
+        else:
+            cand_entries = []
+            for c_i, c in enumerate(seen_candidates):
+                dest = GT_IMAGES_DIR / f"{item_id}_cand{c_i}.jpg"
+                download_tasks[c["image_url"]] = dest
+                cand_entries.append({
+                    "dest": dest, "url": c["image_url"], "is_correct": (c_i == cand_idx),
+                    "country": c.get("country"),
+                })
+            planned_items.append({
+                "type": "multiple_choice", "item_id": item_id, "language": language, "iso": iso,
+                "country": sample.get("country"), "english": english, "local_word": local_word,
+                "category": category, "slug": slug, "cands": cand_entries,
+                "votes": n_votes, "total_reviews": len(subs), "cand_idx": cand_idx,
+            })
 
+    # 2. Download all required images in parallel
+    print(f"Downloading {len(download_tasks)} unique candidate images in parallel...")
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        futures = [ex.submit(download_one, (u, p)) for u, p in download_tasks.items()]
+        completed = 0
+        for fut in as_completed(futures):
+            completed += 1
+            if completed % 15 == 0 or completed == len(download_tasks):
+                print(f"  [{completed}/{len(download_tasks)}] images cached")
+
+    # 3. Build benchmark questions
+    ground_truth_questions = []
+    for item in planned_items:
+        item_id = item["item_id"]
+        if item["type"] == "binary":
+            if not item["file"].exists() or item["file"].stat().st_size < 500:
+                continue
             ground_truth_questions.append({
                 "id": item_id,
                 "question_type": "binary",
-                "language": language,
-                "iso639_3": iso,
-                "country": sample.get("country"),
-                "english": english,
-                "local_word": local_word,
-                "category": category,
-                "slug": slug,
-                "image_file": str(correct_file.relative_to(DATA)),
-                "image_url": top_url,
+                "language": item["language"],
+                "iso639_3": item["iso"],
+                "country": item["country"],
+                "english": item["english"],
+                "local_word": item["local_word"],
+                "category": item["category"],
+                "slug": item["slug"],
+                "image_file": str(item["file"].relative_to(DATA)),
+                "image_url": item["url"],
                 "correct_answer": "Yes",
-                "human_votes": n_votes,
-                "total_reviews": len(subs),
+                "human_votes": item["votes"],
+                "total_reviews": item["total_reviews"],
                 "decision_depth": 1,
             })
         else:
-            # Case 2: Candidate k accepted after rejecting earlier ones -> Multiple-choice among candidates 1..k
-            cand_files = []
-            for c_i, c in enumerate(seen_candidates):
-                dest = GT_IMAGES_DIR / f"{item_id}_cand{c_i}.jpg"
-                if download_image(c["image_url"], dest):
-                    cand_files.append({
-                        "image_file": str(dest.relative_to(DATA)),
-                        "image_url": c["image_url"],
-                        "is_correct": (c_i == cand_idx),
-                        "country": c.get("country"),
-                    })
-
-            if not cand_files or not any(c["is_correct"] for c in cand_files):
-                print(f"Warning: Missing downloaded files for {item_id}")
+            valid_cands = [
+                c for c in item["cands"]
+                if c["dest"].exists() and c["dest"].stat().st_size > 500
+            ]
+            if not any(c["is_correct"] for c in valid_cands):
                 continue
 
-            # Shuffle candidate options so the correct answer isn't predictably last
-            rng.shuffle(cand_files)
-            correct_idx = next(i for i, c in enumerate(cand_files) if c["is_correct"])
+            # Shuffle candidate options
+            shuffled = valid_cands[:]
+            rng.shuffle(shuffled)
+            correct_idx = next(i for i, c in enumerate(shuffled) if c["is_correct"])
             correct_letter = LETTERS[correct_idx]
 
             image_options = [
                 {
                     "letter": LETTERS[i],
-                    "image_file": c["image_file"],
-                    "image_url": c["image_url"],
+                    "image_file": str(c["dest"].relative_to(DATA)),
+                    "image_url": c["url"],
                     "country": c.get("country"),
                 }
-                for i, c in enumerate(cand_files)
+                for i, c in enumerate(shuffled)
             ]
 
             ground_truth_questions.append({
                 "id": item_id,
                 "question_type": "multiple_choice",
-                "language": language,
-                "iso639_3": iso,
-                "country": sample.get("country"),
-                "english": english,
-                "local_word": local_word,
-                "category": category,
-                "slug": slug,
+                "language": item["language"],
+                "iso639_3": item["iso"],
+                "country": item["country"],
+                "english": item["english"],
+                "local_word": item["local_word"],
+                "category": item["category"],
+                "slug": item["slug"],
                 "image_options": image_options,
                 "correct_letter": correct_letter,
                 "correct_answer": correct_letter,
                 "correct_index": correct_idx,
-                "human_votes": n_votes,
-                "total_reviews": len(subs),
-                "decision_depth": cand_idx + 1,
+                "human_votes": item["votes"],
+                "total_reviews": item["total_reviews"],
+                "decision_depth": item["cand_idx"] + 1,
             })
 
     out_file = DATA / "questions_ground_truth.json"
     out_file.write_text(json.dumps(ground_truth_questions, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # Also write a summary of human ground truth
     by_lang_counts = Counter(q["language"] for q in ground_truth_questions)
     by_type_counts = Counter(q["question_type"] for q in ground_truth_questions)
     summary = {
@@ -230,7 +257,6 @@ def main():
 
     print(f"\nBuilt {len(ground_truth_questions)} symmetrical benchmark questions -> {out_file}")
     print(f"Question types: {dict(by_type_counts)}")
-    print(f"Items with no matching image (none match): {len(none_match_items)}")
     print(f"By language: {dict(by_lang_counts)}")
 
 

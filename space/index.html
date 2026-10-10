@@ -319,17 +319,29 @@ let LANGUAGES = [];
 let SUMMARY = null;
 let REVIEWERS = [];
 
+async function fetchFirst(paths){
+  let lastErr;
+  for (const url of paths){
+    try{
+      const r = await fetch(url, {cache:'no-store'});
+      if (!r.ok) throw new Error(`${r.status}`);
+      return r;
+    }catch(e){ lastErr = e; }
+  }
+  throw lastErr;
+}
+
 async function loadData() {
   try {
     // 1. Load language configs
-    const rLang = await fetch(`${RAW}/human-eval/data/languages.json`, { cache: 'no-store' });
-    if (rLang.ok) LANGUAGES = await rLang.json();
+    const rLang = await fetchFirst(['../data/human_eval/languages.json', '../human-eval/data/languages.json', `${RAW}/human-eval/data/languages.json`]);
+    LANGUAGES = await rLang.json();
   } catch (e) { console.log('Lang load:', e); }
 
   try {
     // 2. Load model summary if present
-    const rSum = await fetch(`${RAW}/results/summary.json`, { cache: 'no-store' });
-    if (rSum.ok) SUMMARY = await rSum.json();
+    const rSum = await fetchFirst(['../results/summary.json', `${RAW}/results/summary.json`]);
+    SUMMARY = await rSum.json();
   } catch (e) { console.log('Summary load:', e); }
 
   try {
@@ -389,6 +401,7 @@ function renderStats() {
 function renderLeaderboard() {
   const tbody = document.getElementById('tbody-leaderboard');
   const models = SUMMARY && SUMMARY.models ? Object.entries(SUMMARY.models) : [];
+  models.sort((a, b) => (b[1].overall_pass_rate || 0) - (a[1].overall_pass_rate || 0));
 
   if (!models.length) {
     tbody.innerHTML = `

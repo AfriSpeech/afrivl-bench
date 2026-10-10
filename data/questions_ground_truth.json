@@ -1,0 +1,1500 @@
+[
+  {
+    "id": "twi-airplane",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Airplane",
+    "local_word": "Wiemuhyɛn",
+    "category": "transportation",
+    "slug": "airplane",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-airplane_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/04_La_Tante_DC-10_Restaurant.jpg/500px-04_La_Tante_DC-10_Restaurant.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-airplane_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/14-Airplane-Restaurant-Accra-DSC00592.jpg/500px-14-Airplane-Restaurant-Accra-DSC00592.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_answer": "B",
+    "correct_index": 1,
+    "human_votes": 2,
+    "total_reviews": 4,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-guava",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Guava",
+    "local_word": "Oguaa",
+    "category": "food and drink",
+    "slug": "guava",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-guava_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Alike_Guava_Flower2.jpg/500px-Alike_Guava_Flower2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-guava_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Alike_Guava_Fruit1.jpg/500px-Alike_Guava_Fruit1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-guava_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Alike_Guava_Flower1.jpg/500px-Alike_Guava_Flower1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_answer": "B",
+    "correct_index": 1,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 3
+  },
+  {
+    "id": "twi-earring",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Earring",
+    "local_word": "Asomadeɛ",
+    "category": "clothing",
+    "slug": "earring",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-earring_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Gambia_%282344556271%29.jpg/500px-Gambia_%282344556271%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Gambia"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-earring_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Ceccy_Twum_1.jpg/500px-Ceccy_Twum_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-earring_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/African_Bride.jpg/500px-African_Bride.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-earring_cand7.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Le_r%C3%AAve.jpg/500px-Le_r%C3%AAve.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-earring_cand6.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/CLOSEUP_OF_A_BLACK_BEAUTY_GRACING_A_FLOAT_DURING_THE_ANNUAL_BUD_BILLIKEN_DAY_PARADE_ALONG_DR._MARTIN_L._KING_JR...._-_NARA_-_556281.jpg/500px-CLOSEUP_OF_A_BLACK_BEAUTY_GRACING_A_FLOAT_DURING_THE_ANNUAL_BUD_BILLIKEN_DAY_PARADE_ALONG_DR._MARTIN_L._KING_JR...._-_NARA_-_556281.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-earring_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/A_Nigerian_Yoruba_lady_in_a_Buba_and_Gele_headtie.jpg/500px-A_Nigerian_Yoruba_lady_in_a_Buba_and_Gele_headtie.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Nigeria"
+      },
+      {
+        "letter": "G",
+        "image_file": "images/ground_truth/twi-earring_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/AssisesNationalesS%C3%A9n%C3%A9gal58.jpg/500px-AssisesNationalesS%C3%A9n%C3%A9gal58.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "H",
+        "image_file": "images/ground_truth/twi-earring_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Agundabweni_Akweyu_and_Evelyn_Wanjiru.jpg/500px-Agundabweni_Akweyu_and_Evelyn_Wanjiru.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Kenya"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 8
+  },
+  {
+    "id": "twi-farmer",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Farmer",
+    "local_word": "Okuani",
+    "category": "professions",
+    "slug": "farmer",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-farmer_cand8.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/Farmers_in_Ghana_women.jpg/500px-Farmers_in_Ghana_women.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-farmer_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/A_farmer_preparing_poultry_feed.jpg/500px-A_farmer_preparing_poultry_feed.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-farmer_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/A_farmer_and_his_friend_in_northern_Ghana.jpg/500px-A_farmer_and_his_friend_in_northern_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-farmer_cand9.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Female_Farmer_with_Her_Children_in_Northern_Ghana.png/500px-Female_Farmer_with_Her_Children_in_Northern_Ghana.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-farmer_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/A_farmer_using_the_tractor_in_northern_ghana_02.jpg/500px-A_farmer_using_the_tractor_in_northern_ghana_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-farmer_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/A_farmer_using_the_tractor_in_northern_ghana.jpg/500px-A_farmer_using_the_tractor_in_northern_ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "G",
+        "image_file": "images/ground_truth/twi-farmer_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/A_Female_Farmer_in_Northern_Ghana.png/500px-A_Female_Farmer_in_Northern_Ghana.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "H",
+        "image_file": "images/ground_truth/twi-farmer_cand7.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Chicken_farmer_in_Ghana_%285926941911%29.jpg/500px-Chicken_farmer_in_Ghana_%285926941911%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "I",
+        "image_file": "images/ground_truth/twi-farmer_cand6.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/A_farmer_using_the_tractor_in_northern_ghana_03.jpg/500px-A_farmer_using_the_tractor_in_northern_ghana_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "J",
+        "image_file": "images/ground_truth/twi-farmer_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/A_farmer_packing_firewood_in_northern_Ghana.jpg/500px-A_farmer_packing_firewood_in_northern_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 10
+  },
+  {
+    "id": "twi-goat",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Goat",
+    "local_word": "Abirekyie",
+    "category": "animals",
+    "slug": "goat",
+    "image_file": "images/ground_truth/twi-goat_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/A_Goat_1.jpg/500px-A_Goat_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-egg",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Egg",
+    "local_word": "Kosua",
+    "category": "food and drink",
+    "slug": "egg",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-egg_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Egg_seller_in_Ghana.jpg/500px-Egg_seller_in_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-egg_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Boiled_yam_and_garden_egg_stew.jpg/500px-Boiled_yam_and_garden_egg_stew.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-fork",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Fork",
+    "local_word": "Adinam",
+    "category": "cooking",
+    "slug": "fork",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-fork_cand6.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Ustensiles_de_cuisine-2025.jpg/500px-Ustensiles_de_cuisine-2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-fork_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Strangler_fig_at_Aburi_Botanical_Garden.jpg/500px-Strangler_fig_at_Aburi_Botanical_Garden.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-fork_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Aburi_garden_3.jpg/500px-Aburi_garden_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-fork_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Western_Accord_13_130619-Z-ZZ999-005.jpg/500px-Western_Accord_13_130619-Z-ZZ999-005.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-fork_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Fork-tailed_Drongo%2C_Dicrurus_adsimilis%2C_at_Marakele_National_Park%2C_Limpopo%2C_South_Africa_%2816222726018%29.jpg/500px-Fork-tailed_Drongo%2C_Dicrurus_adsimilis%2C_at_Marakele_National_Park%2C_Limpopo%2C_South_Africa_%2816222726018%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-fork_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Ghana_Aburi_Botanical_gardens_%2811%29.jpg/500px-Ghana_Aburi_Botanical_gardens_%2811%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "G",
+        "image_file": "images/ground_truth/twi-fork_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Fork-tailed_Drongo_%28Dicrurus_adsimilis%29_%2820716342139%29.jpg/500px-Fork-tailed_Drongo_%28Dicrurus_adsimilis%29_%2820716342139%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 7
+  },
+  {
+    "id": "twi-driver",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Driver",
+    "local_word": "Drɔbani",
+    "category": "professions",
+    "slug": "driver",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-driver_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Danfo_Driver_on_Nigeria_Road.jpg/500px-Danfo_Driver_on_Nigeria_Road.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Nigeria"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-driver_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Trotro1.jpg/500px-Trotro1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-fish",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Fish",
+    "local_word": "Nsuomunam",
+    "category": "food and drink",
+    "slug": "fish",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-fish_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Dried_fish_in_Winneba%2C_Ghana.jpg/500px-Dried_fish_in_Winneba%2C_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-fish_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Cassava_fish_vendor.jpg/500px-Cassava_fish_vendor.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-fish_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Cassava_fish.jpg/500px-Cassava_fish.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-fish_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Accra_Ghana_2.jpg/500px-Accra_Ghana_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 4
+  },
+  {
+    "id": "twi-duck",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Duck",
+    "local_word": "Dabodabo",
+    "category": "animals",
+    "slug": "duck",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-duck_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/1st_Battalion%2C_175th_Infantry_Regiment_conducts_nighttime_mortar_range_at_African_Lion_2024_%288384654%29.jpg/500px-1st_Battalion%2C_175th_Infantry_Regiment_conducts_nighttime_mortar_range_at_African_Lion_2024_%288384654%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-duck_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Xwildduckhunting.jpg/500px-Xwildduckhunting.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-duck_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Anas_sparsa%2C_Walter_Sisulu_NBG_1.jpg/500px-Anas_sparsa%2C_Walter_Sisulu_NBG_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-duck_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/2_Rouen_Duck.jpg/500px-2_Rouen_Duck.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Nigeria"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 4
+  },
+  {
+    "id": "twi-girl",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Girl",
+    "local_word": "Abayewa",
+    "category": "people",
+    "slug": "girl",
+    "image_file": "images/ground_truth/twi-girl_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/A_Primary_School_Girl_in_Ghana.jpg/500px-A_Primary_School_Girl_in_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-doorway",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Doorway",
+    "local_word": "Ɛpono",
+    "category": "house",
+    "slug": "doorway",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-doorway_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Circular_Doorway.jpg/500px-Circular_Doorway.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-doorway_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/ASC_Leiden_-_NSAG_-_Crebolder_1_-_086_-_Kwame_N%27krumah%2C_at_the_Volta_project_-_Akosombo_Dam_in_the_Volta_River%2C_Ghana_-_February_24%2C_1962_%28cropped%29.tiff/lossy-page1-500px-ASC_Leiden_-_NSAG_-_Crebolder_1_-_086_-_Kwame_N%27krumah%2C_at_the_Volta_project_-_Akosombo_Dam_in_the_Volta_River%2C_Ghana_-_February_24%2C_1962_%28cropped%29.tiff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-doorway_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/ASC_Leiden_-_NSAG_-_Crebolder_1_-_086_-_Kwame_N%27krumah%2C_at_the_Volta_project_-_Akosombo_Dam_in_the_Volta_River%2C_Ghana_-_February_24%2C_1962.tiff/lossy-page1-500px-ASC_Leiden_-_NSAG_-_Crebolder_1_-_086_-_Kwame_N%27krumah%2C_at_the_Volta_project_-_Akosombo_Dam_in_the_Volta_River%2C_Ghana_-_February_24%2C_1962.tiff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-doorway_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Door_of_No_Return%2CElmina_Castle.jpg/500px-Door_of_No_Return%2CElmina_Castle.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-doorway_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Door_Ghana.jpg/500px-Door_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 5
+  },
+  {
+    "id": "twi-hat",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Hat",
+    "local_word": "Ɛkyɛ",
+    "category": "clothing",
+    "slug": "hat",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-hat_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Chief_Moomen.jpg/500px-Chief_Moomen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-hat_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/A_kid_wearing_Dagbon_traditional_attire.jpg/500px-A_kid_wearing_Dagbon_traditional_attire.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-fire",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Fire",
+    "local_word": "Egya",
+    "category": "cooking",
+    "slug": "fire",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-fire_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Fish_smoking_in_Ghana.jpg/500px-Fish_smoking_in_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-fire_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/A_buld_of_fire_wood.jpg/500px-A_buld_of_fire_wood.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-fire_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Cooking_stands.jpg/500px-Cooking_stands.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-fire_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Buld_of_fire_wood.jpg/500px-Buld_of_fire_wood.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-fire_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Daan%27ku%C9%A3a.jpg/500px-Daan%27ku%C9%A3a.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-fire_cand4.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/FIRE_WOOD.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 6
+  },
+  {
+    "id": "twi-dress",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Dress",
+    "local_word": "Atadeɛ",
+    "category": "clothing",
+    "slug": "dress",
+    "image_file": "images/ground_truth/twi-dress_cand0.jpg",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/32/A_regent_dressed_in_his_local_dress_in_Northern_Ghana_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-cow",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cow",
+    "local_word": "Nantwie",
+    "category": "animals",
+    "slug": "cow",
+    "image_file": "images/ground_truth/twi-cow_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/A_tied_cow_captured_from_the_back_in_Tamale%2C_Ghana.jpg/500px-A_tied_cow_captured_from_the_back_in_Tamale%2C_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-beans",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Beans",
+    "local_word": "Adua",
+    "category": "food and drink",
+    "slug": "beans",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-beans_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Beans_as_a_Legumes_grown_in_Africa.jpg/500px-Beans_as_a_Legumes_grown_in_Africa.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-beans_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Bambara_beans_farm.jpg/500px-Bambara_beans_farm.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-cutlass",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cutlass",
+    "local_word": "Sekan/Kotokuro",
+    "category": "farm",
+    "slug": "cutlass",
+    "image_file": "images/ground_truth/twi-cutlass_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/A_farmer_boy.jpg/500px-A_farmer_boy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-cooking-oil",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cooking oil",
+    "local_word": "Anwa",
+    "category": "cooking",
+    "slug": "cooking-oil",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Chapati_Sukari.jpg/500px-Chapati_Sukari.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Kenya"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Traditional_Cooking_in_Nigeria.jpg/500px-Traditional_Cooking_in_Nigeria.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Nigeria"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Northern_Ghana_woman_producing_Shea_nut_oil.jpg/500px-Northern_Ghana_woman_producing_Shea_nut_oil.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand11.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Visit_of_Valdis_Dombrovskis%2C_Vice-President_of_the_EC%2C_and_Neven_Mimica%2C_Marianne_Thyssen_and_Christos_Stylianides%2C_Members_of_the_EC%2C_to_Ethiopia_%28P-031222-00-21%29.jpg/500px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ethiopia"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand7.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Chapati_Sukari_3.jpg/500px-Chapati_Sukari_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Kenya"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand9.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Gnankatang._Rice_Pilaf_Dorad_fish_with_Red_Palm_Oil.jpg/500px-Gnankatang._Rice_Pilaf_Dorad_fish_with_Red_Palm_Oil.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "G",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand10.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Thi%C3%A9boudi%C3%A8ne_preparation_3._searing_the_fish.jpg/500px-Thi%C3%A9boudi%C3%A8ne_preparation_3._searing_the_fish.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "H",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Shelves_of_metal_kitchenware.jpg/500px-Shelves_of_metal_kitchenware.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "I",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand6.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Deukhine_-_sauce_with_peanut_butter_and_tamarind_-_basic_ingredients.jpg/500px-Deukhine_-_sauce_with_peanut_butter_and_tamarind_-_basic_ingredients.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "J",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Deukhine_-_sauce_with_peanut_butter_and_tamarind%2C_served_in_communal_platter.jpg/500px-Deukhine_-_sauce_with_peanut_butter_and_tamarind%2C_served_in_communal_platter.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "K",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Chapati_Sukari_2.jpg/500px-Chapati_Sukari_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Kenya"
+      },
+      {
+        "letter": "L",
+        "image_file": "images/ground_truth/twi-cooking-oil_cand8.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Gnankatang._Basic_Ingredients.jpg/500px-Gnankatang._Basic_Ingredients.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 12
+  },
+  {
+    "id": "twi-bird",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bird",
+    "local_word": "Anomaa",
+    "category": "animals",
+    "slug": "bird",
+    "image_file": "images/ground_truth/twi-bird_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Bearded_Barbet_-_Ghana_S4E1149_%2816382667196%29.jpg/500px-Bearded_Barbet_-_Ghana_S4E1149_%2816382667196%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-chicken",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Chicken",
+    "local_word": "Akokɔ",
+    "category": "animals",
+    "slug": "chicken",
+    "image_file": "images/ground_truth/twi-chicken_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/A_black_hen.jpg/500px-A_black_hen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-brother",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Brother",
+    "local_word": "Nua barima",
+    "category": "people",
+    "slug": "brother",
+    "image_file": "images/ground_truth/twi-brother_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Brother_and_sister_fetching_water.jpg/500px-Brother_and_sister_fetching_water.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 2,
+    "total_reviews": 2,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-blackboard",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Blackboard",
+    "local_word": "Twerɛ pono",
+    "category": "school",
+    "slug": "blackboard",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-blackboard_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Description_needed._%2826816369625%29.jpg/500px-Description_needed._%2826816369625%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-blackboard_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/ASC_Leiden_-_NSAG_-_Crebolder_2_-_30_-_Five_schoolgirls_are_listening_to_a_Dutch_student_-_Cape_Coast%2C_Ghana_-_January-February_1962.tif/lossy-page1-500px-ASC_Leiden_-_NSAG_-_Crebolder_2_-_30_-_Five_schoolgirls_are_listening_to_a_Dutch_student_-_Cape_Coast%2C_Ghana_-_January-February_1962.tif.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-child",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Child",
+    "local_word": "Ɔba",
+    "category": "people",
+    "slug": "child",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-child_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/A_child_taking_break_fast_in_Ghana_Tamale.jpg/500px-A_child_taking_break_fast_in_Ghana_Tamale.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-child_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/A_woman_cuddles_her_child_in_northern_Ghana_%288406177626%29.jpg/500px-A_woman_cuddles_her_child_in_northern_Ghana_%288406177626%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_answer": "B",
+    "correct_index": 1,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-bicycle",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bicycle",
+    "local_word": "Basekre",
+    "category": "transportation",
+    "slug": "bicycle",
+    "image_file": "images/ground_truth/twi-bicycle_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Bicycle_0001.jpg/500px-Bicycle_0001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-church",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Church",
+    "local_word": "Asɔredan",
+    "category": "places",
+    "slug": "church",
+    "image_file": "images/ground_truth/twi-church_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/A_Village_Church_in_Northern_Ghana.jpg/500px-A_Village_Church_in_Northern_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-beer",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Beer",
+    "local_word": "Bia",
+    "category": "food and drink",
+    "slug": "beer",
+    "image_file": "images/ground_truth/twi-beer_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Feast_of_Ghana_22.jpg/500px-Feast_of_Ghana_22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-car",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Car",
+    "local_word": "Teaseɛnam",
+    "category": "transportation",
+    "slug": "car",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-car_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Abandoned_Vehicle_13.jpg/500px-Abandoned_Vehicle_13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-car_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Ash_Car_on_the_road.jpg/500px-Ash_Car_on_the_road.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_answer": "B",
+    "correct_index": 1,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-dog",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Dog",
+    "local_word": "Ɔkraman",
+    "category": "animals",
+    "slug": "dog",
+    "image_file": "images/ground_truth/twi-dog_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Dog_in_a_cage.jpg/500px-Dog_in_a_cage.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-bell",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bell",
+    "local_word": "Adɔma",
+    "category": "school",
+    "slug": "bell",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-bell_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/A_locally_made_bell_for_playing_in_Northern_Ghana_02.jpg/500px-A_locally_made_bell_for_playing_in_Northern_Ghana_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-bell_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/A_locally_made_bell_for_playing_in_Northern_Ghana_04.jpg/500px-A_locally_made_bell_for_playing_in_Northern_Ghana_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-bell_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/A_locally_made_bell_for_playing_in_Northern_Ghana_01.jpg/500px-A_locally_made_bell_for_playing_in_Northern_Ghana_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-bell_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/A_locally_made_bell_for_playing_in_Northern_Ghana_03.jpg/500px-A_locally_made_bell_for_playing_in_Northern_Ghana_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-bell_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Bell_1.jpg/500px-Bell_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "E",
+    "correct_answer": "E",
+    "correct_index": 4,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 5
+  },
+  {
+    "id": "twi-cup",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cup",
+    "local_word": "Kuruwa",
+    "category": "cooking",
+    "slug": "cup",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-cup_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/African_Cup_of_Nations_Ghana_2008.png/500px-African_Cup_of_Nations_Ghana_2008.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-cup_cand7.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Jordan_Ayew_9_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg/500px-Jordan_Ayew_9_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-cup_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Benjamin_Asare_16_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_03.jpg/500px-Benjamin_Asare_16_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-cup_cand5.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/FIFA_World_Cup_2010_Ghana_Germany.jpg/500px-FIFA_World_Cup_2010_Ghana_Germany.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-cup_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Caleb_Yirenkyi_3_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg/500px-Caleb_Yirenkyi_3_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "F",
+        "image_file": "images/ground_truth/twi-cup_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Elliot_Anderson_8%2C_Caleb_Yirenkyi_3_England_v_Ghana_at_2026_Fifa_World_Cup.jpg/500px-Elliot_Anderson_8%2C_Caleb_Yirenkyi_3_England_v_Ghana_at_2026_Fifa_World_Cup.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "G",
+        "image_file": "images/ground_truth/twi-cup_cand9.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Boiled_tea_West_African_chai.jpg/500px-Boiled_tea_West_African_chai.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "H",
+        "image_file": "images/ground_truth/twi-cup_cand6.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Ghana_England_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg/500px-Ghana_England_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "I",
+        "image_file": "images/ground_truth/twi-cup_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Benjamin_Asare_16_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_02.jpg/500px-Benjamin_Asare_16_England_v_Ghana_at_2026_Fifa_World_Cup_by_YantsImages_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "J",
+        "image_file": "images/ground_truth/twi-cup_cand8.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/35th_U.S._Army_Culinary_Arts_Competition_-_March_2010.jpg/500px-35th_U.S._Army_Culinary_Arts_Competition_-_March_2010.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      }
+    ],
+    "correct_letter": "G",
+    "correct_answer": "G",
+    "correct_index": 6,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 10
+  },
+  {
+    "id": "twi-cassava",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cassava",
+    "local_word": "Bankye",
+    "category": "farm",
+    "slug": "cassava",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-cassava_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Cassava_09.jpg/500px-Cassava_09.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-cassava_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/A_cassava_plantation_farm_in_Northern_Ghana.jpg/500px-A_cassava_plantation_farm_in_Northern_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-boy",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Boy",
+    "local_word": "Abarimaa",
+    "category": "people",
+    "slug": "boy",
+    "image_file": "images/ground_truth/twi-boy_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/A_Dagomba_boy_playing_with_a_motorcycle_tire_in_Northern_Ghana_01.jpg/500px-A_Dagomba_boy_playing_with_a_motorcycle_tire_in_Northern_Ghana_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-city",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "City",
+    "local_word": "Kuro Keseɛ",
+    "category": "places",
+    "slug": "city",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-city_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Accra%2C_Ghana_%28Copernicus_2025-07-14%29.png/500px-Accra%2C_Ghana_%28Copernicus_2025-07-14%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-city_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/A_pile_of_rubish_in_the_City_of_Accra-Ghana.jpg/500px-A_pile_of_rubish_in_the_City_of_Accra-Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-city_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Accra_Ghana_2.jpg/500px-Accra_Ghana_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_answer": "C",
+    "correct_index": 2,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 3
+  },
+  {
+    "id": "twi-bathroom",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bathroom",
+    "local_word": "Adwareɛ",
+    "category": "house",
+    "slug": "bathroom",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-bathroom_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Badala_Park_Hotel_%284379976359%29.jpg/500px-Badala_Park_Hotel_%284379976359%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Gambia"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-bathroom_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Palace_Home_Decor_Accra_Ghana.jpg/500px-Palace_Home_Decor_Accra_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-bathroom_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Salle_de_bain_en_Casamance.jpg/500px-Salle_de_bain_en_Casamance.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-bathroom_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Stolen_scene_of_daily_life.jpg/500px-Stolen_scene_of_daily_life.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Kenya"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-bathroom_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Sanitary_appliances_02.jpg/500px-Sanitary_appliances_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Nigeria"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 2,
+    "total_reviews": 2,
+    "decision_depth": 5
+  },
+  {
+    "id": "twi-bread",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bread",
+    "local_word": "Paanoo",
+    "category": "food and drink",
+    "slug": "bread",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-bread_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Baked_butter_bread.jpg/500px-Baked_butter_bread.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-bread_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/BREAD_TOAST_WITH_FRIED_EGG.jpg/500px-BREAD_TOAST_WITH_FRIED_EGG.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 2,
+    "total_reviews": 2,
+    "decision_depth": 2
+  },
+  {
+    "id": "twi-donkey",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Donkey",
+    "local_word": "Afunumu",
+    "category": "animals",
+    "slug": "donkey",
+    "image_file": "images/ground_truth/twi-donkey_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1c/A_group_of_donkeys.jpg/500px-A_group_of_donkeys.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-boat",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Boat",
+    "local_word": "Bonto",
+    "category": "transportation",
+    "slug": "boat",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-boat_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Ghana_Military.JPG/500px-Ghana_Military.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-boat_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Still_Life_with_Overturned_Boats_-_Elmina_-_Ghana_%284721712210%29.jpg/500px-Still_Life_with_Overturned_Boats_-_Elmina_-_Ghana_%284721712210%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-boat_cand3.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Xaudience1.jpg/500px-Xaudience1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "D",
+        "image_file": "images/ground_truth/twi-boat_cand4.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/By_boat_photo_1_by_Serdiuk.jpg/500px-By_boat_photo_1_by_Serdiuk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "E",
+        "image_file": "images/ground_truth/twi-boat_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Transporte_p%C3%BAblico_de_Ghana_%E2%80%93_Public_Transport_in_Ghana_%28collage%29.JPG/500px-Transporte_p%C3%BAblico_de_Ghana_%E2%80%93_Public_Transport_in_Ghana_%28collage%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_answer": "D",
+    "correct_index": 3,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 5
+  },
+  {
+    "id": "twi-box",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Box",
+    "local_word": "Adaka",
+    "category": "school",
+    "slug": "box",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-box_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/A_collection_of_old_shoe_maker_boxes_in_northern_Ghana_04.jpg/500px-A_collection_of_old_shoe_maker_boxes_in_northern_Ghana_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-box_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Ballot_Box_in_a_Ghana_Election_01.jpg/500px-Ballot_Box_in_a_Ghana_Election_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-box_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/2018_08_Ghana_football_time-9.jpg/500px-2018_08_Ghana_football_time-9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_answer": "B",
+    "correct_index": 1,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 3
+  },
+  {
+    "id": "twi-banana",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Banana",
+    "local_word": "Kwadu",
+    "category": "food and drink",
+    "slug": "banana",
+    "image_file": "images/ground_truth/twi-banana_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/BANANA.jpg/500px-BANANA.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 2,
+    "total_reviews": 2,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-cloud",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Cloud",
+    "local_word": "Mmununkum",
+    "category": "natural world",
+    "slug": "cloud",
+    "image_file": "images/ground_truth/twi-cloud_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/A_rocky_outcrop.jpg/500px-A_rocky_outcrop.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  },
+  {
+    "id": "twi-chair",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Chair",
+    "local_word": "Akonnwa",
+    "category": "house",
+    "slug": "chair",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-chair_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/A_South_Sudanese_boy_distilling_alcohol_at_home.jpg/500px-A_South_Sudanese_boy_distilling_alcohol_at_home.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "South Africa"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-chair_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Family_gathering_%CC%A0_2.jpg/500px-Family_gathering_%CC%A0_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-chair_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/B%C3%A2timent_en_bois.jpg/500px-B%C3%A2timent_en_bois.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Senegal"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_answer": "C",
+    "correct_index": 2,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 3
+  },
+  {
+    "id": "twi-corn",
+    "question_type": "multiple_choice",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Corn",
+    "local_word": "Aburoo",
+    "category": "food and drink",
+    "slug": "corn",
+    "image_options": [
+      {
+        "letter": "A",
+        "image_file": "images/ground_truth/twi-corn_cand2.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Checking_the_corn_crop_in_the_field.jpg/500px-Checking_the_corn_crop_in_the_field.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "B",
+        "image_file": "images/ground_truth/twi-corn_cand1.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Benson_Ibeabuchi_Homowo_2018_2.jpg/500px-Benson_Ibeabuchi_Homowo_2018_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      },
+      {
+        "letter": "C",
+        "image_file": "images/ground_truth/twi-corn_cand0.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Benson_Ibeabuchi_Homowo_2018.jpg/500px-Benson_Ibeabuchi_Homowo_2018.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "country": "Ghana"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_answer": "A",
+    "correct_index": 0,
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 3
+  },
+  {
+    "id": "twi-bed",
+    "question_type": "binary",
+    "language": "Akan Twi",
+    "iso639_3": "twi",
+    "country": "Ghana",
+    "english": "Bed",
+    "local_word": "Mpa",
+    "category": "house",
+    "slug": "bed",
+    "image_file": "images/ground_truth/twi-bed_cand0.jpg",
+    "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/2_beds_one_room.jpg/500px-2_beds_one_room.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "correct_answer": "Yes",
+    "human_votes": 1,
+    "total_reviews": 1,
+    "decision_depth": 1
+  }
+]

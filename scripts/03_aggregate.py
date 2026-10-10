@@ -17,6 +17,9 @@ def aggregate_model(rows: list[dict]) -> dict:
     n = len(scored)
     n_pass = sum(r["pass"] for r in scored)
 
+    binary_rows = [r for r in scored if r.get("question_type") == "binary"]
+    mcq_rows = [r for r in scored if r.get("question_type") != "binary"]
+
     by_lang = defaultdict(list)
     by_cat = defaultdict(list)
     for r in scored:
@@ -28,7 +31,9 @@ def aggregate_model(rows: list[dict]) -> dict:
         "n_scored": n,
         "n_errors": errors,
         "overall_pass_rate": pct(n_pass, n),
-        "chance_baseline": round(100 / N_CHOICES, 1),
+        "binary_pass_rate": pct(sum(r["pass"] for r in binary_rows), len(binary_rows)),
+        "mcq_pass_rate": pct(sum(r["pass"] for r in mcq_rows), len(mcq_rows)),
+        "chance_baseline": 25.0,
         "by_language": {
             lang: {
                 "iso639_3": rs[0]["iso639_3"],

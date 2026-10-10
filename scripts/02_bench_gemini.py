@@ -44,19 +44,18 @@ def slug_model(model: str) -> str:
 
 
 def prompt_for(q: dict) -> str:
+    word = q.get("local_word", q.get("english"))
     if q.get("question_type") == "binary":
         return (
-            f"The attached image is presented for the word '{q.get('local_word', q.get('english'))}' "
-            f"({q.get('english', '')}) in {q['language']}.\n\n"
-            f"Does this image correctly and accurately depict this concept?\n"
+            f"The attached image is presented for the word '{word}' in {q['language']}.\n\n"
+            f"Does this image correctly and accurately depict this word?\n"
             f"Answer with only 'Yes' or 'No'."
         )
     if q.get("image_options"):
         valid_letters = ", ".join(opt["letter"] for opt in q["image_options"])
         return (
             f"The images above are labeled {valid_letters} in order.\n\n"
-            f"Which image correctly depicts the word '{q.get('local_word', q.get('english'))}' "
-            f"({q.get('english', '')}) in {q['language']}?\n\n"
+            f"Which image correctly depicts the word '{word}' in {q['language']}?\n\n"
             f"Answer with only the letter ({valid_letters}) of the correct image."
         )
     opts = "\n".join(f"{LETTERS[i]}. {c}" for i, c in enumerate(q["choices"]))

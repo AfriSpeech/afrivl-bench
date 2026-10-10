@@ -1,0 +1,12 @@
+{
+  "total_human_submissions": 56,
+  "total_ground_truth_questions": 44,
+  "none_match_items_count": 4,
+  "by_question_type": {
+    "multiple_choice": 27,
+    "binary": 17
+  },
+  "by_language": {
+    "Akan Twi": 44
+  }
+}
