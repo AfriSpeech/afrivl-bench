@@ -163,6 +163,7 @@ let queue = [];
 let current = null;
 let candIdx = 0;
 let sessionAnsweredCount = 0;
+let historyStack = [];
 
 const card = document.getElementById('card');
 
@@ -230,6 +231,7 @@ async function selectLanguage(langObj){
   ]);
   ITEMS = await r.json();
   sessionAnsweredCount = 0;
+  historyStack = [];
   buildQueue();
   nextWord();
 }
@@ -272,32 +274,34 @@ function renderCandidate(){
 
     <div class="word-header">
       <div class="local-word">${current.local_word}</div>
-      <div class="concept-meta">English: <b>${current.english}</b> · Category: <b>${current.category}</b> · Country: <b>${current.primary_country}</b></div>
+      <div class="concept-meta">English: <b>${current.english}</b> · Category: <b>${current.category}</b></div>
     </div>
 
     <div class="imgwrap">
       <img src="${im.image_url}" alt="${current.english}" onerror="onImgError()">
-      <div class="country-pill">${im.country || current.primary_country}</div>
       <div class="cand-badge">${candIdx + 1} of ${totalCands}</div>
-      <div class="img-credit">${im.country ? `[${im.country}] ` : ''}${(im.artist || im.page_title || '').replace(/</g,'')}</div>
+      <div class="img-credit">${(im.artist || im.page_title || '').replace(/</g,'')}</div>
     </div>
 
     <p class="prompt">Does this picture show <b>${current.local_word}</b> (${current.english})?</p>
 
     <div class="btn-row">
-      <button class="choice-btn no-btn" id="no-btn">✕ No, next image</button>
       <button class="choice-btn yes-btn" id="yes-btn">✓ Yes, matches!</button>
+      <button class="choice-btn no-btn" id="no-btn">✕ No, next image</button>
     </div>
 
     <div class="sub-actions">
+      <button class="link-btn" id="prev-btn"${historyStack.length ? '' : ' disabled style="opacity:0.35;cursor:default;"'}>← Go back to previous</button>
       <button class="link-btn" id="skip-word-btn">Skip word →</button>
-      <span class="key-hint">Keys: [N] No · [Y] Yes</span>
       <button class="link-btn" id="switch-lang-btn">Change language</button>
     </div>
   `;
 
   document.getElementById('yes-btn').addEventListener('click', onYes);
   document.getElementById('no-btn').addEventListener('click', onNo);
+  if (historyStack.length) {
+    document.getElementById('prev-btn').addEventListener('click', onPrevious);
+  }
   document.getElementById('skip-word-btn').addEventListener('click', onSkip);
   document.getElementById('switch-lang-btn').addEventListener('click', renderLangPicker);
 }
@@ -311,6 +315,8 @@ function onImgError(){
 
 function onYes(){
   const chosenImg = current.images[candIdx];
+  historyStack.push({ type: 'word', word: current, candIdx, wasAnswered: true });
+
   const payload = {
     type: 'ground_truth_selection',
     action: 'matched',
@@ -339,11 +345,35 @@ function onYes(){
 }
 
 function onNo(){
+  historyStack.push({ type: 'cand', word: current, candIdx, wasAnswered: false });
   candIdx++;
   renderCandidate();
 }
 
+function onPrevious(){
+  if (!historyStack.length) return;
+  const prev = historyStack.pop();
+  if (prev.type === 'word' || prev.type === 'skip') {
+    if (prev.type === 'word') {
+      const reviewed = getReviewed(currentLang.iso);
+      reviewed.delete(prev.word.id);
+      localStorage.setItem(reviewedKey(currentLang.iso), JSON.stringify([...reviewed]));
+      if (sessionAnsweredCount > 0) sessionAnsweredCount--;
+    }
+    if (current && current.id !== prev.word.id) {
+      queue.unshift(current);
+    }
+    current = prev.word;
+    candIdx = prev.candIdx;
+    renderCandidate();
+  } else if (prev.type === 'cand') {
+    candIdx = prev.candIdx;
+    renderCandidate();
+  }
+}
+
 function onExhaustedNoMatch(){
+  historyStack.push({ type: 'word', word: current, candIdx: current.images.length - 1, wasAnswered: true });
   const payload = {
     type: 'ground_truth_selection',
     action: 'no_match_exhausted',
@@ -371,6 +401,7 @@ function onExhaustedNoMatch(){
 }
 
 function onSkip(){
+  historyStack.push({ type: 'skip', word: current, candIdx, wasAnswered: false });
   const payload = {
     type: 'ground_truth_selection',
     action: 'skipped',
@@ -406,16 +437,21 @@ function renderFinished(){
   document.getElementById('another-lang-btn').addEventListener('click', renderLangPicker);
 }
 
-// Keyboard shortcuts: Y/y or Enter -> Yes, N/n or Space -> No
+// Keyboard shortcuts: Y/y -> Yes, N/n or Space -> No, Backspace/ArrowLeft -> Previous
 window.addEventListener('keydown', e => {
   if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
   if (!current) return;
-  if (e.key === 'y' || e.key === 'Y' || e.key === 'Enter') {
+  if (e.key === 'y' || e.key === 'Y') {
     e.preventDefault();
     onYes();
   } else if (e.key === 'n' || e.key === 'N' || e.key === ' ') {
     e.preventDefault();
     onNo();
+  } else if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
+    if (historyStack.length) {
+      e.preventDefault();
+      onPrevious();
+    }
   }
 });
 
