@@ -11,6 +11,13 @@ Lexical translation frequently maps nouns and conceptual entities to common cros
 
 This research introduces **AfriVL-Bench**, a benchmark evaluating the ability of multimodal Large Language Models (VLMs / MLLMs) to associate indigenous language terminology directly with the authentic, localized visual referents identified by native speakers. Rather than evaluating translation solely as text-to-text token prediction or matching against Western stock photography, we establish a human-grounded evaluation protocol across nine African languages (Akan Twi, Hausa, Igbo, kiSwahili, Amharic, Wolof, Mandinka, isiXhosa, and isiZulu). By evaluating models on their capacity to distinguish culturally authentic visual representations from generalized visual distractors, this benchmark probes whether state-of-the-art multimodal models possess genuine regional contextual understanding or merely regurgitate high-resource lexical mappings.
 
+<p align="center">
+  <img src="translation_illusion.jpeg" alt="The Translation Illusion: Mapping words without mapping the world" width="850">
+</p>
+<p align="center">
+  <em><b>Figure 1: The Translation Illusion.</b> Direct lexical translation maps "bayerɛ" to "yam", but the underlying physical, agricultural, and cultural referents diverge completely.</em>
+</p>
+
 ---
 
 ## Key Research Questions

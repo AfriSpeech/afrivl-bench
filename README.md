@@ -3,6 +3,13 @@
 A multimodal benchmark evaluating culturally and regionally grounded visual
 vocabulary across 9 African languages.
 
+<p align="center">
+  <img src="paper/translation_illusion.jpeg" alt="The Translation Illusion: Mapping words without mapping the world" width="800">
+</p>
+<p align="center">
+  <em><b>The Translation Illusion:</b> Direct lexical translation maps "bayerɛ" to "yam", but the underlying physical, agricultural, and cultural referents diverge completely.</em>
+</p>
+
 Each question shows an **image** of a concept and asks a model: *"In
 `<language>`, which of these 4 options is the correct word for what's
 pictured?"* One option is the real human-curated translation; the other three
