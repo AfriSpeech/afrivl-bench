@@ -108,6 +108,23 @@ languages:
 | Amharic / Mandinka | 123 each |
 | Akan Twi | 121 |
 
+## Results
+
+First full run, all 1,207 questions, two Gemini generations:
+
+| model | overall pass rate |
+|---|---|
+| gemini-3.6-flash | **94.8%** |
+| gemini-2.5-flash | **90.3%** |
+
+gemini-3.6-flash beats gemini-2.5-flash on **every single category** — a
+clean generational improvement, not noise. Hardest categories for both models
+are school, professions, clothing and farm (85–92%); easiest are food and
+drink, animals and transportation (96–99%), against a 25% chance baseline.
+Full per-language/per-category breakdown is in
+[`results/summary.json`](results/summary.json) and the
+[dashboard](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri).
+
 ## Models
 
 Currently benchmarked via the Gemini API only (`google-genai` SDK,

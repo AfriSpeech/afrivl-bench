@@ -1,0 +1,221 @@
+{
+  "chance_baseline": 25.0,
+  "models": {
+    "gemini-2.5-flash": {
+      "n_questions": 1207,
+      "n_scored": 1207,
+      "n_errors": 0,
+      "overall_pass_rate": 90.3,
+      "chance_baseline": 25.0,
+      "by_language": {
+        "Akan Twi": {
+          "iso639_3": "twi",
+          "n": 121,
+          "pass_rate": 87.6
+        },
+        "Amharic": {
+          "iso639_3": "amh",
+          "n": 123,
+          "pass_rate": 98.4
+        },
+        "Hausa": {
+          "iso639_3": "hau",
+          "n": 137,
+          "pass_rate": 98.5
+        },
+        "Igbo": {
+          "iso639_3": "ibo",
+          "n": 156,
+          "pass_rate": 92.3
+        },
+        "Mandinka": {
+          "iso639_3": "mnk",
+          "n": 123,
+          "pass_rate": 57.7
+        },
+        "Wolof": {
+          "iso639_3": "wol",
+          "n": 127,
+          "pass_rate": 87.4
+        },
+        "isiXhosa": {
+          "iso639_3": "xho",
+          "n": 143,
+          "pass_rate": 97.2
+        },
+        "isiZulu": {
+          "iso639_3": "zul",
+          "n": 143,
+          "pass_rate": 95.8
+        },
+        "kiSwahili": {
+          "iso639_3": "swh",
+          "n": 134,
+          "pass_rate": 94.0
+        }
+      },
+      "by_category": {
+        "animals": {
+          "n": 110,
+          "pass_rate": 97.3
+        },
+        "body parts": {
+          "n": 202,
+          "pass_rate": 89.6
+        },
+        "clothing": {
+          "n": 141,
+          "pass_rate": 86.5
+        },
+        "cooking": {
+          "n": 82,
+          "pass_rate": 81.7
+        },
+        "farm": {
+          "n": 50,
+          "pass_rate": 80.0
+        },
+        "food and drink": {
+          "n": 170,
+          "pass_rate": 93.5
+        },
+        "house": {
+          "n": 65,
+          "pass_rate": 90.8
+        },
+        "natural world": {
+          "n": 90,
+          "pass_rate": 94.4
+        },
+        "people": {
+          "n": 62,
+          "pass_rate": 87.1
+        },
+        "places": {
+          "n": 55,
+          "pass_rate": 94.5
+        },
+        "professions": {
+          "n": 52,
+          "pass_rate": 92.3
+        },
+        "school": {
+          "n": 75,
+          "pass_rate": 86.7
+        },
+        "transportation": {
+          "n": 53,
+          "pass_rate": 96.2
+        }
+      }
+    },
+    "gemini-3.6-flash": {
+      "n_questions": 1207,
+      "n_scored": 1207,
+      "n_errors": 0,
+      "overall_pass_rate": 94.8,
+      "chance_baseline": 25.0,
+      "by_language": {
+        "Akan Twi": {
+          "iso639_3": "twi",
+          "n": 121,
+          "pass_rate": 92.6
+        },
+        "Amharic": {
+          "iso639_3": "amh",
+          "n": 123,
+          "pass_rate": 100.0
+        },
+        "Hausa": {
+          "iso639_3": "hau",
+          "n": 137,
+          "pass_rate": 97.8
+        },
+        "Igbo": {
+          "iso639_3": "ibo",
+          "n": 156,
+          "pass_rate": 92.9
+        },
+        "Mandinka": {
+          "iso639_3": "mnk",
+          "n": 123,
+          "pass_rate": 86.2
+        },
+        "Wolof": {
+          "iso639_3": "wol",
+          "n": 127,
+          "pass_rate": 93.7
+        },
+        "isiXhosa": {
+          "iso639_3": "xho",
+          "n": 143,
+          "pass_rate": 95.8
+        },
+        "isiZulu": {
+          "iso639_3": "zul",
+          "n": 143,
+          "pass_rate": 97.2
+        },
+        "kiSwahili": {
+          "iso639_3": "swh",
+          "n": 134,
+          "pass_rate": 96.3
+        }
+      },
+      "by_category": {
+        "animals": {
+          "n": 110,
+          "pass_rate": 98.2
+        },
+        "body parts": {
+          "n": 202,
+          "pass_rate": 94.1
+        },
+        "clothing": {
+          "n": 141,
+          "pass_rate": 89.4
+        },
+        "cooking": {
+          "n": 82,
+          "pass_rate": 97.6
+        },
+        "farm": {
+          "n": 50,
+          "pass_rate": 90.0
+        },
+        "food and drink": {
+          "n": 170,
+          "pass_rate": 99.4
+        },
+        "house": {
+          "n": 65,
+          "pass_rate": 96.9
+        },
+        "natural world": {
+          "n": 90,
+          "pass_rate": 97.8
+        },
+        "people": {
+          "n": 62,
+          "pass_rate": 96.8
+        },
+        "places": {
+          "n": 55,
+          "pass_rate": 96.4
+        },
+        "professions": {
+          "n": 52,
+          "pass_rate": 88.5
+        },
+        "school": {
+          "n": 75,
+          "pass_rate": 85.3
+        },
+        "transportation": {
+          "n": 53,
+          "pass_rate": 98.1
+        }
+      }
+    }
+  }
+}
