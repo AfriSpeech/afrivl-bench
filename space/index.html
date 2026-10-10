@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VL-MMLU-Afri — Visual MT Benchmark</title>
+<title>AfriVL-Bench — Multimodal Visual Grounding Benchmark</title>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
   :root{
@@ -38,12 +38,11 @@
 </head>
 <body>
 <header>
-  <h1>VL-MMLU-Afri — Visual Multiple-Choice MT Benchmark</h1>
+  <h1>AfriVL-Bench — Multimodal Visual Grounding Benchmark</h1>
   <p class="lede">
-    Each question shows a model an <b>image</b> of a concept and 4 candidate
-    translations into a target language — 1 correct, 3 real human translations
-    of other concepts. The model must ground the image to answer, not just
-    translate text. Concepts and human reference translations come from the
+    Evaluates vision-language models on culturally and regionally grounded
+    African vocabulary across 9 reference languages. Models must ground the image to answer,
+    not just translate text. Concepts and human reference translations come from the
     <a href="https://www.bu.edu/200word/" target="_blank" rel="noopener">BU 200 Word Project</a>.
     Chance baseline is <code id="chance-note">25%</code> (4 options).
   </p>
@@ -67,7 +66,7 @@
 
 <script>
 const params = new URLSearchParams(location.search);
-const OWNER = params.get('repo') || 'AfriSpeech/vl-mmlu-afri';
+const OWNER = params.get('repo') || 'AfriSpeech/afrivl-bench';
 const BRANCH = params.get('branch') || 'main';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${BRANCH}`;
 const PLOTLY_CFG = {displaylogo:false, responsive:true};

@@ -1,4 +1,4 @@
-"""Run the vl-mmlu-afri question set against one or more Gemini models.
+"""Run the afrivl-bench question set against one or more Gemini models.
 
 Each question is a single stateless `generate_content` call: the concept image
 plus a lettered multiple-choice list of candidate translations in the target

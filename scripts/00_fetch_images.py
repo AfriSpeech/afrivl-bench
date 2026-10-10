@@ -48,7 +48,7 @@ from PIL import Image, ImageDraw, ImageFont
 MANIFEST = DATA / "images_manifest.json"
 HINTS_PATH = DATA / "search_hints.json"
 
-UA = "vl-mmlu-afri/0.1 (research benchmark; contact: michseth@ghananlp.org)"
+UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 
 MIN_SIDE = 250

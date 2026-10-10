@@ -1,6 +1,7 @@
-# VL-MMLU-Afri
+# AfriVL-Bench
 
-A visual multiple-choice translation benchmark for African languages.
+A multimodal benchmark evaluating culturally and regionally grounded visual
+vocabulary across 9 African languages.
 
 Each question shows an **image** of a concept and asks a model: *"In
 `<language>`, which of these 4 options is the correct word for what's
@@ -121,7 +122,7 @@ are school, professions, clothing and farm (85–92%); easiest are food and
 drink, animals and transportation (96–99%), against a 25% chance baseline.
 Full per-language/per-category breakdown is in
 [`results/summary.json`](results/summary.json) and the
-[dashboard](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri).
+[dashboard](https://huggingface.co/spaces/AfriSpeech/afrivl-bench).
 
 ## Models
 
@@ -132,14 +133,14 @@ added later as a second runner.
 ## Dashboard
 
 A static HTML/JS page in [`space/`](space/), deployed as a static Hugging Face
-Space, reads `results/summary.json` from this repo at page load — the same
-pattern as
+Space at [`AfriSpeech/afrivl-bench`](https://huggingface.co/spaces/AfriSpeech/afrivl-bench),
+reads `results/summary.json` from this repo at page load — the same pattern as
 [gemini-afro-mt-bench](https://github.com/AfriSpeech/gemini-afro-mt-bench).
 
 ## Human ground truth review
 
 A second static page, [`human-eval/`](human-eval/) (deployed to Hugging Face Spaces at
-[`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri-human-eval)),
+[`AfriSpeech/afrivl-bench-human-eval`](https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval)),
 allows reviewers to establish visual-linguistic ground truth across 9 African languages.
 
 Reviewers select their language, view the authentic local word alongside country-grounded
@@ -149,7 +150,7 @@ candidate photos from Wikimedia Commons (one at a time), and evaluate whether ea
 - **Skip**: Moves to the next word.
 
 Submissions are saved client-side directly to the dataset:
-[`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval)
+[`AfriSpeech/afrivl-bench-human-eval`](https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval)
 via a write-only, dataset-scoped Hugging Face token.
 
 ### Symmetrical LLM benchmarking

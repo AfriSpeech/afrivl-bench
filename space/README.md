@@ -1,21 +1,20 @@
 ---
-title: VL-MMLU-Afri
-emoji: 🖼️
+title: AfriVL-Bench
+emoji: 🌍
 colorFrom: purple
 colorTo: green
 sdk: static
 pinned: false
 license: cc-by-4.0
-short_description: Visual multiple-choice MT benchmark, African languages
+short_description: Multimodal visual grounding benchmark, African languages
 ---
 
-# VL-MMLU-Afri
+# AfriVL-Bench
 
-Shows a vision-language model an image of a concept and asks it to pick the
-correct translation, in a target African language, from 4 real human-curated
-options. Tests visual grounding, not just text translation.
+Benchmarking multimodal vision-language models on culturally and regionally
+grounded African vocabulary across 9 reference languages.
 
-The app reads `results/summary.json` from the
-[AfriSpeech/vl-mmlu-afri](https://github.com/AfriSpeech/vl-mmlu-afri) GitHub
+The dashboard reads `results/summary.json` from the
+[AfriSpeech/afrivl-bench](https://github.com/AfriSpeech/afrivl-bench) GitHub
 repo at page load, so a new benchmark run appears here on refresh with no
 redeploy.

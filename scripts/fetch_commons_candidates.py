@@ -37,7 +37,7 @@ from pathlib import Path
 
 from common import DATA, EXCLUDED_CATEGORIES
 
-UA = "vl-mmlu-afri/0.1 (research benchmark; contact: michseth@ghananlp.org)"
+UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 MIN_SIDE = 200
 BAD_TITLE_RE = re.compile(

@@ -1,4 +1,4 @@
-# VL-MMLU-Afri: Grounding Visual Concepts in African Languages
+# AfriVL-Bench: Grounding Visual Concepts in African Languages
 
 > **Working Paper / Call for Participation**  
 > **Contact:** [mich@afrispeech.org](mailto:mich@afrispeech.org)
@@ -9,7 +9,7 @@
 
 Lexical translation frequently maps nouns and conceptual entities to common cross-lingual equivalents, masking fundamental differences in the physical, perceptual, and cultural referents that speakers hold in mind. For example, during a bilingual conversation where an English translator renders the Akan Twi word *bayerɛ* as *yam*, the conversational partners operate under divergent conceptual models: an English speaker often envisions generic root vegetables or sweet potatoes, whereas a native Twi speaker refers specifically to the West African yam (*Dioscorea*), distinct in form, preparation, and culinary role in Ghana. Over time, conventions established during the historical translation of low-resource African languages into dominant high-resource languages have codified these approximations as equivalence, divorcing vocabulary from local material reality.
 
-This research introduces **VL-MMLU-Afri**, a benchmark evaluating the ability of multimodal Large Language Models (VLMs / MLLMs) to associate indigenous language terminology directly with the authentic, localized visual referents identified by native speakers. Rather than evaluating translation solely as text-to-text token prediction or matching against Western stock photography, we establish a human-grounded evaluation protocol across nine African languages (Akan Twi, Hausa, Igbo, kiSwahili, Amharic, Wolof, Mandinka, isiXhosa, and isiZulu). By evaluating models on their capacity to distinguish culturally authentic visual representations from generalized visual distractors, this benchmark probes whether state-of-the-art multimodal models possess genuine regional contextual understanding or merely regurgitate high-resource lexical mappings.
+This research introduces **AfriVL-Bench**, a benchmark evaluating the ability of multimodal Large Language Models (VLMs / MLLMs) to associate indigenous language terminology directly with the authentic, localized visual referents identified by native speakers. Rather than evaluating translation solely as text-to-text token prediction or matching against Western stock photography, we establish a human-grounded evaluation protocol across nine African languages (Akan Twi, Hausa, Igbo, kiSwahili, Amharic, Wolof, Mandinka, isiXhosa, and isiZulu). By evaluating models on their capacity to distinguish culturally authentic visual representations from generalized visual distractors, this benchmark probes whether state-of-the-art multimodal models possess genuine regional contextual understanding or merely regurgitate high-resource lexical mappings.
 
 ---
 
@@ -38,7 +38,7 @@ Please include:
 
 ## Project Resources
 
-- **GitHub Repository:** [AfriSpeech/vl-mmlu-afri](https://github.com/AfriSpeech/vl-mmlu-afri)
-- **Human Ground Truth Space:** [AfriSpeech/vl-mmlu-afri-human-eval](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri-human-eval)
-- **Submissions Dataset:** [AfriSpeech/vl-mmlu-afri-human-eval (Dataset)](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval)
-- **Benchmark Dashboard:** [AfriSpeech/vl-mmlu-afri (Space)](https://huggingface.co/spaces/AfriSpeech/vl-mmlu-afri)
+- **GitHub Repository:** [AfriSpeech/afrivl-bench](https://github.com/AfriSpeech/afrivl-bench)
+- **Human Ground Truth Space:** [AfriSpeech/afrivl-bench-human-eval](https://huggingface.co/spaces/AfriSpeech/afrivl-bench-human-eval)
+- **Submissions Dataset:** [AfriSpeech/afrivl-bench-human-eval (Dataset)](https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval)
+- **Benchmark Dashboard:** [AfriSpeech/afrivl-bench (Space)](https://huggingface.co/spaces/AfriSpeech/afrivl-bench)

@@ -1,5 +1,5 @@
 ---
-title: VL-MMLU-Afri Human Review
+title: AfriVL-Bench Human Review
 emoji: 🌍
 colorFrom: blue
 colorTo: green
@@ -9,7 +9,7 @@ license: cc-by-4.0
 short_description: Human ground truth for African visual vocabulary
 ---
 
-# VL-MMLU-Afri — Human Ground Truth Review
+# AfriVL-Bench — Human Ground Truth Review
 
 This tool collects human visual-linguistic ground truth across 9 African languages
 (Akan Twi, Hausa, Igbo, kiSwahili, Amharic, Wolof, Mandinka, isiXhosa, isiZulu).
@@ -19,5 +19,5 @@ candidate photos from Wikimedia Commons, and select the image that best depicts 
 in their culture and country context (or mark if none match).
 
 Selections are recorded to the public dataset:
-[`AfriSpeech/vl-mmlu-afri-human-eval`](https://huggingface.co/datasets/AfriSpeech/vl-mmlu-afri-human-eval)
+[`AfriSpeech/afrivl-bench-human-eval`](https://huggingface.co/datasets/AfriSpeech/afrivl-bench-human-eval)
 and serve as the ground truth against which multimodal vision-language models (e.g. Gemini) are evaluated.

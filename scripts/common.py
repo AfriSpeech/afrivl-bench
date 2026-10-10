@@ -1,4 +1,4 @@
-"""Shared paths, Gemini client, and constants for vl-mmlu-afri."""
+"""Shared paths, Gemini client, and constants for afrivl-bench."""
 from __future__ import annotations
 
 import os

@@ -1,7 +1,7 @@
 """Pull human-eval submissions from the HF dataset and merge into results/summary.json.
 
 Human answers are written as `responses/<session>/<qid>-<ts>.json` to the
-AfriSpeech/vl-mmlu-afri-human-eval dataset by human-eval/index.html. This
+AfriSpeech/afrivl-bench-human-eval dataset by human-eval/index.html. This
 fetches every response file, aggregates it exactly like 03_aggregate.py
 aggregates a model's run (same shape: overall_pass_rate, by_language,
 by_category), and writes it into results/summary.json under the key
@@ -25,7 +25,7 @@ from huggingface_hub import HfApi, hf_hub_download
 
 from common import RESULTS
 
-DATASET = "AfriSpeech/vl-mmlu-afri-human-eval"
+DATASET = "AfriSpeech/afrivl-bench-human-eval"
 
 
 def pct(n, d):

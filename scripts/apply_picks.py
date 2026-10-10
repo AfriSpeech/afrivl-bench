@@ -16,7 +16,7 @@ from pathlib import Path
 
 from common import DATA, EXCLUDED_CATEGORIES, IMAGES
 
-UA = "vl-mmlu-afri/0.1 (research benchmark; contact: michseth@ghananlp.org)"
+UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
 
 
 def slugify(word: str) -> str:

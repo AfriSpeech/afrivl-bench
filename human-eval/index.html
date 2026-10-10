@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VL-MMLU-Afri — Human Ground Truth Review</title>
+<title>AfriVL-Bench — Human Ground Truth Review</title>
 <style>
   :root{
     --bg:#fafafa; --panel:#ffffff; --text:#1a1d23; --muted:#64748b; --border:#e2e8f0;
@@ -93,7 +93,7 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>VL-MMLU-Afri — Human Review</h1>
+    <h1>AfriVL-Bench — Human Review</h1>
     <p class="lede">Review words in your language. Does the picture match the local word? Your answers become the ground truth for multimodal AI evaluation.</p>
   </header>
 
@@ -107,22 +107,22 @@
 <script>
 // ---------------------------------------------------------------- config
 const params = new URLSearchParams(location.search);
-const OWNER = params.get('repo') || 'AfriSpeech/vl-mmlu-afri';
+const OWNER = params.get('repo') || 'AfriSpeech/afrivl-bench';
 const BRANCH = params.get('branch') || 'main';
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${BRANCH}`;
 
-// Scoped write-only token for AfriSpeech/vl-mmlu-afri-human-eval dataset
+// Scoped write-only token for AfriSpeech/afrivl-bench-human-eval dataset
 const _T = ["aGZfa2pERnBPc", "ENsTmVra0t2R0", "90R3hKbmZVdXV", "uVUNuSHBVdw=="];
 const HF_TOKEN = atob(_T.join(""));
-const HF_DATASET = "AfriSpeech/vl-mmlu-afri-human-eval";
+const HF_DATASET = "AfriSpeech/afrivl-bench-human-eval";
 
 const SESSION_ID = (() => {
-  let id = localStorage.getItem('vlmmlu_gt_session');
-  if (!id) { id = crypto.randomUUID(); localStorage.setItem('vlmmlu_gt_session', id); }
+  let id = localStorage.getItem('afrivl_gt_session');
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem('afrivl_gt_session', id); }
   return id;
 })();
 
-function reviewedKey(iso){ return `vlmmlu_gt_reviewed_${iso}`; }
+function reviewedKey(iso){ return `afrivl_gt_reviewed_${iso}`; }
 function getReviewed(iso){
   try { return new Set(JSON.parse(localStorage.getItem(reviewedKey(iso)) || '[]')); }
   catch { return new Set(); }
@@ -183,7 +183,7 @@ async function load(){
   const r = await fetchFirst([`./data/languages.json`, `../data/human_eval/languages.json`, `${RAW}/human-eval/data/languages.json`]);
   LANGUAGES = await r.json();
 
-  const savedLangIso = localStorage.getItem('vlmmlu_gt_last_lang') || params.get('lang');
+  const savedLangIso = localStorage.getItem('afrivl_gt_last_lang') || params.get('lang');
   if (savedLangIso) {
     const match = LANGUAGES.find(l => l.iso === savedLangIso || l.language.toLowerCase() === savedLangIso.toLowerCase());
     if (match) { selectLanguage(match); return; }
@@ -222,7 +222,7 @@ function renderLangPicker(){
 
 async function selectLanguage(langObj){
   currentLang = langObj;
-  localStorage.setItem('vlmmlu_gt_last_lang', langObj.iso);
+  localStorage.setItem('afrivl_gt_last_lang', langObj.iso);
   card.innerHTML = `<div class="loading">Loading words for ${langObj.flag} ${langObj.language}…</div>`;
   const r = await fetchFirst([
     `./data/${langObj.iso}.json`,

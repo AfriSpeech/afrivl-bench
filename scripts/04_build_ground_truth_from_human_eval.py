@@ -1,6 +1,6 @@
 """Build visual-choice benchmark questions from human-eval ground truth.
 
-Pulls human ground-truth submissions from AfriSpeech/vl-mmlu-afri-human-eval
+Pulls human ground-truth submissions from AfriSpeech/afrivl-bench-human-eval
 (or a local directory) written by human-eval/index.html under
 `ground_truth/<session_id>/<id>-<ts>.json`.
 
@@ -33,8 +33,8 @@ from common import DATA, LANGUAGE_ISO, N_CHOICES, RESULTS, SEED
 
 from huggingface_hub import HfApi, hf_hub_download
 
-DATASET = "AfriSpeech/vl-mmlu-afri-human-eval"
-UA = "vl-mmlu-afri/0.1 (research benchmark; contact: michseth@ghananlp.org)"
+DATASET = "AfriSpeech/afrivl-bench-human-eval"
+UA = "afrivl-bench/0.1 (research benchmark; contact: michseth@ghananlp.org)"
 GT_IMAGES_DIR = DATA / "images" / "ground_truth"
 GT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 LETTERS = "ABCD"
